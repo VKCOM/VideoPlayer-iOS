@@ -27,7 +27,6 @@
 		D4CA48452575B4E2009C5DB3 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CA48442575B4E2009C5DB3 /* TabbarController.swift */; };
 		D4D425292A9CFED2002A16E5 /* PiPCustomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D425282A9CFED2002A16E5 /* PiPCustomControls.swift */; };
 		D4E8A5A6294D1721002CAA3F /* MultiplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8A5A5294D1721002CAA3F /* MultiplayController.swift */; };
-		D4E8C1912ABC7E1400842BF0 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = D4E8C1902ABC7E1400842BF0 /* CHANGELOG.md */; };
 		D4FC7349282BCCF40055623C /* Video+Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC7348282BCCF40055623C /* Video+Demo.swift */; };
 		EA04146B28881B1700A05BB0 /* PlayerViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04146A28881B1700A05BB0 /* PlayerViewContext.swift */; };
 		EA0F26BB28183F71004F126C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F26BA28183F71004F126C /* MenuController.swift */; };
@@ -86,7 +85,6 @@
 		D4CA48442575B4E2009C5DB3 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		D4D425282A9CFED2002A16E5 /* PiPCustomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiPCustomControls.swift; sourceTree = "<group>"; };
 		D4E8A5A5294D1721002CAA3F /* MultiplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayController.swift; sourceTree = "<group>"; };
-		D4E8C1902ABC7E1400842BF0 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		D4FC7348282BCCF40055623C /* Video+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Video+Demo.swift"; sourceTree = "<group>"; };
 		E805F55F25CABE2100D9F697 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		EA04146A28881B1700A05BB0 /* PlayerViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewContext.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				D4CA47F12575A268009C5DB3 /* Assets.xcassets */,
 				D4CA47F32575A268009C5DB3 /* LaunchScreen.storyboard */,
 				D4CA47F62575A268009C5DB3 /* Info.plist */,
-				D4E8C1902ABC7E1400842BF0 /* CHANGELOG.md */,
 			);
 			path = PlayerDemo;
 			sourceTree = "<group>";
@@ -350,7 +347,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4CA47F52575A268009C5DB3 /* LaunchScreen.storyboard in Resources */,
-				D4E8C1912ABC7E1400842BF0 /* CHANGELOG.md in Resources */,
 				D4CA47F22575A268009C5DB3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,7 +545,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.74;
+				CURRENT_PROJECT_VERSION = 1.77;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -558,7 +554,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.74;
+				MARKETING_VERSION = 1.77;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -574,7 +570,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.74;
+				CURRENT_PROJECT_VERSION = 1.77;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -583,7 +579,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.74;
+				MARKETING_VERSION = 1.77;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -620,7 +616,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 1.74.0;
+				version = 1.77.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
