@@ -10,6 +10,7 @@ class SingleController: ViewController {
         let player = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
         player.delegate = self
         player.soundOn = true
+        player.backgroundPlaybackPolicy = .continueAudioAndVideo
         return player
     }()
     

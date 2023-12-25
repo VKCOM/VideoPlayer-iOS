@@ -61,8 +61,14 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
             closeButton?.alpha = controlsVisible ? 1 : 0
         }
     }
+
+    weak var pipButton: UIButton? {
+        didSet {
+            pipButton?.isHidden = true
+        }
+    }
     
-    
+
     // MARK: - HideableControls
     
     lazy var tapGesture: UITapGestureRecognizer? = {
