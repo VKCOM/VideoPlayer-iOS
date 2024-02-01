@@ -6,7 +6,7 @@ import AVFoundation
 class SingleController: ViewController {
     
     private lazy var playerView: PlayerView = {
-        let controls = DiscoverControlsView(standardControlsWithFrame: .zero)
+        let controls = InplaceCustomControls(frame: .zero)
         let player = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
         player.delegate = self
         player.soundOn = true

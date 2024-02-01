@@ -35,10 +35,7 @@ class TabbarController: UITabBarController {
         let downloads = NavigationController(rootViewController: DownloadsController())
         downloads.tabBarItem = UITabBarItem(title: "Downloads", image: UIImage(systemName: "arrow.down.to.line"), selectedImage: nil)
         
-        let customControls = NavigationController(rootViewController: CustomControlsController())
-        customControls.tabBarItem = UITabBarItem(title: "Controls", image: UIImage(systemName: "gamecontroller"), selectedImage: nil)
-        
-        viewControllers = [single, feed, customControls, transitions, multiplay, downloads]
+        viewControllers = [single, feed, transitions, multiplay, downloads]
     }
     
     

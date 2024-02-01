@@ -13,7 +13,6 @@
 		D43BD367257E244B007952B6 /* ImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43BD366257E244B007952B6 /* ImportController.swift */; };
 		D468AEEB2A2784DE00DE52D8 /* ImportTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468AEEA2A2784DE00DE52D8 /* ImportTableController.swift */; };
 		D48ADCB22A27489E0066AABF /* ImportFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48ADCB12A27489E0066AABF /* ImportFormatView.swift */; };
-		D4A11B2C2A9768F200AF81F6 /* CustomControlsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A11B2B2A9768F200AF81F6 /* CustomControlsController.swift */; };
 		D4A11B2E2A9793EA00AF81F6 /* InplaceCustomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A11B2D2A9793EA00AF81F6 /* InplaceCustomControls.swift */; };
 		D4BD26CA29D7201A005C52C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BD26C929D7201A005C52C6 /* SceneDelegate.swift */; };
 		D4C551E825767FA7006E6419 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C551E725767FA7006E6419 /* FeedCell.swift */; };
@@ -69,7 +68,6 @@
 		D468AEEA2A2784DE00DE52D8 /* ImportTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTableController.swift; sourceTree = "<group>"; };
 		D48ADCB12A27489E0066AABF /* ImportFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFormatView.swift; sourceTree = "<group>"; };
 		D495720E2732BC6E00208CC8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		D4A11B2B2A9768F200AF81F6 /* CustomControlsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomControlsController.swift; sourceTree = "<group>"; };
 		D4A11B2D2A9793EA00AF81F6 /* InplaceCustomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InplaceCustomControls.swift; sourceTree = "<group>"; };
 		D4BD26C929D7201A005C52C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D4C551E725767FA7006E6419 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
@@ -119,15 +117,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D4A11B2A2A9768D100AF81F6 /* CustomControls */ = {
+		D4027CC82B2A0D6C00DC65E8 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				D4A11B2B2A9768F200AF81F6 /* CustomControlsController.swift */,
 				D4A11B2D2A9793EA00AF81F6 /* InplaceCustomControls.swift */,
 				D4D425282A9CFED2002A16E5 /* PiPCustomControls.swift */,
 				D40B0A292AA5EB7A009EDEA8 /* FullscreenCustomControls.swift */,
 			);
-			path = CustomControls;
+			path = Controls;
 			sourceTree = "<group>";
 		};
 		D4CA47DC2575A267009C5DB3 = {
@@ -150,7 +147,6 @@
 		D4CA47E72575A267009C5DB3 /* PlayerDemo */ = {
 			isa = PBXGroup;
 			children = (
-				D4A11B2A2A9768D100AF81F6 /* CustomControls */,
 				EA2865692949ECAD0006EFE8 /* Transitions */,
 				EA3E58B4291D4CCA00605471 /* Multiplay */,
 				EADF720B274D108000FAD363 /* Downloads */,
@@ -195,6 +191,7 @@
 		D4D7522226E657B10046E7A7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D4027CC82B2A0D6C00DC65E8 /* Controls */,
 				EAAFC53527BBF8EB00033D8B /* Transitions */,
 				EAD0550B28296636002EF645 /* Menu */,
 				D4CA483F2575B3D8009C5DB3 /* ViewControllers.swift */,
@@ -311,7 +308,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					D4CA47E42575A267009C5DB3 = {
 						CreatedOnToolsVersion = 12.2;
@@ -364,7 +361,6 @@
 				D48ADCB22A27489E0066AABF /* ImportFormatView.swift in Sources */,
 				EA2A37572762A40A001FF3F4 /* DownloadsCollectionFooter.swift in Sources */,
 				EADF720F274D10DD00FAD363 /* DownloadsController.swift in Sources */,
-				D4A11B2C2A9768F200AF81F6 /* CustomControlsController.swift in Sources */,
 				D4C551EB257687D6006E6419 /* FeedVideoModel.swift in Sources */,
 				EADF720D274D108F00FAD363 /* DownloadService.swift in Sources */,
 				D4C551E825767FA7006E6419 /* FeedCell.swift in Sources */,
@@ -450,6 +446,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -516,6 +513,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -545,7 +543,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.80;
+				CURRENT_PROJECT_VERSION = 1.84;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -554,7 +552,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.80;
+				MARKETING_VERSION = 1.84;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -570,7 +568,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.80;
+				CURRENT_PROJECT_VERSION = 1.84;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -579,7 +577,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.80;
+				MARKETING_VERSION = 1.84;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -616,7 +614,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 1.80.0;
+				version = 1.84.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -47,6 +47,9 @@ extension SceneDelegate: PlayerManagerDelegate {
         return Self.findTopViewController(base: window!.rootViewController)
     }
     
+    func customPiPControls(with frame: CGRect) -> UIView {
+        return PiPCustomControls(frame: frame)
+    }
     
     func playerView(_ fromPlayerView: OVKit.PlayerView, willShowPiP pip: OVKit.PiPWindow) {
     }
@@ -83,8 +86,6 @@ extension SceneDelegate: PlayerManagerDelegate {
         insets.right = max(insets.right, 14) + 4
         return insets
     }
-    
-
 }
 
 

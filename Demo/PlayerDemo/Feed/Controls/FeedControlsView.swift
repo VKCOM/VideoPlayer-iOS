@@ -1,5 +1,6 @@
 import UIKit
 import OVKit
+import OVKResources
 
 
 /// Показывается только badge со статусом воспроизведения и временем до окончания видео. Перемотка и play/pause недоступны.
@@ -189,9 +190,9 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
             self.logoImageView?.alpha = alpha
         }
         if animated {
-            UIView.animate(withDuration: DiscoverControlsView.visibilityAnimationDuration,
+            UIView.animate(withDuration: Self.visibilityAnimationDuration,
                            delay: 0,
-                           options: DiscoverControlsView.visibilityAnimationOptions,
+                           options: Self.visibilityAnimationOptions,
                            animations: {
                 update()
                 self.controlsDelegate?.visibilityDidChangeTo(visible: visible)

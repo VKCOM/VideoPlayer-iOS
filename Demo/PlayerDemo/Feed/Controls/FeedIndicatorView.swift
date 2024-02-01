@@ -1,5 +1,6 @@
 import UIKit
 import OVKit
+import OVKResources
 
 
 public enum FeedIndicatorViewState {
@@ -133,7 +134,7 @@ public class FeedIndicatorView: UIView {
 
     
     private func updateText() {
-        let text = gifAppearance ? "GIF" : String.formatDuration(from: Int(time))
+        let text = gifAppearance ? "GIF" : String.ovk_formatDuration(from: Int(time))
         guard text != textLabel.text else {
             return
         }

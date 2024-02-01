@@ -144,8 +144,25 @@ extension ViewController: PlayerDelegate {
         }
     }
     
+    
     func player(_ playerView: PlayerView, unlockRestrictedVideo video: VideoType, withCompletionHandler completionHandler: @escaping ([Int]?, Date?, Error?) -> Void) {
-        completionHandler(nil, nil, nil)
+        guard let apiSession = ApiSession.shared else {
+            assertionFailure("Trying to unlock restriction without valid ApiSession")
+            completionHandler(nil, nil, nil)
+            return
+        }
+        apiSession.agreeDisclaimer(video: video) { result in
+            switch result {
+            case .success(let response):
+                var date: Date?
+                if let t = response.expirationTime {
+                    date = Date(timeIntervalSince1970: TimeInterval(t))
+                }
+                completionHandler(response.disclaimerTypes, date, nil)
+            case .failure(let error):
+                completionHandler(nil, nil, error)
+            }
+        }
     }
 }
 

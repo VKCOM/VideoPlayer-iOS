@@ -30,7 +30,7 @@ class FeedCell: UITableViewCell, FocusOfInterestView {
     
     private(set) lazy var playerView: PlayerView = {
         let player = PlayerView(frame: .zero, gravity: .fill, customControls: FeedControlsView(frame: .zero))
-        let context = PlayerViewContext()
+        let context = DemoPlayerViewContext()
         context.openWithDetail = true
         player.context = context
         return player

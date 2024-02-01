@@ -112,7 +112,7 @@ class MultiplayController: ViewController {
     
     
     private func setupPlayer(video: VideoType, multi: Bool) {
-        let player = PlayerView(frame: .zero, gravity: .fill, customControls: DiscoverControlsView(standardControlsWithFrame: .zero))
+        let player = PlayerView(frame: .zero, gravity: .fill, customControls: InplaceCustomControls(frame: .zero))
         player.delegate = self
         // view маленького размера, поэтому нет смысла загружать более высокое качество
         player.autoQualityRange = QualityRange(sameOrWorseThan: 360)

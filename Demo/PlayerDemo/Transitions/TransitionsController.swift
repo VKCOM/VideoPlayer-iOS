@@ -15,7 +15,7 @@ class TransitionsController: ViewController {
     }
     
     private lazy var firstPlayer: PlayerView = {
-        let player = PlayerView(frame: .zero, gravity: .fit, customControls: DiscoverControlsView(standardControlsWithFrame: .zero))
+        let player = PlayerView(frame: .zero, gravity: .fit, customControls: InplaceCustomControls(frame: .zero))
         player.delegate = self
         return player
     }()
