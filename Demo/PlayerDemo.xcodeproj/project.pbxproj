@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1306CD7FF4EB5A9F13229912 /* VKVideoPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 55904406B78EC8E5D1E3C4C6 /* VKVideoPlayer */; };
 		D40B0A2A2AA5EB7A009EDEA8 /* FullscreenCustomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40B0A292AA5EB7A009EDEA8 /* FullscreenCustomControls.swift */; };
-		D41A08F92B3C8C63006D052D /* OVKitChromecastPlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D41A08F82B3C8C63006D052D /* OVKitChromecastPlugin.framework */; };
 		D421DB7A2A264DFF002C86E0 /* ImportSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421DB792A264DFF002C86E0 /* ImportSourceView.swift */; };
 		D43BD367257E244B007952B6 /* ImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43BD366257E244B007952B6 /* ImportController.swift */; };
 		D468AEEB2A2784DE00DE52D8 /* ImportTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468AEEA2A2784DE00DE52D8 /* ImportTableController.swift */; };
@@ -64,7 +63,6 @@
 /* Begin PBXFileReference section */
 		B11EC48D2620C75A00B063FA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D40B0A292AA5EB7A009EDEA8 /* FullscreenCustomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenCustomControls.swift; sourceTree = "<group>"; };
-		D41A08F82B3C8C63006D052D /* OVKitChromecastPlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OVKitChromecastPlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D421DB792A264DFF002C86E0 /* ImportSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSourceView.swift; sourceTree = "<group>"; };
 		D43BD366257E244B007952B6 /* ImportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportController.swift; sourceTree = "<group>"; };
 		D468AEEA2A2784DE00DE52D8 /* ImportTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTableController.swift; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D41A08F92B3C8C63006D052D /* OVKitChromecastPlugin.framework in Frameworks */,
 				1306CD7FF4EB5A9F13229912 /* VKVideoPlayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,7 +205,6 @@
 		D4E0DCF02579944600473090 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D41A08F82B3C8C63006D052D /* OVKitChromecastPlugin.framework */,
 				B11EC48D2620C75A00B063FA /* AVFoundation.framework */,
 				E805F55F25CABE2100D9F697 /* Metal.framework */,
 			);
@@ -547,7 +543,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.84.1;
+				CURRENT_PROJECT_VERSION = 1.84.2;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -556,7 +552,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.84.1;
+				MARKETING_VERSION = 1.84.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -572,7 +568,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.84.1;
+				CURRENT_PROJECT_VERSION = 1.84.2;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -581,7 +577,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.84.1;
+				MARKETING_VERSION = 1.84.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -618,7 +614,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 1.84.1;
+				version = 1.84.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
