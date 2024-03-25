@@ -94,11 +94,11 @@ class ImportFormatView: UIButton {
             rawUrl = (.dashSep, url)
             return
         }
-        if string.contains("/hls/") || string.contains("/hls_") || string.contains("ct=15") {
+        if string.contains("/hls/") {
             if string.contains("_offset_p.") {
-                rawUrl = (.hlsLive, url)
+                rawUrl = (.hlsLivePlayback, url)
             } else {
-                rawUrl = (.hls, url)
+                rawUrl = (.hlsLive, url)
             }
             isLive = true
             return
@@ -106,11 +106,10 @@ class ImportFormatView: UIButton {
         if string.contains("/dash/stream") {
             if string.contains("offset_p") {
                 rawUrl = (.dashLivePlayback, url)
-                isLive = true
             } else {
-                rawUrl = (.dashUni, url)
-                isLive = true
+                rawUrl = (.dashLive, url)
             }
+            isLive = true
             return
         }
         if string.contains("/cmaf/") || string.contains("/live.prod/") || string.contains("/live.test/") {

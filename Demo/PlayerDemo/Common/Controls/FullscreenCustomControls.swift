@@ -5,35 +5,13 @@ import OVKit
 class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
     
     // MARK: - PlayerFullscreenControlsViewProtocol
-    
-    var enableBottomControls: Bool = true
-    
+
     var splitMode: Bool = false
-    
-    var alwaysShowSoundButton: Bool = false
-    
-    var keyboardOverlapsBottomView: Bool = false
-    
-    var keepVisible: Bool = false
     
     var onVisibilityChange: VoidBlock?
     
     var customSafeInsets: UIEdgeInsets? = nil
-    
-    var customControlInsets: (() -> UIEdgeInsets)?
-    
-    var customBottomShadowInset: (() -> CGFloat)?
-    
-    var customBottomShadowHeight: ((UITraitCollection) -> CGFloat?)?
 
-    var controlsDidLayout: (() -> Void)?
-
-    weak var customViewsContainer: UIView?
-    
-    var bottomControlsFrame: CGRect {
-        .zero
-    }
-    
     func togglePause() {
         handlePlayPauseButton()
     }
@@ -46,30 +24,9 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
     
     func fastSeekToStart() {
     }
- 
     
-    // MARK: - ClosableControls
-    
-    var hideCloseButton: Bool = false {
-        didSet {
-            guard hideCloseButton != oldValue else { return }
-            closeButton?.isHidden = isHidden || hideCloseButton
-        }
+    func keyboardOverlapHeightChanged(to height: CGFloat) {
     }
-    
-    weak var closeButton: UIButton? {
-        didSet {
-            closeButton?.isHidden = isHidden || controlMask == nil || hideCloseButton
-            closeButton?.alpha = controlsVisible ? 1 : 0
-        }
-    }
-
-    weak var pipButton: UIButton? {
-        didSet {
-            pipButton?.isHidden = true
-        }
-    }
-    
 
     // MARK: - HideableControls
     
@@ -168,20 +125,12 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
         super.layoutSubviews()
         
         playPauseButton.center = CGPoint(x: bounds.midX, y: bounds.midY)
-        controlsDidLayout?()
-    }
-    
-    override var isHidden: Bool {
-        didSet {
-            closeButton?.isHidden = isHidden || hideCloseButton
-        }
     }
     
     func updateControlsVisible(visible: Bool, animated: Bool) {
         let alpha: CGFloat = visible ? 1 : 0
         let update = {
             self.playPauseButton.alpha = alpha
-            self.closeButton?.alpha = self.splitMode ? 1.0 : alpha
         }
         if animated {
             UIView.animate(withDuration: 0.24, delay: 0, options: .curveEaseInOut, animations: {

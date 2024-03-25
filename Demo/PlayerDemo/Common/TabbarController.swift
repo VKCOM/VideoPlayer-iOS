@@ -35,7 +35,10 @@ class TabbarController: UITabBarController {
         let downloads = NavigationController(rootViewController: DownloadsController())
         downloads.tabBarItem = UITabBarItem(title: "Downloads", image: UIImage(systemName: "arrow.down.to.line"), selectedImage: nil)
         
-        viewControllers = [single, feed, transitions, multiplay, downloads]
+        let rotations = RotationsNavController(rootViewController: RotationsController())
+        rotations.tabBarItem = UITabBarItem(title: "Rotations", image: UIImage(systemName: "rotate.left"), selectedImage: nil)
+
+        viewControllers = [single, feed, transitions, multiplay, downloads, rotations]
     }
     
     

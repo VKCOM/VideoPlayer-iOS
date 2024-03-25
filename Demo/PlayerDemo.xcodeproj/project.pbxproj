@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1306CD7FF4EB5A9F13229912 /* VKVideoPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 55904406B78EC8E5D1E3C4C6 /* VKVideoPlayer */; };
+		37045C262B692515000A8AC9 /* RotationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37045C252B692515000A8AC9 /* RotationsController.swift */; };
 		D40B0A2A2AA5EB7A009EDEA8 /* FullscreenCustomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40B0A292AA5EB7A009EDEA8 /* FullscreenCustomControls.swift */; };
 		D421DB7A2A264DFF002C86E0 /* ImportSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421DB792A264DFF002C86E0 /* ImportSourceView.swift */; };
 		D43BD367257E244B007952B6 /* ImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43BD366257E244B007952B6 /* ImportController.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		37045C252B692515000A8AC9 /* RotationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationsController.swift; sourceTree = "<group>"; };
 		B11EC48D2620C75A00B063FA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D40B0A292AA5EB7A009EDEA8 /* FullscreenCustomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenCustomControls.swift; sourceTree = "<group>"; };
 		D421DB792A264DFF002C86E0 /* ImportSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSourceView.swift; sourceTree = "<group>"; };
@@ -117,6 +119,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37045C242B6924F6000A8AC9 /* Rotations */ = {
+			isa = PBXGroup;
+			children = (
+				37045C252B692515000A8AC9 /* RotationsController.swift */,
+			);
+			path = Rotations;
+			sourceTree = "<group>";
+		};
 		D4027CC82B2A0D6C00DC65E8 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +164,7 @@
 				D4CA48392575B331009C5DB3 /* Single */,
 				EA480D6327B2AF8200EDDD24 /* Detail */,
 				D4CA48382575B327009C5DB3 /* Feed */,
+				37045C242B6924F6000A8AC9 /* Rotations */,
 				D4CA47E82575A267009C5DB3 /* AppDelegate.swift */,
 				D4BD26C929D7201A005C52C6 /* SceneDelegate.swift */,
 				D4CA47F12575A268009C5DB3 /* Assets.xcassets */,
@@ -308,7 +319,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1510;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					D4CA47E42575A267009C5DB3 = {
 						CreatedOnToolsVersion = 12.2;
@@ -386,6 +397,7 @@
 				D4D425292A9CFED2002A16E5 /* PiPCustomControls.swift in Sources */,
 				EADF7211274D11C300FAD363 /* DownloadsCollectionCell.swift in Sources */,
 				EAD174812AE7FC60008E34E7 /* FeedControlsView.swift in Sources */,
+				37045C262B692515000A8AC9 /* RotationsController.swift in Sources */,
 				EA480D6727B2CA4E00EDDD24 /* PlayerViewProvider.swift in Sources */,
 				EA1656B526BD6F1B007743EE /* FocusOfInterestTracker.swift in Sources */,
 				D4CA483C2575B3B0009C5DB3 /* FeedController.swift in Sources */,
@@ -543,7 +555,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.84.2;
+				CURRENT_PROJECT_VERSION = 2.5;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -552,7 +564,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.84.2;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -568,7 +580,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.84.2;
+				CURRENT_PROJECT_VERSION = 2.5;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -577,7 +589,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.84.2;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -614,7 +626,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 1.84.2;
+				version = 2.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

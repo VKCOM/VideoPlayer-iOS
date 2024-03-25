@@ -47,18 +47,21 @@ extension SceneDelegate: PlayerManagerDelegate {
         return Self.findTopViewController(base: window!.rootViewController)
     }
     
-    func customPiPControls(with frame: CGRect) -> UIView {
+    func pictureInPictureControls(with frame: CGRect) -> UIView? {
         return PiPCustomControls(frame: frame)
     }
-    
+
+    func fullscreenControls(for video: VideoType?, originPlayerView: PlayerView?) -> UIView? {
+        return FullscreenCustomControls(frame: .zero)
+    }
+
     func playerView(_ fromPlayerView: OVKit.PlayerView, willShowPiP pip: OVKit.PiPWindow) {
     }
     
     
-    func playerView(_ fromPlayerView: OVKit.PlayerView?, willShowFullscreen fullscreenController: OVKit.FullscreenContentController) -> OVKit.FullscreenController? {
+    func playerView(_ fromPlayerView: OVKit.PlayerView?, willShowFullscreen fullscreenController: OVKit.FullscreenContentViewController) -> OVKit.FullscreenController? {
         // Принудительное включение звука
         fromPlayerView?.soundOn = true
-        fullscreenController.alwaysShowSoundButton = true
 
         // Полноэкранный плеер можно показать сразу с supplementary view controller
         if fromPlayerView?.demo_context?.openWithDetail == true, let video = (fromPlayerView ?? fullscreenController.playerView).video {
@@ -90,10 +93,12 @@ extension SceneDelegate: PlayerManagerDelegate {
 
 
 extension SceneDelegate {
-    
+
     class func findTopViewController(base: UIViewController?) -> UIViewController? {
         if let nav = base as? UINavigationController {
-            return findTopViewController(base: nav.visibleViewController)
+            if let visible = nav.visibleViewController {
+                return findTopViewController(base: visible)
+            }
         }
         if let tab = base as? UITabBarController {
             if let selected = tab.selectedViewController {
