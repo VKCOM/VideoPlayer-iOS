@@ -112,14 +112,6 @@ class FeedCell: UITableViewCell, FocusOfInterestView {
     // MARK: - Private
     
     private func updateFocusedState() {
-#if DEBUG
-        if Environment.shared._focusDebug {
-            self.contentView.layer.borderWidth = isFocusOfInterest ? 2.0 : 0.0
-            self.contentView.layer.borderColor = isFocusOfInterest ? UIColor.red.cgColor : UIColor.clear.cgColor
-        } else {
-            self.contentView.layer.borderWidth = 0.0
-        }
-#endif
         if isFocusOfInterest, uiDelegate?.enableAutoplay == true {
             playerView.play(userInitiated: false)
         } else if !isFocusOfInterest, !playerView.isPlayingOnExternalDevice {

@@ -11,9 +11,6 @@ extension Environment {
     static var demo_advCustomCreativeTypeKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advCustomCreativeType))" }
     static var demo_advDeviceIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advDeviceId))" }
     static var demo_enableMotionAdKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._enableMotionAd))" }
-#if DEBUG
-    static var demo_focusDebug: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._focusDebug))" }
-#endif
 
     func demo_bootstrapFromSettingsPersistence() {
         if let uid = UserDefaults.standard.string(forKey: Environment.demo_userIdKey), uid.count > 0 {
@@ -37,11 +34,6 @@ extension Environment {
         if UserDefaults.standard.object(forKey: Environment.demo_enableMotionAdKey) != nil {
             Environment._enableMotionAd = UserDefaults.standard.bool(forKey: Environment.demo_enableMotionAdKey)
         }
-#if DEBUG
-        if UserDefaults.standard.object(forKey: Environment.demo_focusDebug) != nil {
-            _focusDebug = UserDefaults.standard.bool(forKey: Environment.demo_focusDebug)
-        }
-#endif
     }
 
 }
