@@ -13,9 +13,8 @@ class TabbarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard ApiSession.shared != nil else {
-            assertionFailure("Can nether play the video nor fetch by id. Initialize API Session first.")
-            return
+        if ApiSession.shared == nil {
+            print("Can nether play the video nor fetch by id. Initialize API Session first.")
         }
         
         tabBar.unselectedItemTintColor = UIColor(named: "tabbar_inactive")
@@ -38,7 +37,17 @@ class TabbarController: UITabBarController {
         let rotations = RotationsNavController(rootViewController: RotationsController())
         rotations.tabBarItem = UITabBarItem(title: "Rotations", image: UIImage(systemName: "rotate.left"), selectedImage: nil)
 
-        viewControllers = [single, feed, transitions, multiplay, downloads, rotations]
+#if canImport(OVKitMyTargetPlugin)
+        let videoMotion = NavigationController(rootViewController: MyTargetVideoMotionLayoutDemoViewController())
+        videoMotion.tabBarItem = UITabBarItem(title: "Video Motion", image: UIImage(systemName: "play.tv"), selectedImage: nil)
+#else
+        let videoMotion: NavigationController? = nil
+#endif
+
+        let settings = NavigationController(rootViewController: SettingsViewController(rootView: SettingsView()))
+        settings.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape"), selectedImage: nil)
+
+        viewControllers = [single, feed, transitions, multiplay, downloads, rotations, videoMotion, settings].compactMap { $0 }
     }
     
     

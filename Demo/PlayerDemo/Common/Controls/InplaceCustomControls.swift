@@ -363,7 +363,9 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
     }()
     
     @objc private func handleScreencastButton() {
-        controlsDelegate?.presentScreencastMenu(volumeView: screencastButton.volumeView)
+        controlsDelegate?.presentScreencastMenu(onShowRoutePicker: { [weak self] in
+            self?.screencastButton.showRoutePicker()
+        })
     }
     
     

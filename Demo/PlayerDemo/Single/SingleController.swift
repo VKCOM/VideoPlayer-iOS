@@ -41,7 +41,7 @@ class SingleController: ViewController {
     
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        .portrait
+        .all
     }
     
     

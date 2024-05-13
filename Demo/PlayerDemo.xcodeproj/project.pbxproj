@@ -9,12 +9,24 @@
 /* Begin PBXBuildFile section */
 		1306CD7FF4EB5A9F13229912 /* VKVideoPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 55904406B78EC8E5D1E3C4C6 /* VKVideoPlayer */; };
 		37045C262B692515000A8AC9 /* RotationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37045C252B692515000A8AC9 /* RotationsController.swift */; };
+		B14386882BAD046500B4B002 /* ViewResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14386872BAD046500B4B002 /* ViewResizer.swift */; };
+		B143868A2BAD049200B4B002 /* TapsCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14386892BAD049200B4B002 /* TapsCounter.swift */; };
+		B1C532FA2B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C532F92B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift */; };
+		B1C533012B7A6459006D89B9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C533002B7A6459006D89B9 /* SettingsViewController.swift */; };
+		B1C534632B7AA211006D89B9 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C534622B7AA211006D89B9 /* Environment.swift */; };
 		D40B0A2A2AA5EB7A009EDEA8 /* FullscreenCustomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40B0A292AA5EB7A009EDEA8 /* FullscreenCustomControls.swift */; };
 		D421DB7A2A264DFF002C86E0 /* ImportSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421DB792A264DFF002C86E0 /* ImportSourceView.swift */; };
 		D43BD367257E244B007952B6 /* ImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43BD366257E244B007952B6 /* ImportController.swift */; };
 		D468AEEB2A2784DE00DE52D8 /* ImportTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468AEEA2A2784DE00DE52D8 /* ImportTableController.swift */; };
 		D48ADCB22A27489E0066AABF /* ImportFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48ADCB12A27489E0066AABF /* ImportFormatView.swift */; };
 		D4A11B2E2A9793EA00AF81F6 /* InplaceCustomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A11B2D2A9793EA00AF81F6 /* InplaceCustomControls.swift */; };
+		D4B5352B2B712F22005AB39D /* ApiSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B535212B712F22005AB39D /* ApiSessionError.swift */; };
+		D4B5352C2B712F22005AB39D /* OauthApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B535242B712F22005AB39D /* OauthApi.swift */; };
+		D4B5352D2B712F22005AB39D /* OauthApiSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B535252B712F22005AB39D /* OauthApiSchema.swift */; };
+		D4B5352E2B712F22005AB39D /* ApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B535262B712F22005AB39D /* ApiProvider.swift */; };
+		D4B5352F2B712F22005AB39D /* VKApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B535282B712F22005AB39D /* VKApi.swift */; };
+		D4B535302B712F22005AB39D /* VKApiSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B535292B712F22005AB39D /* VKApiSchema.swift */; };
+		D4B535312B712F22005AB39D /* ApiSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B5352A2B712F22005AB39D /* ApiSession.swift */; };
 		D4BD26CA29D7201A005C52C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BD26C929D7201A005C52C6 /* SceneDelegate.swift */; };
 		D4C551E825767FA7006E6419 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C551E725767FA7006E6419 /* FeedCell.swift */; };
 		D4C551EB257687D6006E6419 /* FeedVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C551EA257687D6006E6419 /* FeedVideoModel.swift */; };
@@ -64,6 +76,11 @@
 /* Begin PBXFileReference section */
 		37045C252B692515000A8AC9 /* RotationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationsController.swift; sourceTree = "<group>"; };
 		B11EC48D2620C75A00B063FA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B14386872BAD046500B4B002 /* ViewResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewResizer.swift; sourceTree = "<group>"; };
+		B14386892BAD049200B4B002 /* TapsCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapsCounter.swift; sourceTree = "<group>"; };
+		B1C532F92B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTargetVideoMotionLayoutDemoViewController.swift; sourceTree = "<group>"; };
+		B1C533002B7A6459006D89B9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B1C534622B7AA211006D89B9 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		D40B0A292AA5EB7A009EDEA8 /* FullscreenCustomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenCustomControls.swift; sourceTree = "<group>"; };
 		D421DB792A264DFF002C86E0 /* ImportSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSourceView.swift; sourceTree = "<group>"; };
 		D43BD366257E244B007952B6 /* ImportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportController.swift; sourceTree = "<group>"; };
@@ -71,6 +88,13 @@
 		D48ADCB12A27489E0066AABF /* ImportFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFormatView.swift; sourceTree = "<group>"; };
 		D495720E2732BC6E00208CC8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		D4A11B2D2A9793EA00AF81F6 /* InplaceCustomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InplaceCustomControls.swift; sourceTree = "<group>"; };
+		D4B535212B712F22005AB39D /* ApiSessionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiSessionError.swift; sourceTree = "<group>"; };
+		D4B535242B712F22005AB39D /* OauthApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthApi.swift; sourceTree = "<group>"; };
+		D4B535252B712F22005AB39D /* OauthApiSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthApiSchema.swift; sourceTree = "<group>"; };
+		D4B535262B712F22005AB39D /* ApiProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiProvider.swift; sourceTree = "<group>"; };
+		D4B535282B712F22005AB39D /* VKApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKApi.swift; sourceTree = "<group>"; };
+		D4B535292B712F22005AB39D /* VKApiSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKApiSchema.swift; sourceTree = "<group>"; };
+		D4B5352A2B712F22005AB39D /* ApiSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiSession.swift; sourceTree = "<group>"; };
 		D4BD26C929D7201A005C52C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D4C551E725767FA7006E6419 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		D4C551EA257687D6006E6419 /* FeedVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVideoModel.swift; sourceTree = "<group>"; };
@@ -127,6 +151,32 @@
 			path = Rotations;
 			sourceTree = "<group>";
 		};
+		B14386862BAD045500B4B002 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B14386872BAD046500B4B002 /* ViewResizer.swift */,
+				B14386892BAD049200B4B002 /* TapsCounter.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		B1C532F82B7A41B6006D89B9 /* Advertisement */ = {
+			isa = PBXGroup;
+			children = (
+				B1C532F92B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift */,
+			);
+			path = Advertisement;
+			sourceTree = "<group>";
+		};
+		B1C533022B7A64EA006D89B9 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B1C533002B7A6459006D89B9 /* SettingsViewController.swift */,
+				B1C534622B7AA211006D89B9 /* Environment.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		D4027CC82B2A0D6C00DC65E8 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +185,44 @@
 				D40B0A292AA5EB7A009EDEA8 /* FullscreenCustomControls.swift */,
 			);
 			path = Controls;
+			sourceTree = "<group>";
+		};
+		D4B535142B712DA5005AB39D /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				D4B535222B712F22005AB39D /* Providers */,
+				D4B5352A2B712F22005AB39D /* ApiSession.swift */,
+				D4B535212B712F22005AB39D /* ApiSessionError.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		D4B535222B712F22005AB39D /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				D4B535232B712F22005AB39D /* Oauth */,
+				D4B535272B712F22005AB39D /* VK */,
+				D4B535262B712F22005AB39D /* ApiProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		D4B535232B712F22005AB39D /* Oauth */ = {
+			isa = PBXGroup;
+			children = (
+				D4B535242B712F22005AB39D /* OauthApi.swift */,
+				D4B535252B712F22005AB39D /* OauthApiSchema.swift */,
+			);
+			path = Oauth;
+			sourceTree = "<group>";
+		};
+		D4B535272B712F22005AB39D /* VK */ = {
+			isa = PBXGroup;
+			children = (
+				D4B535282B712F22005AB39D /* VKApi.swift */,
+				D4B535292B712F22005AB39D /* VKApiSchema.swift */,
+			);
+			path = VK;
 			sourceTree = "<group>";
 		};
 		D4CA47DC2575A267009C5DB3 = {
@@ -157,6 +245,7 @@
 		D4CA47E72575A267009C5DB3 /* PlayerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				D4B535142B712DA5005AB39D /* Api */,
 				EA2865692949ECAD0006EFE8 /* Transitions */,
 				EA3E58B4291D4CCA00605471 /* Multiplay */,
 				EADF720B274D108000FAD363 /* Downloads */,
@@ -165,6 +254,8 @@
 				EA480D6327B2AF8200EDDD24 /* Detail */,
 				D4CA48382575B327009C5DB3 /* Feed */,
 				37045C242B6924F6000A8AC9 /* Rotations */,
+				B1C532F82B7A41B6006D89B9 /* Advertisement */,
+				B1C533022B7A64EA006D89B9 /* Settings */,
 				D4CA47E82575A267009C5DB3 /* AppDelegate.swift */,
 				D4BD26C929D7201A005C52C6 /* SceneDelegate.swift */,
 				D4CA47F12575A268009C5DB3 /* Assets.xcassets */,
@@ -202,6 +293,7 @@
 		D4D7522226E657B10046E7A7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				B14386862BAD045500B4B002 /* Utilities */,
 				D4027CC82B2A0D6C00DC65E8 /* Controls */,
 				EAAFC53527BBF8EB00033D8B /* Transitions */,
 				EAD0550B28296636002EF645 /* Menu */,
@@ -319,7 +411,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					D4CA47E42575A267009C5DB3 = {
 						CreatedOnToolsVersion = 12.2;
@@ -371,33 +463,45 @@
 				D4A11B2E2A9793EA00AF81F6 /* InplaceCustomControls.swift in Sources */,
 				D48ADCB22A27489E0066AABF /* ImportFormatView.swift in Sources */,
 				EA2A37572762A40A001FF3F4 /* DownloadsCollectionFooter.swift in Sources */,
+				B1C533012B7A6459006D89B9 /* SettingsViewController.swift in Sources */,
 				EADF720F274D10DD00FAD363 /* DownloadsController.swift in Sources */,
+				D4B535302B712F22005AB39D /* VKApiSchema.swift in Sources */,
+				B14386882BAD046500B4B002 /* ViewResizer.swift in Sources */,
 				D4C551EB257687D6006E6419 /* FeedVideoModel.swift in Sources */,
 				EADF720D274D108F00FAD363 /* DownloadService.swift in Sources */,
+				D4B5352D2B712F22005AB39D /* OauthApiSchema.swift in Sources */,
 				D4C551E825767FA7006E6419 /* FeedCell.swift in Sources */,
 				EAD0550D28296648002EF645 /* MenuCell.swift in Sources */,
 				EAD0550F28296686002EF645 /* MenuPresentationController.swift in Sources */,
 				EADB39DF27E35F5B0056D9E0 /* OVKStartButtonBehavior+Defaults.swift in Sources */,
+				D4B535312B712F22005AB39D /* ApiSession.swift in Sources */,
+				D4B5352C2B712F22005AB39D /* OauthApi.swift in Sources */,
 				D4E8A5A6294D1721002CAA3F /* MultiplayController.swift in Sources */,
 				EA04146B28881B1700A05BB0 /* PlayerViewContext.swift in Sources */,
 				D4CA48402575B3D8009C5DB3 /* ViewControllers.swift in Sources */,
+				D4B5352E2B712F22005AB39D /* ApiProvider.swift in Sources */,
 				EA480D6527B2AF9D00EDDD24 /* DetailController.swift in Sources */,
 				EA0F26BB28183F71004F126C /* MenuController.swift in Sources */,
 				D4BD26CA29D7201A005C52C6 /* SceneDelegate.swift in Sources */,
+				B1C532FA2B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift in Sources */,
 				EA480D6927B2D64E00EDDD24 /* PlayerTransitionAnimator.swift in Sources */,
 				D4CA48452575B4E2009C5DB3 /* TabbarController.swift in Sources */,
 				D421DB7A2A264DFF002C86E0 /* ImportSourceView.swift in Sources */,
 				EAD174822AE7FC60008E34E7 /* FeedIndicatorView.swift in Sources */,
+				D4B5352F2B712F22005AB39D /* VKApi.swift in Sources */,
 				D4CA47ED2575A267009C5DB3 /* SingleController.swift in Sources */,
 				EAD05511282966A5002EF645 /* MenuTransitioningDelegate.swift in Sources */,
 				D468AEEB2A2784DE00DE52D8 /* ImportTableController.swift in Sources */,
 				D4FC7349282BCCF40055623C /* Video+Demo.swift in Sources */,
 				D4CA47E92575A267009C5DB3 /* AppDelegate.swift in Sources */,
+				B143868A2BAD049200B4B002 /* TapsCounter.swift in Sources */,
 				EA28656B2949ECC20006EFE8 /* TransitionsController.swift in Sources */,
 				D4D425292A9CFED2002A16E5 /* PiPCustomControls.swift in Sources */,
 				EADF7211274D11C300FAD363 /* DownloadsCollectionCell.swift in Sources */,
+				D4B5352B2B712F22005AB39D /* ApiSessionError.swift in Sources */,
 				EAD174812AE7FC60008E34E7 /* FeedControlsView.swift in Sources */,
 				37045C262B692515000A8AC9 /* RotationsController.swift in Sources */,
+				B1C534632B7AA211006D89B9 /* Environment.swift in Sources */,
 				EA480D6727B2CA4E00EDDD24 /* PlayerViewProvider.swift in Sources */,
 				EA1656B526BD6F1B007743EE /* FocusOfInterestTracker.swift in Sources */,
 				D4CA483C2575B3B0009C5DB3 /* FeedController.swift in Sources */,
@@ -555,7 +659,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.5;
+				CURRENT_PROJECT_VERSION = 2.12;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -564,7 +668,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -580,7 +684,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.5;
+				CURRENT_PROJECT_VERSION = 2.12;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -589,7 +693,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onevideo.player.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -626,7 +730,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.5.0;
+				version = 2.12.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

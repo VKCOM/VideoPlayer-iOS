@@ -10,11 +10,6 @@ extension PlayerView {
 }
 
 
-class DemoPlayerViewContext: PlayerViewContext {
-
-    func canBeUsedForTransition(with playerView: OVKit.PlayerView?) -> Bool {
-        true
-    }
-
+class DemoPlayerViewContext: NSObject {
     var openWithDetail: Bool = false
 }

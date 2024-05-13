@@ -2,6 +2,13 @@ import UIKit
 import OVPlayerKit
 import OVKit
 import os.log
+import OVKitStatistics
+#if canImport(OVKitMyTargetPlugin)
+import OVKitMyTargetPlugin
+#endif
+#if canImport(OVKitChromecastPlugin)
+import OVKitChromecastPlugin
+#endif
 
 let logger = Logger(subsystem: "", category: "")
 
@@ -30,19 +37,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         /*
-         Для использования VK Api (получения данный для проигрывания по video id) необходимо получить собственный Client Id и Client Secret.
+         Для использования VK Api (получения данных для проигрывания по video id) необходимо получить собственный Client Id и Client Secret.
          В качестве userId необходимо использовать собственный идентификатор пользователя/устройства.
          */
-        ApiSession.setup(clientId: <#T##String#>, secret: <#T##String#>)
-        Environment.shared.userId = <#T##String#>
-        // Или
-        // Environment.shared.userId = <#T##String#>
-        // Environment.setupStatistics(appKey: <#T##String#>, tokenProvider: <#T##StatsTokenProvider#>)
-                
+
+        let apiClientId = ProcessInfo.processInfo.environment["API_SESSION_CLIENT_ID"]
+        let apiSecret = ProcessInfo.processInfo.environment["API_SESSION_SECRET"]
+        if let apiClientId, !apiClientId.isEmpty, let apiSecret, !apiSecret.isEmpty {
+            ApiSession.setup(clientId: apiClientId, secret: apiSecret)
+        } else {
+            print("API credentials not found in environment!")
+        }
+
+        // Если требуется отправка OneLog статистики, ее необходимо предварительно настроить:
+        // OKApiSession.setup(appKey: <#T##String#>, userId: <#T##String?#>, tokenProvider: <#T##any StatsTokenProvider#>)
+
+        Environment.shared.userId = "2"
+        Environment.shared.demo_bootstrapFromSettingsPersistence()
+
         // При необходимости можно очистить кэш
         OVPlayer.cache.purgeDisk()
         
-        
+        Environment.shared.allowsExternalPlayback = true
+        Environment.shared.allowsBackgroundPlayback = true
+        Environment.shared.enableDiagnosticsView = true
+
+#if canImport(OVKitMyTargetPlugin)
+        Environment.shared.myTargetPlugin = MyTargetPluginImpl()
+#endif
+
+#if canImport(OVKitChromecastPlugin)
+        if let chromecastAppId = ProcessInfo.processInfo.environment["CHROMECAST_APP_ID"], !chromecastAppId.isEmpty {
+            Environment.chromecastPlugin = ChromecastPluginImpl(deviceAppChromecastID: chromecastAppId)
+        }
+#endif
         return true
     }
 }

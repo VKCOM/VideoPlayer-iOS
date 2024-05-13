@@ -1,5 +1,6 @@
 import UIKit
 import OVKit
+import OVKitStatistics
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -73,6 +74,18 @@ extension SceneDelegate: PlayerManagerDelegate {
         }
         
         return nil
+    }
+
+
+    func makeStatHandlers(for playerView: PlayerView) -> [any StatsHandler] {
+        // Если требуется отправка OneLog статистики, необходимо создать для нее хендлер.
+        // guard let video = playerView.video, let handler = StatsHandlerOneLog.makeHandlerForVideo(video)
+        // else {
+        //     return []
+        // }
+        // return [handler]
+
+        return []
     }
 
 
