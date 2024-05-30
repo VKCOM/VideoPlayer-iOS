@@ -1,7 +1,11 @@
 import SwiftUI
 import OVKit
 
-class SettingsViewController: UIHostingController<SettingsView> {}
+class SettingsViewController: UIHostingController<SettingsView> {
+    
+    /// Включает режим отображения плеера, на котором находится фокус автоплея.
+    @objc public static var focusDebug = false
+}
 
 struct SettingsView: View {
 
@@ -25,6 +29,10 @@ struct SettingsView: View {
 
     @AppStorage(Environment.demo_enableMotionAdKey)
     private var enableVideoMotion: Bool = false
+#if DEBUG
+    @AppStorage(Environment.demo_focusDebug)
+    private var focusDebug: Bool = false
+#endif
     @State
     private var creativeType: MyTargetCreativeType = .auto
 
@@ -38,6 +46,16 @@ struct SettingsView: View {
             } footer: {
                 Text("Override vkId parameted for requested ads.")
             }
+#if DEBUG
+            Section {
+                Toggle(isOn: $focusDebug.animation()) {
+                    Text("Focus Preview")
+                }
+                .onChange(of: focusDebug, perform: self.updateFocusDebug)
+            } footer: {
+                Text("Enable Focus Preview for autoplay feature.")
+            }
+#endif
             Section {
                 NavigationLink("Advertisement") {
                     List {
@@ -159,4 +177,14 @@ struct SettingsView: View {
         advDeviceId = value
         Environment.shared._advDeviceId = advDeviceId
     }
+
+    #if DEBUG
+
+    private func updateFocusDebug(value: Bool) {
+        focusDebug = value
+        SettingsViewController.focusDebug = focusDebug
+    }
+
+    #endif
+
 }
