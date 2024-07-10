@@ -41,8 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          В качестве userId необходимо использовать собственный идентификатор пользователя/устройства.
          */
 
-        let apiClientId = ProcessInfo.processInfo.environment["API_SESSION_CLIENT_ID"]
-        let apiSecret = ProcessInfo.processInfo.environment["API_SESSION_SECRET"]
+        let apiClientId = Environment.launchApiSessionClientId ?? UserDefaults.standard.string(forKey: Environment.demo_apiClientIdKey)
+        let apiSecret = Environment.launchApiSessionSecret ?? UserDefaults.standard.string(forKey: Environment.demo_apiSecretKey)
         if let apiClientId, !apiClientId.isEmpty, let apiSecret, !apiSecret.isEmpty {
             ApiSession.setup(clientId: apiClientId, secret: apiSecret)
         } else {

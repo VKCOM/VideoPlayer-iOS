@@ -90,7 +90,24 @@ class ImportFormatView: UIButton {
             rawUrl = (.hls, url)
             return
         }
-        if string.contains("ct=6") || string.contains("/ondemand/") {
+        if string.contains("ct=6") {
+            let mapping : [Int: VideoFileFormat] = [
+                0: .dashHevc,
+                1: .dashSep,
+                4: .dashWebm,
+                5: .dashWebmAv1,
+                6: .dashStreams
+            ]
+            if let fmt = mapping.first (where: { (key, _) in
+                string.contains("type=\(key)")
+            }).map(\.value) {
+                rawUrl = (fmt, url)
+                return
+            } else {
+                rawUrl = (.dashSep, url)
+            }
+        }
+        if string.contains("/ondemand/")  {
             rawUrl = (.dashSep, url)
             return
         }

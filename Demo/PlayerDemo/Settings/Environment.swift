@@ -15,6 +15,9 @@ extension Environment {
     static var demo_focusDebug: String { "\(String(describing: Environment.self)).\(#keyPath(SettingsViewController.focusDebug))" }
 #endif
 
+    static let demo_apiClientIdKey = "demo_apiClientId"
+    static let demo_apiSecretKey = "demo_apiSecret"
+
     func demo_bootstrapFromSettingsPersistence() {
         if let uid = UserDefaults.standard.string(forKey: Environment.demo_userIdKey), uid.count > 0 {
             userId = uid
@@ -44,4 +47,12 @@ extension Environment {
 #endif
     }
 
+
+    static var launchApiSessionClientId: String? {
+        ProcessInfo.processInfo.environment["API_SESSION_CLIENT_ID"]
+    }
+
+    static var launchApiSessionSecret: String? {
+        ProcessInfo.processInfo.environment["API_SESSION_SECRET"]
+    }
 }

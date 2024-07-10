@@ -33,6 +33,13 @@ struct SettingsView: View {
     @AppStorage(Environment.demo_focusDebug)
     private var focusDebug: Bool = false
 #endif
+
+    @AppStorage(Environment.demo_apiClientIdKey)
+    private var clientId: String = ""
+
+    @AppStorage(Environment.demo_apiSecretKey)
+    private var clientSecret: String = ""
+
     @State
     private var creativeType: MyTargetCreativeType = .auto
 
@@ -44,7 +51,24 @@ struct SettingsView: View {
             } header: {
                 Text("User ID")
             } footer: {
-                Text("Override vkId parameted for requested ads.")
+                Text("Override VK ID parameter for requested ads.")
+            }
+
+            Section {
+                if let clientId = Environment.launchApiSessionClientId {
+                    Text(clientId)
+                } else {
+                    TextField("Client ID", text: $clientId)
+                        .autocorrectionDisabled()
+                }
+
+                if let apiSecret = Environment.launchApiSessionSecret {
+                    Text(String(repeating: "*", count: apiSecret.count))
+                } else {
+                    SecureField("Secret", text: $clientSecret)
+                }
+            } header: {
+                Text("VK API Credentials")
             }
 #if DEBUG
             Section {
