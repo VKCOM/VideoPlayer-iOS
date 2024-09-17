@@ -61,7 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment.shared.allowsExternalPlayback = true
         Environment.shared.allowsBackgroundPlayback = true
         Environment.shared.enableDiagnosticsView = true
-
+        Environment.cmafLowLatencyMode = 2
+        
 #if canImport(OVKitMyTargetPlugin)
         Environment.shared.myTargetPlugin = MyTargetPluginImpl()
 #endif
