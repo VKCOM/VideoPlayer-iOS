@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         print("Demo: OVPlayerKit v\(Environment.versionOVPlayerKit), OVKit v\(Environment.versionOVKit), OVKResources v\(Environment.versionOVKResources)")
+
+        PersistenceManager.warmup()
         
         /*
          Основная документация находится в OVLogger.h. Настройку логов следует выполнять опираясь на следующие рекомендации:
@@ -74,4 +76,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
         return true
     }
+
+    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+        PersistenceManager.handleBackgroundSession(identifier: identifier, completionHandler: completionHandler)
+    }
+
+    
 }

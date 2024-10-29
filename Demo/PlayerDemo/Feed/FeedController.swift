@@ -272,9 +272,13 @@ extension FeedController: ListPrefetcherDataSource {
 // MARK: - ListPrefetcherDelegate
 
 extension FeedController: ListPrefetcherDelegate {
-    
     func listPrefetcher(_ prefetcher: ListPrefetcher, didPrefetchItem item: PrefetchItem) {
         os_log("Prefetcher did prefetch item %@", log: .default, type: .info, "\(item)")
+    }
+
+    func listPrefetcher(_ prefetcher: OVKit.ListPrefetcher, didFailToPrefetchItem item: any OVKit.PrefetchItem, withError error: (any Error)?) {
+        let description = error != nil ? error.debugDescription : "unknown"
+        os_log("Prefetcher did fail to prefetch item %@ with %@ error", log: .default, type: .error, "\(item)", description)
     }
 }
 

@@ -56,7 +56,7 @@ class DownloadsController: CollectionController {
     private func updateDataSource() {
         DispatchQueue.global(qos: .userInitiated).async {
             let items: [DownloadItemModel] = DownloadService.shared.items.map { item in
-                let video = DownloadService.shared.getVideo(of: item)
+                let video = DownloadService.shared.getVideo(of: item, forLocalPlayback: true)
                 return DownloadItemModel(persistentItem: item, video: video)
             }
             

@@ -41,7 +41,8 @@ class DownloadService {
     }
     
     func downloadVideo(_ video: VideoType) {
-        downloader.downloadVideo(video, inQuality: 1080, userData: nil)
+        let useHLS = SettingsViewController.useHLS
+        downloader.downloadVideo(video, inQuality: 1080, useHLS: useHLS, userData: nil)
     }
     
     func deleteVideo(_ video: VideoType) {
@@ -52,8 +53,8 @@ class DownloadService {
         downloader.state(of: item) // Немного блокирующий вызов может быть
     }
     
-    func getVideo(of item: PersistentItem) -> Video {
-        downloader.video(of: item)
+    func getVideo(of item: PersistentItem, forLocalPlayback: Bool = false) -> Video {
+        downloader.video(of: item, forLocalPlayback: forLocalPlayback)
     }
     
     func hasVideo(_ video: VideoType) -> Bool {

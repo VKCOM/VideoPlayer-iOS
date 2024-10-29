@@ -15,6 +15,8 @@ extension Environment {
     static var demo_focusDebug: String { "\(String(describing: Environment.self)).\(#keyPath(SettingsViewController.focusDebug))" }
 #endif
 
+    static var demo_hlsDownload: String { "\(String(describing: Environment.self)).\(#keyPath(SettingsViewController.useHLS))" }
+
     static let demo_apiClientIdKey = "demo_apiClientId"
     static let demo_apiSecretKey = "demo_apiSecret"
 
@@ -45,6 +47,9 @@ extension Environment {
             SettingsViewController.focusDebug = UserDefaults.standard.bool(forKey: Environment.demo_focusDebug)
         }
 #endif
+        if UserDefaults.standard.object(forKey: Environment.demo_hlsDownload) != nil {
+            SettingsViewController.useHLS = UserDefaults.standard.bool(forKey: Environment.demo_hlsDownload)
+        }
     }
 
 

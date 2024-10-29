@@ -5,6 +5,8 @@ class SettingsViewController: UIHostingController<SettingsView> {
     
     /// Включает режим отображения плеера, на котором находится фокус автоплея.
     @objc public static var focusDebug = false
+    /// Включает загрузку видео в формате HLS
+    @objc public static var useHLS = false
 }
 
 struct SettingsView: View {
@@ -33,6 +35,9 @@ struct SettingsView: View {
     @AppStorage(Environment.demo_focusDebug)
     private var focusDebug: Bool = false
 #endif
+
+    @AppStorage(Environment.demo_hlsDownload)
+    private var videoInHLS: Bool = false
 
     @AppStorage(Environment.demo_apiClientIdKey)
     private var clientId: String = ""
@@ -80,6 +85,16 @@ struct SettingsView: View {
                 Text("Enable Focus Preview for autoplay feature.")
             }
 #endif
+
+            if Environment._enableHLSDownload {
+                Section {
+                    Toggle(isOn: $videoInHLS.animation()) {
+                        Text("Download videos in HLS")
+                    }
+                    .onChange(of: videoInHLS, perform: self.updateHLS)
+                }
+            }
+
             Section {
                 NavigationLink("Advertisement") {
                     List {
@@ -210,5 +225,10 @@ struct SettingsView: View {
     }
 
     #endif
+
+    private func updateHLS(value: Bool) {
+        videoInHLS = value
+        SettingsViewController.useHLS = videoInHLS
+    }
 
 }
