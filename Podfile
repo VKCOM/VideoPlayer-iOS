@@ -10,7 +10,7 @@ target 'PlayerDemo' do
   pod 'OVKit', :podspec => "#{artifactory_url}/OVKit/5.36/OVKit.podspec", :inhibit_warnings => true
   pod 'OVKitStatistics', :podspec => "#{artifactory_url}/OVKitStatistics/1.23/OVKitStatistics.podspec", :inhibit_warnings => true
   pod 'OVPlayerKit', :podspec => "#{artifactory_url}/OVPlayerKit/3.76/OVPlayerKit.podspec", :inhibit_warnings => true
-  pod 'WebM', :podspec => "#{artifactory_url}/WebM/1.2/WebM.podspec", :inhibit_warnings => true
+  pod 'WebM', :podspec => "#{artifactory_url}/WebM/1.2.1/WebM.podspec", :inhibit_warnings => true
   pod 'VKOpus', :podspec => "#{artifactory_url}/VKOpus/1.0/VKOpus.podspec", :inhibit_warnings => true
-  pod 'VPX', :podspec => "#{artifactory_url}/VPX/1.2/VPX.podspec", :inhibit_warnings => true
+  pod 'VPX', :podspec => "#{artifactory_url}/VPX/1.2.1/VPX.podspec", :inhibit_warnings => true
 end
