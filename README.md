@@ -5,7 +5,7 @@
   Плеер для видео и трансляций на платформе VK Видео.
 </p>
 <p align="center">
-  <a href="https://vk.com/video-sdk" title="Информация об инфраструктуре и SDK">SDK и инфраструктура</a> · <a href="https://vkcom.github.io/VideoPlayer-iOS/documentation/ovkit/" title="Документация к SDK">Документация</a>
+  <a href="https://vkcom.github.io/VideoPlayer-iOS/documentation/ovkit/" title="Документация к SDK">Документация</a>
 </p>
 
 ---
