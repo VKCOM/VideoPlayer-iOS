@@ -272,7 +272,8 @@ extension FeedController: ListPrefetcherDataSource {
 // MARK: - ListPrefetcherDelegate
 
 extension FeedController: ListPrefetcherDelegate {
-    func listPrefetcher(_ prefetcher: ListPrefetcher, didPrefetchItem item: PrefetchItem) {
+
+    func listPrefetcher(_ prefetcher: OVKit.ListPrefetcher, didPrefetchItem item: any PrefetchItem, totalBytesReceived: UInt) {
         os_log("Prefetcher did prefetch item %@", log: .default, type: .info, "\(item)")
     }
 
