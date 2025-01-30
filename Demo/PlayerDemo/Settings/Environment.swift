@@ -10,7 +10,6 @@ extension Environment {
     static var demo_advCustomSlotIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advCustomSlotId))" }
     static var demo_advCustomCreativeTypeKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advCustomCreativeType))" }
     static var demo_advDeviceIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advDeviceId))" }
-    static var demo_enableMotionAdKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._enableMotionAd))" }
 #if DEBUG
     static var demo_focusDebug: String { "\(String(describing: Environment.self)).\(#keyPath(SettingsViewController.focusDebug))" }
 #endif
@@ -38,9 +37,6 @@ extension Environment {
         }
         if let advDeviceId = UserDefaults.standard.string(forKey: Environment.demo_advDeviceIdKey), advDeviceId.count > 0 {
             _advDeviceId = advDeviceId
-        }
-        if UserDefaults.standard.object(forKey: Environment.demo_enableMotionAdKey) != nil {
-            Environment._enableMotionAd = UserDefaults.standard.bool(forKey: Environment.demo_enableMotionAdKey)
         }
 #if DEBUG
         if UserDefaults.standard.object(forKey: Environment.demo_focusDebug) != nil {

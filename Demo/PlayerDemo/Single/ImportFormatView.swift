@@ -120,15 +120,6 @@ class ImportFormatView: UIButton {
             isLive = true
             return
         }
-        if string.contains("/dash/stream") {
-            if string.contains("offset_p") {
-                rawUrl = (.dashLivePlayback, url)
-            } else {
-                rawUrl = (.dashLive, url)
-            }
-            isLive = true
-            return
-        }
         if string.contains("/cmaf/") || string.contains("/live.prod/") || string.contains("/live.test/") {
             rawUrl = (.dashCmaf, url)
             return

@@ -29,8 +29,6 @@ struct SettingsView: View {
     @AppStorage(Environment.demo_advExpIdKey)
     private var advExpId: String = ""
 
-    @AppStorage(Environment.demo_enableMotionAdKey)
-    private var enableVideoMotion: Bool = false
 #if DEBUG
     @AppStorage(Environment.demo_focusDebug)
     private var focusDebug: Bool = false
@@ -98,14 +96,6 @@ struct SettingsView: View {
             Section {
                 NavigationLink("Advertisement") {
                     List {
-                        Section {
-                            Toggle(isOn: $enableVideoMotion.animation()) {
-                                Text("Video Motion")
-                            }
-                            .onChange(of: enableVideoMotion, perform: self.updateEnableVideoMotion)
-                        } footer: {
-                            Text("Enable Video Motion format for In-stream video ads.")
-                        }
                         Section {
                             Toggle(isOn: $advDebug.animation()) {
                                 Text("Debug Mode")
@@ -184,11 +174,6 @@ struct SettingsView: View {
     private func updateAdvDebug(value: Bool) {
         advDebug = value
         Environment.shared._advDebug = advDebug
-    }
-
-    private func updateEnableVideoMotion(value: Bool) {
-        enableVideoMotion = value
-        Environment._enableMotionAd = enableVideoMotion
     }
 
     private func updateCustomSlotId(value: String) {

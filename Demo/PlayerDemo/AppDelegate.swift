@@ -63,6 +63,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment.shared.allowsExternalPlayback = true
         Environment.shared.allowsBackgroundPlayback = true
         Environment.shared.enableDiagnosticsView = true
+        Environment._handleLowMemory = 10
+        Environment._handleLowMemoryHardLevel = true
+
+        Environment._cmafAbrBuffer = true
+        Environment._cmafRecoverAfterStall = 5
+        Environment._cmafSimpleTimeline = true
+        Environment._cmafAbrHarmonicCount = 12
+        Environment._cmafAudioDataPlayedBack = true
 
 #if canImport(OVKitMyTargetPlugin)
         Environment.shared.myTargetPlugin = MyTargetPluginImpl()

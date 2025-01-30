@@ -42,7 +42,7 @@ class DownloadService {
     
     func downloadVideo(_ video: VideoType) {
         let useHLS = SettingsViewController.useHLS
-        downloader.downloadVideo(video, inQuality: 1080, useHLS: useHLS, userData: nil)
+        downloader.downloadVideo(video, inQuality: 1080, useHLS: useHLS, onlySound: false, userData: nil)
     }
     
     func deleteVideo(_ video: VideoType) {
