@@ -40,14 +40,20 @@ class TabbarController: UITabBarController {
 #if canImport(OVKitMyTargetPlugin)
         let videoMotion = NavigationController(rootViewController: MyTargetVideoMotionLayoutDemoViewController())
         videoMotion.tabBarItem = UITabBarItem(title: "Video Motion", image: UIImage(systemName: "play.tv"), selectedImage: nil)
+        let adsControls = NavigationController(rootViewController: AdsControlsViewController())
+        adsControls.tabBarItem = UITabBarItem(title: "Ads Controls", image: UIImage(systemName: "rectangle.and.hand.point.up.left.filled"), selectedImage: nil)
+        let adsSupplementary = NavigationController(rootViewController: UIViewController())
+        adsSupplementary.tabBarItem = UITabBarItem(title: "Ads Supplementary", image: UIImage(systemName: "plus.app"), selectedImage: nil)
 #else
         let videoMotion: NavigationController? = nil
+        let adsControls: NavigationController? = nil
+        let adsSupplementary: NavigationController? = nil
 #endif
 
         let settings = NavigationController(rootViewController: SettingsViewController(rootView: SettingsView()))
         settings.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape"), selectedImage: nil)
 
-        viewControllers = [single, feed, transitions, multiplay, downloads, rotations, videoMotion, settings].compactMap { $0 }
+        viewControllers = [single, feed, transitions, multiplay, downloads, rotations, videoMotion, adsControls, adsSupplementary, settings].compactMap { $0 }
     }
     
     

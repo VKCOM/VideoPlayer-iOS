@@ -67,8 +67,8 @@ class ImportFormatView: UIButton {
             rawUrl = (VideoFileFormat.source, url)
             return
         }
-        
-        if let host = url.host?.lowercased(), (host.hasSuffix("vk.com") || host.hasSuffix("vk.ru")) {
+
+        if let host = url.host?.lowercased(), (host.hasSuffix("vk.com") || host.hasSuffix("vk.ru") || host.hasSuffix("vkvideo.ru")) {
             let path = url.lastPathComponent.lowercased()
             var template: String?
             if path.starts(with: "video") { template = "video" }

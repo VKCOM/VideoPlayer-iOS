@@ -4,12 +4,12 @@ import OVKit
 
 extension Environment {
 
-    static var demo_userIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment.userId))" }
-    static var demo_advDebugKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advDebug))" }
-    static var demo_advExpIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advExpId))" }
-    static var demo_advCustomSlotIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advCustomSlotId))" }
-    static var demo_advCustomCreativeTypeKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advCustomCreativeType))" }
-    static var demo_advDeviceIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(OVKit.Environment._advDeviceId))" }
+    static var demo_userIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(Environment.userId))" }
+    static var demo_advDebugKey: String { "\(String(describing: Environment.self)).\(#keyPath(Environment._advDebug))" }
+    static var demo_advExpIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(Environment._advExpId))" }
+    static var demo_advCustomSlotIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(Environment._advCustomSlotId))" }
+    static var demo_advCustomCreativeTypeKey: String { "\(String(describing: Environment.self)).\(#keyPath(Environment._advCustomCreativeType))" }
+    static var demo_advDeviceIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(Environment._advDeviceId))" }
 #if DEBUG
     static var demo_focusDebug: String { "\(String(describing: Environment.self)).\(#keyPath(SettingsViewController.focusDebug))" }
 #endif

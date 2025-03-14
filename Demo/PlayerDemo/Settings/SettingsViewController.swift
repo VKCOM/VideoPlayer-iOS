@@ -118,6 +118,7 @@ struct SettingsView: View {
                                     Text("None").tag(MyTargetCreativeType.auto)
                                     Text("Shoppable").tag(MyTargetCreativeType.shoppable)
                                     Text("Video Motion").tag(MyTargetCreativeType.videoMotion)
+                                    Text("Instream").tag(MyTargetCreativeType.instream)
                                 }
                                 .pickerStyle(.segmented)
                                 .onChange(of: creativeType, perform: self.updateCreativeType)
@@ -216,4 +217,11 @@ struct SettingsView: View {
         SettingsViewController.useHLS = videoInHLS
     }
 
+}
+
+@available(iOS 13.0, *)
+struct SettingsView_Preview: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
+    }
 }

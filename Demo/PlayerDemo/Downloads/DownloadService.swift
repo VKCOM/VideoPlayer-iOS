@@ -6,7 +6,7 @@ class DownloadService {
     
     private let accessLock = NSLock()
     
-    private lazy var _downloader: PersistenceManager = {
+    public lazy var _downloader: PersistenceManager = {
         let libraryUrl = try! FileManager.default.url(for: .libraryDirectory,
                                                        in: .userDomainMask,
                                            appropriateFor: nil,
