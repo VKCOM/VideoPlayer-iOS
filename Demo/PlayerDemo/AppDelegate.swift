@@ -63,11 +63,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment.shared.allowsExternalPlayback = true
         Environment.shared.allowsBackgroundPlayback = true
         Environment.shared.enableDiagnosticsView = true
-        Environment._handleLowMemory = 10
-        Environment._handleLowMemoryHardLevel = true
 
         Environment._cmafRecoverAfterStall = 5
         Environment._cmafAbrHarmonicCount = 12
+        Environment.shared._cmafTrackReaderVersion = .v2
 
 #if canImport(OVKitMyTargetPlugin)
         Environment.shared.myTargetPlugin = MyTargetPluginImpl()
@@ -78,6 +77,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Environment.chromecastPlugin = ChromecastPluginImpl(deviceAppChromecastID: chromecastAppId)
         }
 #endif
+        // not prod ready
+        Environment._handleLowMemory = 10
+        Environment._handleLowMemoryHardLevel = true
+        Environment._metalYUVConverter = true
+
         return true
     }
 
