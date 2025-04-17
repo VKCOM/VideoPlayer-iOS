@@ -84,13 +84,11 @@ struct SettingsView: View {
             }
 #endif
 
-            if Environment._enableHLSDownload {
-                Section {
-                    Toggle(isOn: $videoInHLS.animation()) {
-                        Text("Download videos in HLS")
-                    }
-                    .onChange(of: videoInHLS, perform: self.updateHLS)
+            Section {
+                Toggle(isOn: $videoInHLS.animation()) {
+                    Text("Download videos in HLS")
                 }
+                .onChange(of: videoInHLS, perform: self.updateHLS)
             }
 
             Section {

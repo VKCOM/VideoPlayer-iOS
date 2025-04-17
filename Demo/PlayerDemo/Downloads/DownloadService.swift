@@ -11,7 +11,7 @@ class DownloadService {
                                                        in: .userDomainMask,
                                            appropriateFor: nil,
                                                          create: false).appendingPathComponent("one.video.offline")
-        let config = PersistenceManagerConfig(libraryRoot: libraryUrl, allowedNetworkType: .wifiAndCellular())
+        let config = PersistenceManagerConfig(libraryRoot: libraryUrl, allowedNetworkType: .wifiAndCellular(), maxConcurrentDownloadsCount: OperationQueue.defaultMaxConcurrentOperationCount)
         return PersistenceManager(with: config, listenerQueue: .main)
     }()
     
