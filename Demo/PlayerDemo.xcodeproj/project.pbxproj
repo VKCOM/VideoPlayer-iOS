@@ -11,6 +11,7 @@
 		37045C262B692515000A8AC9 /* RotationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37045C252B692515000A8AC9 /* RotationsController.swift */; };
 		B14386882BAD046500B4B002 /* ViewResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14386872BAD046500B4B002 /* ViewResizer.swift */; };
 		B143868A2BAD049200B4B002 /* TapsCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14386892BAD049200B4B002 /* TapsCounter.swift */; };
+		B1B093ED2D956E660079B2CB /* FullscreenAdsControlsViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B093EC2D956E5D0079B2CB /* FullscreenAdsControlsViewContainer.swift */; };
 		B1BBFD402D4273410029400D /* AdsControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BBFD3F2D4273410029400D /* AdsControlsViewController.swift */; };
 		B1C532FA2B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C532F92B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift */; };
 		B1C533012B7A6459006D89B9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C533002B7A6459006D89B9 /* SettingsViewController.swift */; };
@@ -79,6 +80,7 @@
 		B11EC48D2620C75A00B063FA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B14386872BAD046500B4B002 /* ViewResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewResizer.swift; sourceTree = "<group>"; };
 		B14386892BAD049200B4B002 /* TapsCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapsCounter.swift; sourceTree = "<group>"; };
+		B1B093EC2D956E5D0079B2CB /* FullscreenAdsControlsViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenAdsControlsViewContainer.swift; sourceTree = "<group>"; };
 		B1BBFD3F2D4273410029400D /* AdsControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsControlsViewController.swift; sourceTree = "<group>"; };
 		B1C532F92B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTargetVideoMotionLayoutDemoViewController.swift; sourceTree = "<group>"; };
 		B1C533002B7A6459006D89B9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		B1C532F82B7A41B6006D89B9 /* Advertisement */ = {
 			isa = PBXGroup;
 			children = (
+				B1B093EC2D956E5D0079B2CB /* FullscreenAdsControlsViewContainer.swift */,
 				B1C532F92B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift */,
 				B1BBFD3F2D4273410029400D /* AdsControlsViewController.swift */,
 			);
@@ -462,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4B5352E2B712F22005AB39D /* ApiProvider.swift in Sources */,
+				B1B093ED2D956E660079B2CB /* FullscreenAdsControlsViewContainer.swift in Sources */,
 				D4B535312B712F22005AB39D /* ApiSession.swift in Sources */,
 				D4B5352B2B712F22005AB39D /* ApiSessionError.swift in Sources */,
 				D4CA47E92575A267009C5DB3 /* AppDelegate.swift in Sources */,
@@ -663,7 +667,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.45.1;
+				CURRENT_PROJECT_VERSION = 2.46;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -672,7 +676,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.45.1;
+				MARKETING_VERSION = 2.46;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vk.dev.VideoPlayerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -689,7 +693,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.45.1;
+				CURRENT_PROJECT_VERSION = 2.46;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -698,7 +702,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.45.1;
+				MARKETING_VERSION = 2.46;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vk.dev.VideoPlayerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -736,7 +740,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.45.1;
+				version = 2.46.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

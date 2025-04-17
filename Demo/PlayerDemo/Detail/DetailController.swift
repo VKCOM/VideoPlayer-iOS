@@ -269,4 +269,8 @@ extension DetailController: FullscreenSupplementaryController {
     var customControlsSafeInsets: NSValue? {
         nil
     }
+
+    var shouldBeClosedOnRotateToPortrait: Bool {
+        false
+    }
 }

@@ -66,7 +66,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Environment._cmafRecoverAfterStall = 5
         Environment._cmafAbrHarmonicCount = 12
+        Environment.shared._cmafTimeLineVersion = .v4
         Environment.shared._cmafTrackReaderVersion = .v2
+        Environment.shared._cmafRttFiltering = true
+        Environment.shared._cmafProviderV2 = true
 
 #if canImport(OVKitMyTargetPlugin)
         Environment.shared.myTargetPlugin = MyTargetPluginImpl()
@@ -77,7 +80,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Environment.chromecastPlugin = ChromecastPluginImpl(deviceAppChromecastID: chromecastAppId)
         }
 #endif
-        // not prod ready
+        // Not prod ready
+
+        Environment.shared._audioCompressorParameters = AudioCompressorParameters()
         Environment._handleLowMemory = 10
         Environment._handleLowMemoryHardLevel = true
         Environment._metalYUVConverter = true

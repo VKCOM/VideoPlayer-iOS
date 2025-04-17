@@ -53,7 +53,11 @@ class NavigationController: UINavigationController, PlayerViewProvider, Fullscre
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         topViewController?.supportedInterfaceOrientations ?? .all
     }
-    
+
+    var shouldBeClosedOnRotateToPortrait: Bool {
+        false
+    }
+
     
     // MARK: - Helpers
     

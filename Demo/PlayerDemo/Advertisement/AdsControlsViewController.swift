@@ -11,6 +11,7 @@ extension ControlMask {
         let currentTime: Double? = 10.0
         let duration: Double? = 30.0
         let secondsToSkip: Double? = nil
+        let needPostView = false
         let cta: AssembleAdCallToAction? = AssembleAdCallToAction(ctaText: "Получить предложение")
         cta?.iconUrlString = ""
         cta?.text = "vk.com"
@@ -18,7 +19,17 @@ extension ControlMask {
         let adInfoImage: UIImage? = UIImage.ovk_infoOutline16
         let shoppableAdsItems: [OVKit.ShoppableAdsItem]? = nil
         let videoMotionPlayer: MyTargetInstreamAdVideoMotionPlayer? = nil
-
+        let postViewData: CTAPostBannerData? = if needPostView {
+            CTAPostBannerData(
+                text: "Узнайте подробнее на сайте http://vk.com/feed",
+                duration: 10,
+                overlayViewColor: .red,
+                backgroundImage: "https://random.imagecdn.app/160/90",
+                aspectRatio: 16.0 / 9.0
+            )
+        } else {
+            nil
+        }
         var mask = Set<ControlValue>()
         mask.insert(.adSurface)
         mask.insert(.sparked)
@@ -32,7 +43,7 @@ extension ControlMask {
             mask.insert(.duration(seconds: duration))
         }
         if let cta = cta {
-            let data = CTAData(title: cta.text, text: cta.ctaText, icon: cta.icon, iconUrl: cta.iconUrlString, color: cta.ctaTextColor, backgroundColor: cta.ctaBackgroundColor)
+            let data = CTAData(title: cta.text, text: cta.ctaText, icon: cta.icon, iconUrl: cta.iconUrlString, color: cta.ctaTextColor, backgroundColor: cta.ctaBackgroundColor, postBannerData: postViewData)
             mask.insert(.callToAction(data: data))
         }
         if let skipTime = secondsToSkip {
@@ -63,34 +74,48 @@ final class FullscreenAdsControlsViewController: UIViewController {
 
 
     private var controlsView: FullscreenSupplementedAdControlsView?
-
+    private var container: FullscreenAdsControlsViewContainer?
 
     override func loadView() {
         super.loadView()
-
-        let controlsBounds: CGRect = if view.bounds.width > 0 {
-            .init(
-                origin: .zero,
-                size: .init(width: view.bounds.width, height: view.bounds.width * 9 / 16)
-            )
-        } else {
-            .zero
-        }
-
-        controlsView = FullscreenSupplementedAdControlsView.createInstance(frame: controlsBounds)
-        if let controlsView {
-            controlsView.controlMask = controlMask
-            controlsView.hideControls(animated: false)
-            controlsView.backgroundColor = .lightGray
-            view.addSubview(controlsView)
-        }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+        view.backgroundColor = .black
 
-        controlsView?.frame = view.bounds
+        let controlsBounds = view.bounds
+
+        container = FullscreenAdsControlsViewContainer(frame: controlsBounds)
+        if let container {
+            container.overrideUserInterfaceStyle = .dark
+            container.backgroundColor = .black
+            container.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(container)
+            NSLayoutConstraint.activate([
+                .init(item: container, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
+                .init(item: container, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0),
+                .init(item: container, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0),
+                .init(item: container, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
+            ])
+
+            controlsView = FullscreenSupplementedAdControlsView.createInstance(frame: container.bounds)
+            if let controlsView {
+                controlsView.translatesAutoresizingMaskIntoConstraints = false
+                controlsView.controlsContainer = container
+                controlsView.controlMask = controlMask
+                controlsView.hideControls(animated: false)
+                controlsView.backgroundColor = .lightGray
+                container.addSubview(controlsView)
+                NSLayoutConstraint.activate([
+                    .init(item: controlsView, attribute: .top, relatedBy: .equal, toItem: container, attribute: .top, multiplier: 1, constant: 0),
+                    .init(item: controlsView, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 0),
+                    .init(item: controlsView, attribute: .trailing, relatedBy: .equal, toItem: container, attribute: .trailing, multiplier: 1, constant: 0),
+                    .init(item: controlsView, attribute: .bottom, relatedBy: .equal, toItem: container, attribute: .bottom, multiplier: 1, constant: 0),
+                ])
+            }
+        }
     }
 }
 

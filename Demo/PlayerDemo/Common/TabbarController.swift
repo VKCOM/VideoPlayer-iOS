@@ -44,16 +44,19 @@ class TabbarController: UITabBarController {
         adsControls.tabBarItem = UITabBarItem(title: "Ads Controls", image: UIImage(systemName: "rectangle.and.hand.point.up.left.filled"), selectedImage: nil)
         let adsSupplementary = NavigationController(rootViewController: UIViewController())
         adsSupplementary.tabBarItem = UITabBarItem(title: "Ads Supplementary", image: UIImage(systemName: "plus.app"), selectedImage: nil)
+        let fullscreenAds = FullscreenAdsControlsViewController()
+        fullscreenAds.tabBarItem = UITabBarItem(title: "Ads Fullscreen", image: UIImage(systemName: "arrow.up.left.and.arrow.down.right"), selectedImage: nil)
 #else
         let videoMotion: NavigationController? = nil
         let adsControls: NavigationController? = nil
         let adsSupplementary: NavigationController? = nil
+        let adsSupplementary: fullscreenAds? = nil
 #endif
 
         let settings = NavigationController(rootViewController: SettingsViewController(rootView: SettingsView()))
         settings.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape"), selectedImage: nil)
 
-        viewControllers = [single, feed, transitions, multiplay, downloads, rotations, videoMotion, adsControls, adsSupplementary, settings].compactMap { $0 }
+        viewControllers = [single, feed, transitions, multiplay, downloads, rotations, videoMotion, adsControls, adsSupplementary, fullscreenAds, settings].compactMap { $0 }
     }
     
     
