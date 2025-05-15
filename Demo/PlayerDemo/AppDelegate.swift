@@ -45,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let apiClientId = Environment.launchApiSessionClientId ?? UserDefaults.standard.string(forKey: Environment.demo_apiClientIdKey)
         let apiSecret = Environment.launchApiSessionSecret ?? UserDefaults.standard.string(forKey: Environment.demo_apiSecretKey)
+        UserDefaults.standard.set(apiClientId, forKey: Environment.demo_apiClientIdKey)
+        UserDefaults.standard.set(apiSecret, forKey: Environment.demo_apiSecretKey)
         if let apiClientId, !apiClientId.isEmpty, let apiSecret, !apiSecret.isEmpty {
             ApiSession.setup(clientId: apiClientId, secret: apiSecret)
         } else {
@@ -64,12 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment.shared.allowsBackgroundPlayback = true
         Environment.shared.enableDiagnosticsView = true
 
-        Environment._cmafRecoverAfterStall = 5
         Environment._cmafAbrHarmonicCount = 12
-        Environment.shared._cmafTimeLineVersion = .v4
-        Environment.shared._cmafTrackReaderVersion = .v2
-        Environment.shared._cmafRttFiltering = true
-        Environment.shared._cmafProviderV2 = true
 
 #if canImport(OVKitMyTargetPlugin)
         Environment.shared.myTargetPlugin = MyTargetPluginImpl()

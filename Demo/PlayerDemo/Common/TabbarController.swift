@@ -50,7 +50,7 @@ class TabbarController: UITabBarController {
         let videoMotion: NavigationController? = nil
         let adsControls: NavigationController? = nil
         let adsSupplementary: NavigationController? = nil
-        let fullscreenAds: UIViewController? = nil
+        let fullscreenAds: NavigationController? = nil
 #endif
 
         let settings = NavigationController(rootViewController: SettingsViewController(rootView: SettingsView()))
