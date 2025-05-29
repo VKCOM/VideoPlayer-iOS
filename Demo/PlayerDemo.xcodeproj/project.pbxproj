@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1306CD7FF4EB5A9F13229912 /* VKVideoPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 55904406B78EC8E5D1E3C4C6 /* VKVideoPlayer */; };
 		37045C262B692515000A8AC9 /* RotationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37045C252B692515000A8AC9 /* RotationsController.swift */; };
+		B13D03632DA80C3B00D68B56 /* AdsSupplementaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D03622DA80C2F00D68B56 /* AdsSupplementaryViewController.swift */; };
+		B13D03652DA81FA300D68B56 /* DemoControlMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D03642DA81F9F00D68B56 /* DemoControlMask.swift */; };
 		B14386882BAD046500B4B002 /* ViewResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14386872BAD046500B4B002 /* ViewResizer.swift */; };
 		B143868A2BAD049200B4B002 /* TapsCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14386892BAD049200B4B002 /* TapsCounter.swift */; };
 		B1B093ED2D956E660079B2CB /* FullscreenAdsControlsViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B093EC2D956E5D0079B2CB /* FullscreenAdsControlsViewContainer.swift */; };
@@ -78,6 +80,8 @@
 /* Begin PBXFileReference section */
 		37045C252B692515000A8AC9 /* RotationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationsController.swift; sourceTree = "<group>"; };
 		B11EC48D2620C75A00B063FA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B13D03622DA80C2F00D68B56 /* AdsSupplementaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsSupplementaryViewController.swift; sourceTree = "<group>"; };
+		B13D03642DA81F9F00D68B56 /* DemoControlMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoControlMask.swift; sourceTree = "<group>"; };
 		B14386872BAD046500B4B002 /* ViewResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewResizer.swift; sourceTree = "<group>"; };
 		B14386892BAD049200B4B002 /* TapsCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapsCounter.swift; sourceTree = "<group>"; };
 		B1B093EC2D956E5D0079B2CB /* FullscreenAdsControlsViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenAdsControlsViewContainer.swift; sourceTree = "<group>"; };
@@ -167,6 +171,8 @@
 		B1C532F82B7A41B6006D89B9 /* Advertisement */ = {
 			isa = PBXGroup;
 			children = (
+				B13D03642DA81F9F00D68B56 /* DemoControlMask.swift */,
+				B13D03622DA80C2F00D68B56 /* AdsSupplementaryViewController.swift */,
 				B1B093EC2D956E5D0079B2CB /* FullscreenAdsControlsViewContainer.swift */,
 				B1C532F92B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift */,
 				B1BBFD3F2D4273410029400D /* AdsControlsViewController.swift */,
@@ -471,6 +477,7 @@
 				D4CA47E92575A267009C5DB3 /* AppDelegate.swift in Sources */,
 				EA480D6527B2AF9D00EDDD24 /* DetailController.swift in Sources */,
 				EADF720D274D108F00FAD363 /* DownloadService.swift in Sources */,
+				B13D03632DA80C3B00D68B56 /* AdsSupplementaryViewController.swift in Sources */,
 				EADF7211274D11C300FAD363 /* DownloadsCollectionCell.swift in Sources */,
 				EA2A37572762A40A001FF3F4 /* DownloadsCollectionFooter.swift in Sources */,
 				EADF720F274D10DD00FAD363 /* DownloadsController.swift in Sources */,
@@ -498,6 +505,7 @@
 				EADB39DF27E35F5B0056D9E0 /* OVKStartButtonBehavior+Defaults.swift in Sources */,
 				D4B5352C2B712F22005AB39D /* OauthApi.swift in Sources */,
 				D4B5352D2B712F22005AB39D /* OauthApiSchema.swift in Sources */,
+				B13D03652DA81FA300D68B56 /* DemoControlMask.swift in Sources */,
 				D4D425292A9CFED2002A16E5 /* PiPCustomControls.swift in Sources */,
 				EA480D6927B2D64E00EDDD24 /* PlayerTransitionAnimator.swift in Sources */,
 				EA04146B28881B1700A05BB0 /* PlayerViewContext.swift in Sources */,
@@ -667,7 +675,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.47;
+				CURRENT_PROJECT_VERSION = 2.48;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -676,7 +684,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.47;
+				MARKETING_VERSION = 2.48;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vk.dev.VideoPlayerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -693,7 +701,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.47;
+				CURRENT_PROJECT_VERSION = 2.48;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -702,7 +710,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.47;
+				MARKETING_VERSION = 2.48;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vk.dev.VideoPlayerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -740,7 +748,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.47.0;
+				version = 2.48.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

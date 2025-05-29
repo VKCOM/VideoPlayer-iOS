@@ -42,7 +42,7 @@ class TabbarController: UITabBarController {
         videoMotion.tabBarItem = UITabBarItem(title: "Video Motion", image: UIImage(systemName: "play.tv"), selectedImage: nil)
         let adsControls = NavigationController(rootViewController: AdsControlsViewController())
         adsControls.tabBarItem = UITabBarItem(title: "Ads Controls", image: UIImage(systemName: "rectangle.and.hand.point.up.left.filled"), selectedImage: nil)
-        let adsSupplementary = NavigationController(rootViewController: UIViewController())
+        let adsSupplementary = NavigationController(rootViewController: AdsSupplementaryViewController())
         adsSupplementary.tabBarItem = UITabBarItem(title: "Ads Supplementary", image: UIImage(systemName: "plus.app"), selectedImage: nil)
         let fullscreenAds = FullscreenAdsControlsViewController()
         fullscreenAds.tabBarItem = UITabBarItem(title: "Ads Fullscreen", image: UIImage(systemName: "arrow.up.left.and.arrow.down.right"), selectedImage: nil)

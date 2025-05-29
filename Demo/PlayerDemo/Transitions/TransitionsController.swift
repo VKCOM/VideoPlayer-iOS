@@ -15,13 +15,23 @@ class TransitionsController: ViewController {
     }
     
     private lazy var firstPlayer: PlayerView = {
-        let player = PlayerView(frame: .zero, gravity: .fit, customControls: InplaceCustomControls(frame: .zero))
+        let player = PlayerView(
+            frame: .zero,
+            gravity: .fit,
+            customControls: InplaceCustomControls(frame: .zero),
+            adsProvider: DefaultAdsProvider.autoplay()
+        )
         player.delegate = self
         return player
     }()
     
     private lazy var secondPlayer: PlayerView = {
-        let player = PlayerView(frame: .zero, gravity: .fill, customControls: FeedControlsView(frame: .zero))
+        let player = PlayerView(
+            frame: .zero,
+            gravity: .fill,
+            customControls: FeedControlsView(frame: .zero),
+            adsProvider: DefaultAdsProvider.fullscreen()
+        )
         player.delegate = self
         return player
     }()
@@ -175,9 +185,7 @@ class TransitionsController: ViewController {
         case .custom:
             if let floating = transition.floatingView {
                 UIView.animateKeyframes(withDuration: 1.0, delay: 0.0) {
-                    UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0) {
-                        transition.animateToDestination()
-                    }
+                    transition.animateToDestination()
                     UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.5) {
                         floating.transform = .identity.scaledBy(x: 0.5, y: 0.5)
                     }

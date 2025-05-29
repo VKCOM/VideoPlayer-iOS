@@ -39,4 +39,8 @@ extension FeedVideoModel: PrefetchItem {
     var prefetchPreviews: [ImageAssetType] {
         item.previewImages
     }
+
+    var prefetchThumbnails: [ImageAssetType] {
+        item.prefetchThumbnails
+    }
 }

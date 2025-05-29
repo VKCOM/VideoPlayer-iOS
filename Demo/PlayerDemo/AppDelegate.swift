@@ -3,6 +3,8 @@ import OVPlayerKit
 import OVKit
 import os.log
 import OVKitStatistics
+import Metal
+
 #if canImport(OVKitMyTargetPlugin)
 import OVKitMyTargetPlugin
 #endif
@@ -70,6 +72,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if canImport(OVKitMyTargetPlugin)
         Environment.shared.myTargetPlugin = MyTargetPluginImpl()
+        Environment._enableInstreamSupplementary = true
+        Environment.shared._enableAnimatedControlsTranstions = true
 #endif
 
 #if canImport(OVKitChromecastPlugin)
@@ -82,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment.shared._audioCompressorParameters = AudioCompressorParameters()
         Environment._handleLowMemory = 10
         Environment._handleLowMemoryHardLevel = true
-        Environment._metalYUVConverter = true
+        Environment._metalYUVConverterGPUFamily = NSNumber(value: Int32(MTLGPUFamily.apple6.rawValue));
 
         return true
     }

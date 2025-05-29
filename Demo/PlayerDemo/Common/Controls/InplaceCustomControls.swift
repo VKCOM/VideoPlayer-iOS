@@ -165,7 +165,7 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
     }
     
     
-    // Вызовется при соответствующего метода в PlayerView или установке нового видео
+    // Вызовется при вызове соответствующего метода в PlayerView или установке нового видео.
     func prepareForReuse() {}
     
     

@@ -40,7 +40,8 @@ class FullscreenAdsControlsViewContainer: UIView,  ControlsViewContainer {
 
     var isInFullscreen: Bool { true }
 
-    func updateCoverView() { }
+
+    func updateCoverView() {}
 }
 
 
