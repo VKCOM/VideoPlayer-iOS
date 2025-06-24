@@ -85,6 +85,12 @@ extension SceneDelegate: PlayerManagerDelegate {
         // }
         // return [handler]
 
+        if StatsManager.shared.debugMode {
+            if let video = playerView.video, let h = OVTechStatsHandler.makeHandlerForVideo(video, configuration: OVTechStatsHandler.Configuration()) {
+                return [h]
+            }
+        }
+
         return []
     }
 

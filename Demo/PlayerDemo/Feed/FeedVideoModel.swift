@@ -19,7 +19,7 @@ class FeedVideoModel: CustomStringConvertible {
 // MARK: - PrefetchItem
 
 extension FeedVideoModel: PrefetchItem {
-    
+        
     var prefetchMinTime: TimeInterval {
         item.prefetchMinTime
     }

@@ -58,6 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Если требуется отправка OneLog статистики, ее необходимо предварительно настроить:
         // OKApiSession.setup(appKey: <#T##String#>, userId: <#T##String?#>, tokenProvider: <#T##any StatsTokenProvider#>)
 
+        StatsManager.shared.debugMode = true
+        Environment.shared._oneLogV2 = true
+
         Environment.shared.userId = "2"
         Environment.shared.demo_bootstrapFromSettingsPersistence()
 
