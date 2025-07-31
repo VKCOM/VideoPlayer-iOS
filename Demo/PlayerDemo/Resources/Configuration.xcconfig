@@ -1,0 +1,6 @@
+#include "ci-app-build.xcconfig"
+APP_BUNDLE_IDENTIFIER = com.vk.dev.OneVideoPlayerDemo
+
+APP_LAUNCHIMAGE_ASSET_NAME = LaunchScreen.storyboard
+APP_VERSION = 2.50
+PRODUCT_BUNDLE_DISPLAY_NAME = Player Demo

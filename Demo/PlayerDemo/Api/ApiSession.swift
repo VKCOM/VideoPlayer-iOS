@@ -9,6 +9,7 @@ class ApiSession: NSObject {
     
     private let clientId: String
     private let clientSecret: String
+    private let isAnonymous: Bool
     private let apiVersion = "5.226"
 
     private let accessTokenStorageKey = "ovk.api.session.token"
@@ -59,19 +60,27 @@ class ApiSession: NSObject {
      При смене пользователя  (``Environment/userId``) также необходимо вызывать метод.
      */
     @objc public static func setup(clientId: String, secret: String) {
-        let session = ApiSession(with: clientId, secret: secret)
+        let session = ApiSession(with: clientId, secret: secret, isAnonymous: true)
         if !session.isValid {
             session.obtainToken(completion: nil)
         }
         shared = session
     }
-    
+
+
+    @objc public static func setup(sessionToken: String, isAnonymous: Bool = false) {
+        let session = ApiSession(with: "", secret: "There's No Secrets This Year", isAnonymous: isAnonymous)
+        session.accessToken = sessionToken
+        shared = session
+    }
+
     
     // MARK: - Initialization
     
-    private init(with id: String, secret: String) {
+    private init(with id: String, secret: String, isAnonymous: Bool) {
         self.clientId = id
         self.clientSecret = secret
+        self.isAnonymous = isAnonymous
     }
     
     
@@ -278,9 +287,9 @@ class ApiSession: NSObject {
         }
         
         var p = params
-        p["v"]                  = apiVersion
-        p["anonymous_token"]    = accessToken
-        
+        p["v"]      = apiVersion
+        p[tokenKey] = accessToken
+
         urlComponents.queryItems = p.map {
             URLQueryItem(name: $0.key, value: $0.value)
         }
@@ -292,5 +301,10 @@ class ApiSession: NSObject {
             cachePolicy: .reloadIgnoringLocalCacheData,
             timeoutInterval: timeoutInterval
         )
+    }
+
+
+    private var tokenKey: String {
+        isAnonymous ? "anonymous_token" : "access_token"
     }
 }

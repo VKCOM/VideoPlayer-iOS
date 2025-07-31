@@ -1,0 +1,8 @@
+// for final product we use Info.plist with
+// APP_VERSION and APP_BUILD_NUM to show codereader
+// it's must be the same version as main app
+APP_BUILD_NUM=999999
+// we could keep MARKETING_VERSION and CURRENT_PROJECT_VERSION
+// with the same value
+// for backward compatibility
+CURRENT_PROJECT_VERSION=$(APP_BUILD_NUM)

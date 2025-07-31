@@ -11,6 +11,7 @@ class SingleController: ViewController {
         player.delegate = self
         player.soundOn = true
         player.backgroundPlaybackPolicy = .continueAudioAndVideo
+        player.accessibilityIdentifier = "video_player.video_container"
         return player
     }()
     

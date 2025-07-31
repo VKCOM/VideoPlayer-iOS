@@ -51,6 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.set(apiSecret, forKey: Environment.demo_apiSecretKey)
         if let apiClientId, !apiClientId.isEmpty, let apiSecret, !apiSecret.isEmpty {
             ApiSession.setup(clientId: apiClientId, secret: apiSecret)
+        } else if let apiToken = ProcessInfo.processInfo.environment["API_SESSION_TOKEN"] {
+            ApiSession.setup(sessionToken: apiToken)
         } else {
             print("API credentials not found in environment!")
         }
@@ -70,12 +72,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment.shared.allowsExternalPlayback = true
         Environment.shared.allowsBackgroundPlayback = true
         Environment.shared.enableDiagnosticsView = true
+        Environment.shared.autoShowDiagnosticsView = false
 
         Environment._cmafAbrHarmonicCount = 12
 
 #if canImport(OVKitMyTargetPlugin)
-        Environment.shared.myTargetPlugin = MyTargetPluginImpl()
-        Environment._enableInstreamSupplementary = true
+        let disableAds = ProcessInfo.processInfo.environment["DEMO_DISABLE_ADS"] == "1"
+        Environment.shared.myTargetPlugin = disableAds ? nil : MyTargetPluginImpl()
         Environment.shared._enableAnimatedControlsTranstions = true
 #endif
 
@@ -87,8 +90,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Not prod ready
 
         Environment.shared._audioCompressorParameters = AudioCompressorParameters()
-        Environment._handleLowMemory = 10
-        Environment._handleLowMemoryHardLevel = true
         Environment._metalYUVConverterGPUFamily = NSNumber(value: Int32(MTLGPUFamily.apple6.rawValue));
 
         return true
