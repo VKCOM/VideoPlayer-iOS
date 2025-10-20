@@ -1,29 +1,33 @@
-import UIKit
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
+
 import OVKit
 import OVKResources
-
+import UIKit
 
 class MultiplayController: ViewController {
-    
     var multiPlayers = [PlayerView]()
     var multiIndicators = [UIImageView]()
     var regularPlayer: PlayerView?
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         navigationItem.title = "Multiplay"
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         view.addGestureRecognizer(tap)
     }
-    
-    
-    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+
+    @objc
+    private func handleTap(_ gesture: UITapGestureRecognizer) {
         let point = gesture.location(in: view)
         for multiPlayer in multiPlayers {
-            guard multiPlayer.frame.contains(point) else { continue }
-            if multiPlayer.isPlaybackActive && multiPlayer.soundOn {
+            guard multiPlayer.frame.contains(point) else {
+                continue
+            }
+
+            if multiPlayer.isPlaybackActive, multiPlayer.soundOn {
                 // достаточно выключить звук, и плеер перестанет быть активным
                 multiPlayer.soundOn = false
             } else {
@@ -33,84 +37,87 @@ class MultiplayController: ViewController {
             break
         }
     }
-    
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         func playIfNeeded() {
             regularPlayer?.playerViewOnScreen = true
-            multiPlayers.forEach {
-                $0.playerViewOnScreen = true
-                $0.play(userInitiated: false)
+            for multiPlayer in multiPlayers {
+                multiPlayer.playerViewOnScreen = true
+                multiPlayer.play(userInitiated: false)
             }
         }
-        
+
         if isFirstAppearance {
-            loadVideos() {
+            loadVideos {
                 playIfNeeded()
             }
         } else {
             playIfNeeded()
         }
     }
-    
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         regularPlayer?.playerViewOnScreen = false
-        multiPlayers.forEach {
-            $0.playerViewOnScreen = false
+        for multiPlayer in multiPlayers {
+            multiPlayer.playerViewOnScreen = false
         }
     }
-    
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        guard let regularPlayer else { return }
-        
+
+        guard let regularPlayer else {
+            return
+        }
+
         let safeFrame = view.bounds.inset(by: view.safeAreaInsets)
         let frames = Self.calculateFrames(into: safeFrame)
-        
+
         for i in 0..<multiPlayers.count {
             multiPlayers[i].frame = frames[i]
             multiIndicators[i].center = CGPoint(x: frames[i].maxX, y: frames[i].minY)
         }
         regularPlayer.frame = frames[4]
     }
-    
-    
+
     private func loadVideos(_ completion: @escaping () -> Void) {
         startActivity()
-        ApiSession.shared?.fetch(ownerVideos: "-26006257", count: 20) { [weak self] (items, error) in
+        ApiSession.shared?.fetch(ownerVideos: "-26006257", count: 20) { [weak self] items, error in
             DispatchQueue.main.async {
-                guard let self else { return }
+                guard let self else {
+                    return
+                }
+
                 self.stopActivity()
-                
+
                 let videos = items?.filter { $0.haveVideoFiles }
                 guard let videos, videos.count >= 5 else {
                     self.showError(error?.localizedDescription ?? "Something went wrong")
                     return
                 }
+
                 for i in 0..<4 {
                     self.setupPlayer(video: videos[i], multi: true)
                 }
                 self.setupPlayer(video: videos[4], multi: false)
-                
+
                 completion()
             }
         }
     }
-    
-    
+
     func player(_ playerView: PlayerView, didMute muted: Bool, userInitiated: Bool) {
-        guard playerView.allowsMultiplay else { return }
+        guard playerView.allowsMultiplay else {
+            return
+        }
+
         multiIndicators[playerView.tag].image = muted ? .ovk_soundOff48 : .ovk_soundOn48
     }
-    
-    
+
     private func setupPlayer(video: VideoType, multi: Bool) {
         let player = PlayerView(frame: .zero, gravity: .fill, customControls: InplaceCustomControls(frame: .zero))
         player.delegate = self
@@ -128,7 +135,7 @@ class MultiplayController: ViewController {
             regularPlayer = player
         }
         view.addSubview(player)
-        
+
         if multi {
             let indicator = UIImageView(image: .ovk_soundOff48)
             indicator.layer.anchorPoint = CGPoint(x: 1, y: 0)
@@ -136,7 +143,7 @@ class MultiplayController: ViewController {
             view.addSubview(indicator)
         }
     }
-    
+
     private static func calculateFrames(into viewFrame: CGRect) -> [CGRect] {
         var frames = [CGRect]()
         let padding: CGFloat = 12

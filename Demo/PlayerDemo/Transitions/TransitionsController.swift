@@ -1,19 +1,21 @@
-import UIKit
-import OVKit
-import CoreMedia.CMTime
-import AVFoundation
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
 
+import AVFoundation
+import CoreMedia.CMTime
+import OVKit
+import UIKit
 
 class TransitionsController: ViewController {
-    
     enum TransitionStyle {
-        // Встроенная анимация
+        /// Встроенная анимация
         case standard
-        
-        // Настраиваемая анимация
+
+        /// Настраиваемая анимация
         case custom
     }
-    
+
     private lazy var firstPlayer: PlayerView = {
         let player = PlayerView(
             frame: .zero,
@@ -24,7 +26,7 @@ class TransitionsController: ViewController {
         player.delegate = self
         return player
     }()
-    
+
     private lazy var secondPlayer: PlayerView = {
         let player = PlayerView(
             frame: .zero,
@@ -35,7 +37,18 @@ class TransitionsController: ViewController {
         player.delegate = self
         return player
     }()
-    
+
+    private lazy var customProviderPlayer: PlayerView = {
+        let player = PlayerView(
+            frame: .zero,
+            gravity: .fill,
+            customControls: InplaceCustomControls(frame: .zero),
+            adsProvider: CustomTimelineAdsProvider()
+        )
+        player.delegate = self
+        return player
+    }()
+
     private lazy var defaultButton: UIButton = {
         let b = UIButton(type: .system)
         b.setTitle("Standard", for: .normal)
@@ -44,7 +57,7 @@ class TransitionsController: ViewController {
         b.sizeToFit()
         return b
     }()
-    
+
     private lazy var customButton: UIButton = {
         let b = UIButton(type: .system)
         b.setTitle("Custom", for: .normal)
@@ -53,38 +66,40 @@ class TransitionsController: ViewController {
         b.sizeToFit()
         return b
     }()
-    
-    
+
     deinit {
         if isViewLoaded {
             firstPlayer.stop()
             secondPlayer.stop()
         }
     }
-    
-      
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         navigationItem.title = "Transitions"
-        
+
         view.addSubview(firstPlayer)
         view.addSubview(secondPlayer)
         view.addSubview(defaultButton)
         view.addSubview(customButton)
-        
+
         loadVideo()
     }
-    
-    
+
     private func loadVideo() {
         let uiItems = [firstPlayer, secondPlayer, defaultButton, secondPlayer]
-        uiItems.forEach { $0.isHidden = true }
-        
+        for uiItem in uiItems {
+            uiItem.isHidden = true
+        }
+
         startActivity()
         ApiSession.shared?.fetch(videoIds: ["-26006257_456245181"]) { [weak self] videos, error in
             DispatchQueue.main.async {
-                guard let self else { return }
+                guard let self else {
+                    return
+                }
+
                 self.stopActivity()
                 if let error {
                     self.showError(error.localizedDescription)
@@ -94,45 +109,44 @@ class TransitionsController: ViewController {
                     self.showError("Something went wrong")
                     return
                 }
-                uiItems.forEach { $0.isHidden = false }
+
+                for uiItem in uiItems {
+                    uiItem.isHidden = false
+                }
                 self.firstPlayer.video = video
             }
         }
     }
-    
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         .portrait
     }
-    
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         firstPlayer.playerViewOnScreen = true
         secondPlayer.playerViewOnScreen = true
     }
-    
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         firstPlayer.playerViewOnScreen = false
         secondPlayer.playerViewOnScreen = false
     }
-    
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         let safeFrame = view.bounds
             .inset(by: view.safeAreaInsets)
             .inset(by: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
         let ratio = CGSize(width: 16, height: 9)
-        
+
         let buttonsWidth = defaultButton.bounds.width + customButton.bounds.width + 32
         let buttonsX = safeFrame.minX + (safeFrame.width - buttonsWidth) / 2
-        
+
         if safeFrame.width > safeFrame.height {
             let maxPlayerWidth = floor((safeFrame.width - 32) / 2)
             let maxPlayerHeight = safeFrame.height - max(defaultButton.bounds.height, customButton.bounds.height) - 32
@@ -147,15 +161,15 @@ class TransitionsController: ViewController {
             firstPlayer.frame = AVMakeRect(aspectRatio: ratio, insideRect: topPlayerFrame)
             secondPlayer.frame = AVMakeRect(aspectRatio: ratio, insideRect: bottomPlayerFrame)
         }
-        
+
         defaultButton.frame.origin = CGPoint(x: buttonsX, y: firstPlayer.frame.maxY + 32)
         customButton.frame.origin = CGPoint(x: defaultButton.frame.maxX + 32, y: defaultButton.frame.origin.y)
     }
-    
-    
+
     // MARK: - Buttons
-    
-    @objc private func handleSwapButton(_ sender: UIView) {
+
+    @objc
+    private func handleSwapButton(_ sender: UIView) {
         let style: TransitionStyle = sender == customButton ? .custom : .standard
         if firstPlayer.video != nil {
             performTransition(from: firstPlayer, to: secondPlayer, style: style)
@@ -163,15 +177,14 @@ class TransitionsController: ViewController {
             performTransition(from: secondPlayer, to: firstPlayer, style: style)
         }
     }
-    
-    
+
     // MARK: - Transition
-    
+
     private func performTransition(from source: PlayerView, to destination: PlayerView, style: TransitionStyle) {
         guard let transition = source.createAnimatedTransition(to: destination, in: view) else {
             return
         }
-        
+
         transition.prepare()
 
         switch style {
@@ -181,7 +194,7 @@ class TransitionsController: ViewController {
             } completion: { _ in
                 transition.finish(completed: true)
             }
-            
+
         case .custom:
             if let floating = transition.floatingView {
                 UIView.animateKeyframes(withDuration: 1.0, delay: 0.0) {

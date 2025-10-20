@@ -1,8 +1,10 @@
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
+
 import UIKit
 
-
 class ImportSourceView: UIView {
-    
     func addEntry(name: String, target: Any?, action: Selector) {
         let button = UIButton(type: .system)
         button.addTarget(target, action: action, for: .touchUpInside)
@@ -14,25 +16,25 @@ class ImportSourceView: UIView {
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
         button.sizeToFit()
         button.frame.size = CGSize(width: ceil(button.frame.width) + 12, height: 32)
-        
+
         addSubview(button)
         items.append(button)
     }
-    
-    
+
     func heightForWidth(_ width: CGFloat) -> CGFloat {
-        guard width > 0 else { return 0 }
+        guard width > 0 else {
+            return 0
+        }
+
         return itemsFrames(availableWidth: width).last?.maxY ?? 0
     }
-    
-    
+
     // MARK: - Private
-    
+
     private let itemsPadding = CGPoint(x: 8, y: 6)
-    
+
     private var items = [UIButton]()
-    
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         let frames = itemsFrames(availableWidth: bounds.width)
@@ -40,8 +42,7 @@ class ImportSourceView: UIView {
             items[i].frame = frames[i]
         }
     }
-    
-    
+
     private func itemsFrames(availableWidth: CGFloat) -> [CGRect] {
         var frames = [CGRect]()
         var y = CGFloat(0)

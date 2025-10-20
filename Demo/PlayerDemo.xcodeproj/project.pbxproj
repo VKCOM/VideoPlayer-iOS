@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		1306CD7FF4EB5A9F13229912 /* VKVideoPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 55904406B78EC8E5D1E3C4C6 /* VKVideoPlayer */; };
 		37045C262B692515000A8AC9 /* RotationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37045C252B692515000A8AC9 /* RotationsController.swift */; };
+		3796ABE82E5367400031B627 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3796ABE72E5367400031B627 /* AppCoordinator.swift */; };
+		37A3A1862E5C5A40008008D7 /* CustomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1842E5C5A40008008D7 /* CustomController.swift */; };
+		37D5D9E72E65A1BD00B4E928 /* URLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5D9E62E65A1BD00B4E928 /* URLParser.swift */; };
+		3D0819042E4126F80016CEDC /* CustomTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0819032E4126F30016CEDC /* CustomTimeline.swift */; };
 		40A9BA762E1FAC3100BC5384 /* Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 40A9BA752E1FAC3100BC5384 /* Configuration.xcconfig */; };
 		40E3AADB2E1FAA5300EF2F75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E3AAD52E1FAA5300EF2F75 /* Assets.xcassets */; };
 		40E3AADD2E1FAA5300EF2F75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40E3AAD92E1FAA5300EF2F75 /* LaunchScreen.storyboard */; };
@@ -53,6 +57,7 @@
 		EA480D6527B2AF9D00EDDD24 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA480D6427B2AF9D00EDDD24 /* DetailController.swift */; };
 		EA480D6727B2CA4E00EDDD24 /* PlayerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA480D6627B2CA4E00EDDD24 /* PlayerViewProvider.swift */; };
 		EA480D6927B2D64E00EDDD24 /* PlayerTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA480D6827B2D64E00EDDD24 /* PlayerTransitionAnimator.swift */; };
+		EA68DCF02E7B0D8E00FDEE69 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = EA68DCEF2E7B0D8E00FDEE69 /* AppIcon.icon */; };
 		EAAFC53427BBEB6400033D8B /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFC53327BBEB6400033D8B /* NavigationController.swift */; };
 		EAD0550D28296648002EF645 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD0550C28296648002EF645 /* MenuCell.swift */; };
 		EAD0550F28296686002EF645 /* MenuPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD0550E28296686002EF645 /* MenuPresentationController.swift */; };
@@ -80,6 +85,10 @@
 
 /* Begin PBXFileReference section */
 		37045C252B692515000A8AC9 /* RotationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationsController.swift; sourceTree = "<group>"; };
+		3796ABE72E5367400031B627 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		37A3A1842E5C5A40008008D7 /* CustomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomController.swift; sourceTree = "<group>"; };
+		37D5D9E62E65A1BD00B4E928 /* URLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParser.swift; sourceTree = "<group>"; };
+		3D0819032E4126F30016CEDC /* CustomTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTimeline.swift; sourceTree = "<group>"; };
 		40A9BA752E1FAC3100BC5384 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Configuration.xcconfig; sourceTree = "<group>"; };
 		40E3AAD52E1FAA5300EF2F75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40E3AAD62E1FAA5300EF2F75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -129,6 +138,7 @@
 		EA480D6427B2AF9D00EDDD24 /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		EA480D6627B2CA4E00EDDD24 /* PlayerViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewProvider.swift; sourceTree = "<group>"; };
 		EA480D6827B2D64E00EDDD24 /* PlayerTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTransitionAnimator.swift; sourceTree = "<group>"; };
+		EA68DCEF2E7B0D8E00FDEE69 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		EAAFC53327BBEB6400033D8B /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		EAD0550C28296648002EF645 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		EAD0550E28296686002EF645 /* MenuPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPresentationController.swift; sourceTree = "<group>"; };
@@ -161,9 +171,18 @@
 			path = Rotations;
 			sourceTree = "<group>";
 		};
+		37A3A1852E5C5A40008008D7 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				37A3A1842E5C5A40008008D7 /* CustomController.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
 		40E3AADA2E1FAA5300EF2F75 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EA68DCEF2E7B0D8E00FDEE69 /* AppIcon.icon */,
 				40E3AAD52E1FAA5300EF2F75 /* Assets.xcassets */,
 				40A9BA752E1FAC3100BC5384 /* Configuration.xcconfig */,
 				40E3AAD62E1FAA5300EF2F75 /* Info.plist */,
@@ -177,6 +196,7 @@
 			children = (
 				B14386872BAD046500B4B002 /* ViewResizer.swift */,
 				B14386892BAD049200B4B002 /* TapsCounter.swift */,
+				37D5D9E62E65A1BD00B4E928 /* URLParser.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -184,6 +204,7 @@
 		B1C532F82B7A41B6006D89B9 /* Advertisement */ = {
 			isa = PBXGroup;
 			children = (
+				3D0819032E4126F30016CEDC /* CustomTimeline.swift */,
 				B13D03642DA81F9F00D68B56 /* DemoControlMask.swift */,
 				B13D03622DA80C2F00D68B56 /* AdsSupplementaryViewController.swift */,
 				B1B093EC2D956E5D0079B2CB /* FullscreenAdsControlsViewContainer.swift */,
@@ -275,6 +296,7 @@
 				EA3E58B4291D4CCA00605471 /* Multiplay */,
 				EADF720B274D108000FAD363 /* Downloads */,
 				D4D7522226E657B10046E7A7 /* Common */,
+				37A3A1852E5C5A40008008D7 /* Custom */,
 				D4CA48392575B331009C5DB3 /* Single */,
 				EA480D6327B2AF8200EDDD24 /* Detail */,
 				D4CA48382575B327009C5DB3 /* Feed */,
@@ -283,6 +305,7 @@
 				40E3AADA2E1FAA5300EF2F75 /* Resources */,
 				B1C533022B7A64EA006D89B9 /* Settings */,
 				D4CA47E82575A267009C5DB3 /* AppDelegate.swift */,
+				3796ABE72E5367400031B627 /* AppCoordinator.swift */,
 				D4BD26C929D7201A005C52C6 /* SceneDelegate.swift */,
 			);
 			path = PlayerDemo;
@@ -470,6 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40E3AADB2E1FAA5300EF2F75 /* Assets.xcassets in Resources */,
+				EA68DCF02E7B0D8E00FDEE69 /* AppIcon.icon in Resources */,
 				40A9BA762E1FAC3100BC5384 /* Configuration.xcconfig in Resources */,
 				40E3AADD2E1FAA5300EF2F75 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -501,7 +525,9 @@
 				D4C551EB257687D6006E6419 /* FeedVideoModel.swift in Sources */,
 				EA1656B526BD6F1B007743EE /* FocusOfInterestTracker.swift in Sources */,
 				D40B0A2A2AA5EB7A009EDEA8 /* FullscreenCustomControls.swift in Sources */,
+				3796ABE82E5367400031B627 /* AppCoordinator.swift in Sources */,
 				D43BD367257E244B007952B6 /* ImportController.swift in Sources */,
+				37D5D9E72E65A1BD00B4E928 /* URLParser.swift in Sources */,
 				B1BBFD402D4273410029400D /* AdsControlsViewController.swift in Sources */,
 				D48ADCB22A27489E0066AABF /* ImportFormatView.swift in Sources */,
 				D421DB7A2A264DFF002C86E0 /* ImportSourceView.swift in Sources */,
@@ -512,6 +538,8 @@
 				EAD0550F28296686002EF645 /* MenuPresentationController.swift in Sources */,
 				EAD05511282966A5002EF645 /* MenuTransitioningDelegate.swift in Sources */,
 				D4E8A5A6294D1721002CAA3F /* MultiplayController.swift in Sources */,
+				37A3A1862E5C5A40008008D7 /* CustomController.swift in Sources */,
+				3D0819042E4126F80016CEDC /* CustomTimeline.swift in Sources */,
 				B1C532FA2B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift in Sources */,
 				EAAFC53427BBEB6400033D8B /* NavigationController.swift in Sources */,
 				EADB39DF27E35F5B0056D9E0 /* OVKStartButtonBehavior+Defaults.swift in Sources */,
@@ -686,9 +714,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.50;
+				CURRENT_PROJECT_VERSION = 2.51.1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -697,7 +726,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.50;
+				MARKETING_VERSION = 2.51.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -713,9 +742,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.50;
+				CURRENT_PROJECT_VERSION = 2.51.1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -724,7 +754,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.50;
+				MARKETING_VERSION = 2.51.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -762,7 +792,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.50.0;
+				version = 2.51.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

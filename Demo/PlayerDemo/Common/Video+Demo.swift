@@ -1,14 +1,21 @@
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
+
 import Foundation
 import OVKit
-
 
 // Demo Extension
 
 extension Video {
-    
     static func loadFromUserDefaults() -> Video? {
-        guard let dict = UserDefaults.standard.dictionary(forKey: "single_ovk_video") as? [String: String] else { return nil }
-        guard let id = dict["id"] else { return nil }
+        guard let dict = UserDefaults.standard.dictionary(forKey: "single_ovk_video") as? [String: String] else {
+            return nil
+        }
+        guard let id = dict["id"] else {
+            return nil
+        }
+
         let video = Video(id: id)
         for format in VideoFileFormat.allCases {
             if let value = dict[format.rawValue] {
@@ -22,9 +29,7 @@ extension Video {
     }
 }
 
-
 extension VideoType {
-    
     func saveToUserDefaults() {
         var dict = ["id": videoId]
         for format in VideoFileFormat.allCases {

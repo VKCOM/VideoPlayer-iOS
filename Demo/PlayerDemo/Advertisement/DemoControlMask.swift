@@ -1,9 +1,11 @@
-import UIKit
-import OVKit
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
 
+import OVKit
+import UIKit
 
 extension ControlMask {
-
     static func demoControlMask(needPostView: Bool = false) -> ControlMask {
         let paused = false
         let soundOn = true
@@ -38,10 +40,10 @@ extension ControlMask {
         if let time = currentTime {
             mask.insert(.playhead(seconds: time))
         }
-        if let duration = duration {
+        if let duration {
             mask.insert(.duration(seconds: duration))
         }
-        if let cta = cta {
+        if let cta {
             let data = CTAData(title: cta.text, text: cta.ctaText, icon: cta.icon, iconUrl: cta.iconUrlString, color: cta.ctaTextColor, backgroundColor: cta.ctaBackgroundColor, postBannerData: postViewData)
             mask.insert(.callToAction(data: data))
         }
@@ -53,7 +55,7 @@ extension ControlMask {
         }
         if let items = shoppableAdsItems {
             mask.insert(.adInteractive(banner: .shoppable(items: items)))
-        } else if let videoMotionPlayer = videoMotionPlayer {
+        } else if let videoMotionPlayer {
             if let banner = videoMotionPlayer.banner {
                 mask.insert(.adInteractive(banner: .videoMotion(banner: banner)))
             } else {
