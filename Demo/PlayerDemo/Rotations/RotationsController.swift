@@ -1,9 +1,12 @@
-import UIKit
-import OVKit
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
+
 import AVFoundation
+import OVKit
+import UIKit
 
 class RotationsController: ViewController {
-
     private lazy var horizontalPlayerView: PlayerView = {
         let controls = InplaceCustomControls(frame: .zero)
         let player = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
@@ -12,7 +15,6 @@ class RotationsController: ViewController {
         player.backgroundPlaybackPolicy = .continueAudioAndVideo
         return player
     }()
-
 
     private lazy var verticalPlayerView: PlayerView = {
         let controls = InplaceCustomControls(frame: .zero)
@@ -23,11 +25,7 @@ class RotationsController: ViewController {
         return player
     }()
 
-
-    private lazy var controlledPlayerView: PlayerView = {
-        horizontalPlayerView
-    }()
-
+    private lazy var controlledPlayerView: PlayerView = horizontalPlayerView
 
     deinit {
         if isViewLoaded {
@@ -35,7 +33,6 @@ class RotationsController: ViewController {
             verticalPlayerView.stop()
         }
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,19 +50,17 @@ class RotationsController: ViewController {
         tapSwitch()
     }
 
-
-    @objc func tapSwitch() {
+    @objc
+    func tapSwitch() {
         controlledPlayerView.autoRotateToLandscapeInFullscreenIfPossible.toggle()
         updateAutoRotateState()
     }
-
 
     func updateAutoRotateState() {
         let value = controlledPlayerView.autoRotateToLandscapeInFullscreenIfPossible
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Auto: \(value)", style: .plain, target: self, action: #selector(tapSwitch))
         highlightCurrentPlayer()
     }
-
 
     func highlightCurrentPlayer() {
         UIView.animate(withDuration: 0.2) { [controlledPlayerView] in
@@ -77,23 +72,24 @@ class RotationsController: ViewController {
         }
     }
 
-
-    @objc func tapSwitchPlayer() {
+    @objc
+    func tapSwitchPlayer() {
         controlledPlayerView = controlledPlayerView == horizontalPlayerView ? verticalPlayerView : horizontalPlayerView
         updateAutoRotateState()
     }
 
+    @objc
+    func handleRotate() {
+        guard PlayerView.canMaximizeToFullscreenInLandscape(from: self) else {
+            return
+        }
 
-    @objc func handleRotate() {
-        guard PlayerView.canMaximizeToFullscreenInLandscape(from: self) else { return }
         controlledPlayerView.maximizeToFullscreenFromLandscapeOrientation()
     }
-
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         .portrait
     }
-
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -102,14 +98,12 @@ class RotationsController: ViewController {
         verticalPlayerView.playerViewOnScreen = true
     }
 
-
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
         horizontalPlayerView.playerViewOnScreen = false
         verticalPlayerView.playerViewOnScreen = false
     }
-
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -125,11 +119,10 @@ class RotationsController: ViewController {
             .inset(by: .init(top: 20, left: 20, bottom: 20, right: 50))
         horizontalPlayerView.frame = AVMakeRect(aspectRatio: ratio, insideRect: frame)
 
-        verticalPlayerView.frame = .init(x: 20, y: 400, width: 9*20, height: 16*20)
+        verticalPlayerView.frame = .init(x: 20, y: 400, width: 9 * 20, height: 16 * 20)
         verticalPlayerView.center.x = view.center.x + 80
     }
 }
-
 
 class RotationsNavController: UINavigationController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

@@ -1,10 +1,14 @@
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
+
 import OVKit
 
-
 extension PreviewPlayButtonBehavior {
-    
     static func feed(autoplay: Bool) -> PreviewPlayButtonBehavior {
-        .init(withAutoplay: autoplay ? .hidden : .inactive,
-              isActiveWhenAutoplayIsDisabled: false)
+        .init(
+            withAutoplay: autoplay ? .hidden : .inactive,
+            isActiveWhenAutoplayIsDisabled: false
+        )
     }
 }

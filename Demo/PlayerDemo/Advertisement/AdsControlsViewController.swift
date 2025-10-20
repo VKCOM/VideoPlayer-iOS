@@ -1,16 +1,16 @@
-import UIKit
-import OVKit
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
 
+import OVKit
+import UIKit
 
 final class FullscreenAdsControlsViewController: UIViewController {
-
     private var controlMask: ControlMask {
         .demoControlMask()
     }
 
-
     private var controlsView: FullscreenSupplementedAdControlsView?
-
 
     private var container: FullscreenAdsControlsViewContainer?
 
@@ -59,16 +59,12 @@ final class FullscreenAdsControlsViewController: UIViewController {
     }
 }
 
-
 final class AdsControlsViewController: UIViewController {
-
     private var controlMask: ControlMask {
         .demoControlMask()
     }
 
-
     private let stackView = UIStackView()
-
 
     override func loadView() {
         super.loadView()
@@ -96,7 +92,7 @@ final class AdsControlsViewController: UIViewController {
             .zero
         }
 
-        let types:[UIView & PlayerControlsViewProtocol] = [
+        let types: [UIView & PlayerControlsViewProtocol] = [
             SupplementedAdControlsView.createInstance(frame: controlsBounds),
             DiscoverSupplementedAdControlsView.createInstance(frame: controlsBounds),
             FullscreenSupplementedAdControlsView.createInstance(frame: controlsBounds),
@@ -114,21 +110,17 @@ final class AdsControlsViewController: UIViewController {
         }
     }
 
-
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
         stackView.frame = view.bounds.inset(by: view.safeAreaInsets)
     }
 
-
     // MARK: Present Fullscreen
 
-
     func createFullscreenNavigationItem() -> UIBarButtonItem {
-        UIBarButtonItem.init(image: UIImage.init(systemName: "arrow.up.left.and.arrow.down.right"), style: .plain, target: self, action: #selector(presentFullscreenAdsControlsViewController))
+        UIBarButtonItem(image: UIImage(systemName: "arrow.up.left.and.arrow.down.right"), style: .plain, target: self, action: #selector(presentFullscreenAdsControlsViewController))
     }
-
 
     @objc
     func presentFullscreenAdsControlsViewController() {

@@ -1,56 +1,60 @@
-import SwiftUI
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
+
 import OVKit
+import SwiftUI
 
 class SettingsViewController: UIHostingController<SettingsView> {
-    
     /// Включает режим отображения плеера, на котором находится фокус автоплея.
-    @objc public static var focusDebug = false
+    @objc
+    static var focusDebug = false
     /// Включает загрузку видео в формате HLS
-    @objc public static var useHLS = false
+    @objc
+    static var useHLS = false
 }
 
 struct SettingsView: View {
-
     @AppStorage(Environment.demo_userIdKey)
-    private var userId: String = ""
+    private var userId = ""
 
     @AppStorage(Environment.demo_advDebugKey)
-    private var advDebug: Bool = false
+    private var advDebug = false
 
     @AppStorage(Environment.demo_advDeviceIdKey)
-    private var advDeviceId: String = ""
+    private var advDeviceId = ""
 
     @AppStorage(Environment.demo_advCustomSlotIdKey)
-    private var advCustomSlotId: String = ""
+    private var advCustomSlotId = ""
 
     @AppStorage(Environment.demo_advCustomCreativeTypeKey)
-    private var advCustomCreativeType: String = ""
+    private var advCustomCreativeType = ""
 
     @AppStorage(Environment.demo_advExpIdKey)
-    private var advExpId: String = ""
+    private var advExpId = ""
 
-#if DEBUG
-    @AppStorage(Environment.demo_focusDebug)
-    private var focusDebug: Bool = false
-#endif
+    #if DEBUG
+        @AppStorage(Environment.demo_focusDebug)
+        private var focusDebug = false
+    #endif
 
     @AppStorage(Environment.demo_hlsDownload)
-    private var videoInHLS: Bool = false
+    private var videoInHLS = false
 
     @AppStorage(Environment.demo_apiClientIdKey)
-    private var clientId: String = ""
+    private var clientId = ""
 
     @AppStorage(Environment.demo_apiSecretKey)
-    private var clientSecret: String = ""
+    private var clientSecret = ""
 
     @State
-    private var creativeType: MyTargetCreativeType = .auto
+    private var creativeType = MyTargetCreativeType.auto
 
     var body: some View {
         Form {
             Section {
                 TextField("[0-9]+", text: $userId)
-                    .onChange(of: userId, perform: self.updateUserId)
+                    .onChange(of: userId, perform: updateUserId)
             } header: {
                 Text("User ID")
             } footer: {
@@ -73,22 +77,22 @@ struct SettingsView: View {
             } header: {
                 Text("VK API Credentials")
             }
-#if DEBUG
-            Section {
-                Toggle(isOn: $focusDebug.animation()) {
-                    Text("Focus Preview")
+            #if DEBUG
+                Section {
+                    Toggle(isOn: $focusDebug.animation()) {
+                        Text("Focus Preview")
+                    }
+                    .onChange(of: focusDebug, perform: updateFocusDebug)
+                } footer: {
+                    Text("Enable Focus Preview for autoplay feature.")
                 }
-                .onChange(of: focusDebug, perform: self.updateFocusDebug)
-            } footer: {
-                Text("Enable Focus Preview for autoplay feature.")
-            }
-#endif
+            #endif
 
             Section {
                 Toggle(isOn: $videoInHLS.animation()) {
                     Text("Download videos in HLS")
                 }
-                .onChange(of: videoInHLS, perform: self.updateHLS)
+                .onChange(of: videoInHLS, perform: updateHLS)
             }
 
             Section {
@@ -98,13 +102,13 @@ struct SettingsView: View {
                             Toggle(isOn: $advDebug.animation()) {
                                 Text("Debug Mode")
                             }
-                            .onChange(of: advDebug, perform: self.updateAdvDebug)
+                            .onChange(of: advDebug, perform: updateAdvDebug)
                         }
                         if advDebug {
                             // Slot ID
                             Section {
                                 TextField("Optional [0-9]+", text: $advCustomSlotId)
-                                    .onChange(of: advCustomSlotId, perform: self.updateCustomSlotId)
+                                    .onChange(of: advCustomSlotId, perform: updateCustomSlotId)
                             } header: {
                                 Text("Custom Slot ID")
                             } footer: {
@@ -119,7 +123,7 @@ struct SettingsView: View {
                                     Text("Instream").tag(MyTargetCreativeType.instream)
                                 }
                                 .pickerStyle(.segmented)
-                                .onChange(of: creativeType, perform: self.updateCreativeType)
+                                .onChange(of: creativeType, perform: updateCreativeType)
                             } header: {
                                 Text("Creative Type")
                             } footer: {
@@ -129,7 +133,7 @@ struct SettingsView: View {
                             Section {
                                 TextField("Optional String", text: $advExpId)
                                     .minimumScaleFactor(0.5)
-                                    .onChange(of: advExpId, perform: self.updateAdvExpId)
+                                    .onChange(of: advExpId, perform: updateAdvExpId)
                             } header: {
                                 Text("Experiment Id")
                             } footer: {
@@ -139,7 +143,7 @@ struct SettingsView: View {
                             Section {
                                 TextField("Optional String", text: $advDeviceId)
                                     .minimumScaleFactor(0.5)
-                                    .onChange(of: advDeviceId, perform: self.updateAdvDeviceId)
+                                    .onChange(of: advDeviceId, perform: updateAdvDeviceId)
                             } header: {
                                 Text("Test Device ID")
                             } footer: {
@@ -162,7 +166,7 @@ struct SettingsView: View {
         }
     }
 
-    // MARK - Private
+    // MARK: - Private
 
     private func updateUserId(value: String) {
         let number = UInt(value)
@@ -203,10 +207,10 @@ struct SettingsView: View {
 
     #if DEBUG
 
-    private func updateFocusDebug(value: Bool) {
-        focusDebug = value
-        SettingsViewController.focusDebug = focusDebug
-    }
+        private func updateFocusDebug(value: Bool) {
+            focusDebug = value
+            SettingsViewController.focusDebug = focusDebug
+        }
 
     #endif
 
@@ -214,7 +218,6 @@ struct SettingsView: View {
         videoInHLS = value
         SettingsViewController.useHLS = videoInHLS
     }
-
 }
 
 @available(iOS 13.0, *)

@@ -1,36 +1,34 @@
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
+
 import UIKit
 
-
 class ViewResizer: NSObject, UIGestureRecognizerDelegate {
-
-    public var isEnabled: Bool = false {
+    var isEnabled = false {
         didSet {
             panGesture.isEnabled = isEnabled
         }
     }
 
-
-    public func activate() {
+    func activate() {
         panEnablingGesture.isEnabled = true
     }
 
-
-    public var minHeight: CGFloat = 0.0
-    public var minWidth: CGFloat = 0.0
-
+    var minHeight: CGFloat = 0.0
+    var minWidth: CGFloat = 0.0
 
     init(with view: UIView) {
         self.view = view
         super.init()
         self.view.addGestureRecognizer(panGesture)
-        beganFrame = view.frame
+        self.beganFrame = view.frame
         self.view.addGestureRecognizer(panEnablingGesture)
     }
 
     // MARK: Private
 
     private let view: UIView
-
 
     private lazy var panGesture = {
         let gesture = UIPanGestureRecognizer()
@@ -40,7 +38,6 @@ class ViewResizer: NSObject, UIGestureRecognizerDelegate {
         return gesture
     }()
 
-
     private lazy var panEnablingGesture = {
         let gesture = UITapGestureRecognizer()
         gesture.delegate = self
@@ -49,9 +46,7 @@ class ViewResizer: NSObject, UIGestureRecognizerDelegate {
         return gesture
     }()
 
-
-    private var beganFrame: CGRect = .zero
-
+    private var beganFrame = CGRect.zero
 
     @objc
     private func togglePan(_ gesture: UIPanGestureRecognizer) {
@@ -67,12 +62,17 @@ class ViewResizer: NSObject, UIGestureRecognizerDelegate {
         switch gesture.state {
         case .possible: break
         case .began: beganFrame = view.frame
-        case .changed, .cancelled, .ended, .failed:
+        case .changed,
+             .cancelled,
+             .ended,
+             .failed:
             let translation = gesture.translation(in: gesture.view?.superview)
             view.frame = .init(
                 origin: beganFrame.origin,
-                size: .init(width: max(minWidth, beganFrame.width + translation.x),
-                            height: max(minHeight, beganFrame.height + translation.y))
+                size: .init(
+                    width: max(minWidth, beganFrame.width + translation.x),
+                    height: max(minHeight, beganFrame.height + translation.y)
+                )
             ).integral
         @unknown default:
             break

@@ -1,29 +1,27 @@
-import UIKit
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
 
+import UIKit
 
 protocol Counter {
     var count: Int? { get }
 }
 
-
 class TapsCounter: Counter {
-
-    public var count: Int? {
+    var count: Int? {
         didSet {
             handler()
         }
     }
 
-
-    public func beginCountTaps(on view: UIView) {
+    func beginCountTaps(on view: UIView) {
         view.addGestureRecognizer(tapGestureRecognizer)
     }
 
-
-    public func endCountTaps(on view: UIView) {
+    func endCountTaps(on view: UIView) {
         view.removeGestureRecognizer(tapGestureRecognizer)
     }
-
 
     init(maxCount: Int, handler: @escaping () -> Void) {
         self.maxCount = maxCount
@@ -33,11 +31,8 @@ class TapsCounter: Counter {
     // MARK: Private
 
     private let maxCount: Int
-    private let handler: (() -> ())
-    private lazy var tapGestureRecognizer: UITapGestureRecognizer = {
-        UITapGestureRecognizer(target: self, action: #selector(tap))
-    }()
-
+    private let handler: () -> Void
+    private lazy var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
 
     @objc
     private func tap() {

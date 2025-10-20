@@ -1,11 +1,13 @@
-import UIKit
-import OVKit
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
 
+import OVKit
+import UIKit
 
 class DownloadsController: CollectionController {
-    
     private var itemModels = [DownloadItemModel]()
-    
+
     init() {
         let layout = UICollectionViewFlowLayout()
         var height: CGFloat = 48
@@ -16,50 +18,52 @@ class DownloadsController: CollectionController {
         layout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.size.width, height: 36)
         super.init(collectionViewLayout: layout)
     }
-    
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         navigationItem.title = "Downloads"
-        
+
         configurePauseButton(forPause: true)
-        
+
         collectionView.register(DownloadsCollectionCell.self, forCellWithReuseIdentifier: DownloadsCollectionCell.reuseId)
-        collectionView.register(DownloadsCollectionFooter.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                withReuseIdentifier: DownloadsCollectionFooter.reuseId)
+        collectionView.register(
+            DownloadsCollectionFooter.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: DownloadsCollectionFooter.reuseId
+        )
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = false
-        
+
         collectionView.delegate = self
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         if isFirstAppearance {
             DownloadService.shared.addListener(self)
         }
-        
+
         updateDataSource()
     }
-    
+
     // MARK: - Private
-    
+
     private func updateDataSource() {
         DispatchQueue.global(qos: .userInitiated).async {
             let items: [DownloadItemModel] = DownloadService.shared.items.map { item in
                 let video = DownloadService.shared.getVideo(of: item, forLocalPlayback: true)
                 return DownloadItemModel(persistentItem: item, video: video)
             }
-            
+
             DispatchQueue.main.async {
                 self.itemModels = items
                 self.collectionView.reloadData()
@@ -75,15 +79,18 @@ class DownloadsController: CollectionController {
             }
         }
     }
-    
+
     private func configurePauseButton(forPause: Bool) {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: forPause ? .pause : .play,
-                                                            target: self,
-                                                            action: #selector(pauseButtonAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: forPause ? .pause : .play,
+            target: self,
+            action: #selector(pauseButtonAction)
+        )
     }
-    
+
     private var downloadsPaused = false
-    @objc private func pauseButtonAction() {
+    @objc
+    private func pauseButtonAction() {
         if downloadsPaused {
             downloadsPaused = false
             configurePauseButton(forPause: true)
@@ -99,39 +106,42 @@ class DownloadsController: CollectionController {
 // MARK: - UICollectionViewDataSource
 
 extension DownloadsController {
-    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        1
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemModels.count
+        itemModels.count
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DownloadsCollectionCell.reuseId, for: indexPath) as! DownloadsCollectionCell
-        
+
         cell.update(with: itemModels[indexPath.item])
         cell.uiDelegate = self
         return cell
     }
-    
-    override func collectionView(_ collectionView: UICollectionView,
-                                 viewForSupplementaryElementOfKind kind: String,
-                                 at indexPath: IndexPath) -> UICollectionReusableView {
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                         withReuseIdentifier: DownloadsCollectionFooter.reuseId,
-                                                                         for: indexPath) as? DownloadsCollectionFooter
-            guard let footer = footer else {
+            let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: DownloadsCollectionFooter.reuseId,
+                for: indexPath
+            ) as? DownloadsCollectionFooter
+            guard let footer else {
                 return UICollectionReusableView()
             }
-            
+
             footerView = footer
             updateFooter()
             return footer
         }
-        
+
         return UICollectionReusableView()
     }
 }
@@ -139,7 +149,6 @@ extension DownloadsController {
 // MARK: - UICollectionViewDelegate
 
 extension DownloadsController {
-    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = itemModels[indexPath.item]
         PlayerView.showFullscreen(model.video, on: self, fromTime: nil)
@@ -149,7 +158,6 @@ extension DownloadsController {
 // MARK: - DownloadsCollectionCellUIDelegate
 
 extension DownloadsController: DownloadsCollectionCellUIDelegate {
-    
     func cancelDownload(of model: DownloadItemModel) {
         DownloadService.shared.deleteVideo(model.video)
     }
@@ -158,21 +166,20 @@ extension DownloadsController: DownloadsCollectionCellUIDelegate {
 // MARK: - PersistenceManagerListener
 
 extension DownloadsController: PersistenceManagerListener {
-    
     func persistenceManager(_ manager: PersistenceManager, didFailWithError error: Error) {
         // Ignore
     }
-    
+
     func persistenceManager(_ manager: PersistenceManager, added item: PersistentItem) {
         updateDataSource()
         updateFooter()
     }
-    
+
     func persistenceManager(_ manager: PersistenceManager, removed item: PersistentItem) {
         updateDataSource()
         updateFooter()
     }
-    
+
     func persistenceManager(_ manager: PersistenceManager, updatedStatusOf item: PersistentItem) {
         if manager.state(of: item).downloadState == .finished {
             updateFooter()

@@ -1,5 +1,8 @@
-import Foundation
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
 
+import Foundation
 
 enum ApiSessionError: CustomNSError {
     /// Неверный запрос
@@ -16,39 +19,38 @@ enum ApiSessionError: CustomNSError {
     case videoCountDoesNotMatch
     /// Неверный формат VK Video ID
     case vkVideoIdFormat
-    
-    
+
     static var errorDomain: String {
         "OVKApiSessionError"
     }
-    
+
     var errorCode: Int {
         switch self {
-        case .invalidRequest:           return 0
-        case .invalidResponse(_):       return 1
-        case .parse(_):                 return 2
-        case .obtainToken(_):           return 3
-        case .vkApi(_, _):              return 4
-        case .videoCountDoesNotMatch:   return 5
-        case .vkVideoIdFormat:          return 6
+        case .invalidRequest: return 0
+        case .invalidResponse: return 1
+        case .parse: return 2
+        case .obtainToken: return 3
+        case .vkApi: return 4
+        case .videoCountDoesNotMatch: return 5
+        case .vkVideoIdFormat: return 6
         }
     }
-    
+
     var errorUserInfo: [String: Any] {
         switch self {
-        case .invalidResponse(let error as NSError):
+        case let .invalidResponse(error as NSError):
             return [NSUnderlyingErrorKey: error]
-            
-        case .parse(let error as NSError):
+
+        case let .parse(error as NSError):
             return [NSUnderlyingErrorKey: error]
-            
-        case .obtainToken(let error as NSError):
+
+        case let .obtainToken(error as NSError):
             return [NSUnderlyingErrorKey: error]
-            
-        case .vkApi(let code, let message):
+
+        case let .vkApi(code, message):
             return [
-                "code"      : code,
-                "message"   : message,
+                "code": code,
+                "message": message,
             ]
 
         default:

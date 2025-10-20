@@ -1,15 +1,14 @@
-import UIKit
-import OVKit
+//
+//  Copyright © 2024 - present, VK. All rights reserved.
+//
 
+import OVKit
+import UIKit
 
 final class AdsSupplementaryViewController: UIViewController {
-
-
     private var contentContainerView = UIView()
 
-
     private var supplementaryView: SupplementaryAdControlsView?
-
 
     override func loadView() {
         super.loadView()
@@ -24,12 +23,14 @@ final class AdsSupplementaryViewController: UIViewController {
         view.addSubview(contentContainerView)
 
         // Supplementary
-        supplementaryView = SupplementaryAdControlsView(frame: .zero, style: SupplementaryAdViewStyle.init(
-                                                                edgeInsets: .init(top: 12, left: 12, bottom: 12, right: 12),
-                                                                buttonInsets: .init(top: 1, left: 0, bottom: 1, right: 0),
-                                                                imageRadius: 14
-                                                            ),
-                                                        showsProgress: true
+        supplementaryView = SupplementaryAdControlsView(
+            frame: .zero,
+            style: SupplementaryAdViewStyle(
+                edgeInsets: .init(top: 12, left: 12, bottom: 12, right: 12),
+                buttonInsets: .init(top: 1, left: 0, bottom: 1, right: 0),
+                imageRadius: 14
+            ),
+            showsProgress: true
         )
         if let supplementaryView {
             supplementaryView.overrideUserInterfaceStyle = .dark
@@ -41,7 +42,6 @@ final class AdsSupplementaryViewController: UIViewController {
             contentContainerView.addSubview(supplementaryView)
         }
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +58,6 @@ final class AdsSupplementaryViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
     }
-
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
