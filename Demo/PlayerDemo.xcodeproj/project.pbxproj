@@ -13,6 +13,7 @@
 		37A3A1862E5C5A40008008D7 /* CustomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1842E5C5A40008008D7 /* CustomController.swift */; };
 		37D5D9E72E65A1BD00B4E928 /* URLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5D9E62E65A1BD00B4E928 /* URLParser.swift */; };
 		3D0819042E4126F80016CEDC /* CustomTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0819032E4126F30016CEDC /* CustomTimeline.swift */; };
+		3D2D7CA92EA7C24400FFC9B3 /* SurfaceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2D7CA82EA7C24000FFC9B3 /* SurfaceAnimation.swift */; };
 		40A9BA762E1FAC3100BC5384 /* Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 40A9BA752E1FAC3100BC5384 /* Configuration.xcconfig */; };
 		40E3AADB2E1FAA5300EF2F75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E3AAD52E1FAA5300EF2F75 /* Assets.xcassets */; };
 		40E3AADD2E1FAA5300EF2F75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40E3AAD92E1FAA5300EF2F75 /* LaunchScreen.storyboard */; };
@@ -89,6 +90,7 @@
 		37A3A1842E5C5A40008008D7 /* CustomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomController.swift; sourceTree = "<group>"; };
 		37D5D9E62E65A1BD00B4E928 /* URLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParser.swift; sourceTree = "<group>"; };
 		3D0819032E4126F30016CEDC /* CustomTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTimeline.swift; sourceTree = "<group>"; };
+		3D2D7CA82EA7C24000FFC9B3 /* SurfaceAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfaceAnimation.swift; sourceTree = "<group>"; };
 		40A9BA752E1FAC3100BC5384 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Configuration.xcconfig; sourceTree = "<group>"; };
 		40E3AAD52E1FAA5300EF2F75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40E3AAD62E1FAA5300EF2F75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -177,6 +179,14 @@
 				37A3A1842E5C5A40008008D7 /* CustomController.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		3D2D7CA72EA7C23200FFC9B3 /* SurfaceAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				3D2D7CA82EA7C24000FFC9B3 /* SurfaceAnimation.swift */,
+			);
+			path = SurfaceAnimation;
 			sourceTree = "<group>";
 		};
 		40E3AADA2E1FAA5300EF2F75 /* Resources */ = {
@@ -291,6 +301,7 @@
 		D4CA47E72575A267009C5DB3 /* PlayerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3D2D7CA72EA7C23200FFC9B3 /* SurfaceAnimation */,
 				D4B535142B712DA5005AB39D /* Api */,
 				EA2865692949ECAD0006EFE8 /* Transitions */,
 				EA3E58B4291D4CCA00605471 /* Multiplay */,
@@ -506,6 +517,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D2D7CA92EA7C24400FFC9B3 /* SurfaceAnimation.swift in Sources */,
 				D4B5352E2B712F22005AB39D /* ApiProvider.swift in Sources */,
 				B1B093ED2D956E660079B2CB /* FullscreenAdsControlsViewContainer.swift in Sources */,
 				D4B535312B712F22005AB39D /* ApiSession.swift in Sources */,
@@ -717,7 +729,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.51.1;
+				CURRENT_PROJECT_VERSION = 2.52;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -726,7 +738,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.51.1;
+				MARKETING_VERSION = 2.52;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -745,7 +757,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.51.1;
+				CURRENT_PROJECT_VERSION = 2.52;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -754,7 +766,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.51.1;
+				MARKETING_VERSION = 2.52;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -792,7 +804,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.51.1;
+				version = 2.52.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

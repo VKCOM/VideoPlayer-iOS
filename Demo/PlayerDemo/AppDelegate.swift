@@ -74,6 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment.shared._audioRouteChangeStrategy = NSNumber(value: 1)
         Environment._cmafAbrHarmonicCount = 12
         Environment.shared._fixURLParamsParser = true
+        Environment.shared._fixPixelBufferCopy = true
+        Environment._surfaceView = true
 
         if ProcessInfo.processInfo.environment["DEMO_DISABLE_ANIMATIONS"] == "1" {
             UIView.setAnimationsEnabled(false)
