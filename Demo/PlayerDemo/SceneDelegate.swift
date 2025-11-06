@@ -91,8 +91,8 @@ extension SceneDelegate: PlayerManagerDelegate {
         return []
     }
 
-    func pipWindow(_ pip: PiPWindow, restoreUserInterfaceForPipMaximizeWithCompletionHandler completionHandler: @escaping (PlayerView?) -> Void) {
-        completionHandler(nil)
+    func pipWindow(_ pip: PiPWindow, restoreUserInterfaceForPipMaximizeWithCompletionHandler completionHandler: @escaping (PlayerView?, Bool) -> Void) {
+        completionHandler(nil, true)
     }
 
     func pipScreenInsets(_ playerView: OVKit.PlayerView) -> UIEdgeInsets {
