@@ -2,9 +2,38 @@ import Foundation
 import OVKit
 import OVKitUIComponents
 import OVKResources
+import OVPlayerKit
 import UIKit
 
 class SurfaceAnimationViewController: UIViewController {
+
+    enum Constants {
+
+        static let playerHeightMax: CGFloat = 300
+
+        static let playerHeightMin: CGFloat = 200
+
+        static let initialAnimationDuration: TimeInterval = 0.5
+
+        static let animationDelay: TimeInterval = 1.0
+
+        static let useRoundCorners = false
+
+        static let initialAnimationTimingFunction = UIView.AnimationCurve.easeInOut
+
+        static let initialSpring = true
+
+        static func springTiming(duration: CFTimeInterval) -> UISpringTimingParameters {
+            if #available(iOS 17.0, *) {
+                // UIKit не имеет методов, подобных `-[CASpringAnimation initWithPerceptualDuration:bounce:]`,
+                // поэтому имитируем результат с помощью UISpringTimingParameters
+                UISpringTimingParameters(duration: duration, bounce: 0.2)
+            } else {
+                // Предсказать длительность анимации непросто, поэтому тут просто заглушка для старых ОС.
+                UISpringTimingParameters(mass: 0.02, stiffness: 30.0, damping: 1.0, initialVelocity: .zero)
+            }
+        }
+    }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         .allButUpsideDown
@@ -27,8 +56,9 @@ class SurfaceAnimationViewController: UIViewController {
 
         override func layoutSubviews() {
             super.layoutSubviews()
+
+            playerView.bounds = .init(origin: .zero, size: bounds.size)
             playerView.center = .init(x: bounds.midX, y: bounds.midY)
-            playerView.bounds.size = bounds.size
         }
     }
 
@@ -62,14 +92,14 @@ class SurfaceAnimationViewController: UIViewController {
 
     func newPlayerView() -> OVKit.PlayerView {
         let controls = ControlsView()
-        let playerView = OVKit.PlayerView(frame: .init(x: 0, y: 0, width: 100, height: 100), gravity: .fit, customControls: controls)
+        let playerView = OVKit.PlayerView(frame: .init(x: 0, y: 0, width: dimension, height: dimension), gravity: .fit, customControls: controls)
         playerView.soundOn = true
         playerView.backgroundPlaybackPolicy = .continueAudioAndVideo
         playerView.loopBehavior = .always
         playerView.disableFinishedCover = true
         playerView.showsPreviewOnFinish = false
         playerView.customPreviewBackgroundColor = .yellow
-        playerView.backgroundColor = .red
+        playerView.backgroundColor = .black
         playerView.startButtonBehavior = .init(withAutoplay: .hidden, isActiveWhenAutoplayIsDisabled: true)
         playerView.allowsMultiplay = true
         playerView._prefersCustomRenderer = useMetal
@@ -86,10 +116,10 @@ class SurfaceAnimationViewController: UIViewController {
         if let playerViewContainer {
             playerViewContainer.backgroundColor = .brown
             view.insertSubview(playerViewContainer, at: 0)
+            playerViewContainer.bounds = .init(origin: .zero, size: .init(width: Constants.playerHeightMin, height: Constants.playerHeightMin))
             playerViewContainer.center = view.center
-            playerViewContainer.bounds.size = CGSize(width: 200, height: 200)
             if useRoundCorners {
-                playerViewContainer.layer.cornerRadius = 100.0
+                playerViewContainer.layer.cornerRadius = radius
                 playerViewContainer.layer.masksToBounds = true
                 playerViewContainer.layer.cornerCurve = .circular
             }
@@ -119,11 +149,11 @@ class SurfaceAnimationViewController: UIViewController {
         stackView.spacing = spacing
 
         let noAnimationButton = createButton(title: "Force Layout", action: #selector(noAnimation))
-        let animateOldButton = createButton(title: "UIView.animate", action: #selector(animateOld))
-        let animateNewButton = createButton(title: "Property Animator", action: #selector(animateNew))
+        let animateUIViewButton = createButton(title: "UIView.animate", action: #selector(animate))
+        let animatorButton = createButton(title: "Property Animator", action: #selector(animatePropertyAnimator))
         stackView.addArrangedSubview(noAnimationButton)
-        stackView.addArrangedSubview(animateOldButton)
-        stackView.addArrangedSubview(animateNewButton)
+        stackView.addArrangedSubview(animateUIViewButton)
+        stackView.addArrangedSubview(animatorButton)
 
         containerView.contentView.addSubview(stackView)
 
@@ -225,7 +255,7 @@ class SurfaceAnimationViewController: UIViewController {
     /// ID of square clip or video to simulate video message
     private let videoId = "1265333_456247154"
 
-    private var duration: TimeInterval = 0.5 {
+    private var duration: TimeInterval = Constants.initialAnimationDuration {
         didSet {
             updateAnimator()
             updateContextMenu()
@@ -246,30 +276,32 @@ class SurfaceAnimationViewController: UIViewController {
         }
     }
 
-    private var curve = UIView.AnimationCurve.easeInOut {
+    private var curve = Constants.initialAnimationTimingFunction {
         didSet {
             updateAnimator()
             updateContextMenu()
         }
     }
 
-    private var useRoundCorners = true {
+    private var useSpring = Constants.initialSpring {
+        didSet {
+            updateAnimator()
+            updateContextMenu()
+        }
+    }
+
+    private var useRoundCorners = Constants.useRoundCorners {
         didSet {
             setupPlayerViewContainer()
             updateContextMenu()
         }
     }
 
-    private let maxSize = 300.0
-
-    private let minSize = 200.0
-
     private var isExpanded = false {
         didSet {
             if (self.view.next as? UIViewController) != nil {
                 // UIViewController, for demo purpose
                 self.view.setNeedsLayout()
-                self.view.layoutIfNeeded()
             } else {
                 // UIView
                 layoutPlayerView()
@@ -278,7 +310,7 @@ class SurfaceAnimationViewController: UIViewController {
     }
 
     private var dimension: CGFloat {
-        isExpanded ? minSize : maxSize
+        isExpanded ? Constants.playerHeightMin : Constants.playerHeightMax
     }
 
     private var radius: CGFloat {
@@ -292,19 +324,31 @@ class SurfaceAnimationViewController: UIViewController {
         )
     }
 
-    private lazy var animator: UIViewPropertyAnimator = {
-        let animator = UIViewPropertyAnimator(duration: duration, curve: curve)
-        animator.isInterruptible = true
-        return animator
-    }()
+    private lazy var animator: UIViewPropertyAnimator = buildAnimator(duration: duration)
 
     private func updateAnimator() {
-        if duration < CGFLOAT_EPSILON {
-            animator = UIViewPropertyAnimator(duration: CGFLOAT_EPSILON, curve: curve)
+        animator = buildAnimator(duration: duration)
+    }
+
+    private func buildAnimator(duration: TimeInterval) -> UIViewPropertyAnimator {
+        let animator = if useSpring {
+            UIViewPropertyAnimator(
+                duration: max(duration, Double.ulpOfOne), // Значение 0.0 вызывает проблемы
+                timingParameters: Constants.springTiming(duration: duration)
+            )
         } else {
-            animator = UIViewPropertyAnimator(duration: duration, curve: curve)
+            UIViewPropertyAnimator(
+                duration: max(duration, Double.ulpOfOne), // Значение 0.0 вызывает проблемы
+                curve: curve
+            )
+        }
+        if #available(iOS 26.0, *) {
+            // По умолчанию - false, но важно отметить то, что это свойство не нужно включать -
+            // будет хуже, так как видимое состояние SBDL sublayers будет сбрасываться перед анимацией.
+            animator.flushUpdates = false
         }
         animator.isInterruptible = true
+        return animator
     }
 
     // MARK: Actions
@@ -318,7 +362,17 @@ class SurfaceAnimationViewController: UIViewController {
     }
 
     @objc
-    private func animateOld() {
+    private func animate() {
+        if useSpring {
+            animateUIViewSpring()
+        } else {
+            animateUIView()
+        }
+    }
+
+    private func animateUIView() {
+        self.togglePlayerSize()
+
         UIView.animate(
             withDuration: duration,
             delay: delay,
@@ -332,29 +386,75 @@ class SurfaceAnimationViewController: UIViewController {
                     return
                 }
 
-                self.togglePlayerSize()
+                self.view.layoutIfNeeded()
             }
         )
     }
 
     @objc
-    private func animateNew() {
+    private func animateUIViewSpring() {
+        self.togglePlayerSize()
+
+        UIView.animate(
+            withDuration: duration,
+            delay: delay,
+            usingSpringWithDamping: 1.0,
+            initialSpringVelocity: 0.0,
+            options: [], // пустой набор - не баг!
+            animations: { [weak self] in
+                guard let self else {
+                    return
+                }
+
+                self.view.layoutIfNeeded()
+            }
+        )
+    }
+
+    @objc
+    private func animatePropertyAnimator() {
         animator.stopAnimation(true)
         animator.finishAnimation(at: .current)
+
+        self.togglePlayerSize()
+
         animator.addAnimations { [weak self] in
             guard let self else {
                 return
             }
 
-            self.togglePlayerSize()
+            self.view.layoutIfNeeded()
         }
         animator.startAnimation(afterDelay: delay)
     }
 
+    private func cleanAllAnimationsFromPlayer() {
+        guard let playerViewContainer else { return }
+
+        removeAllAnimationsRecursively(from: playerViewContainer)
+    }
+
     @objc
     private func noAnimation() {
-        UIView.performWithoutAnimation {
-            togglePlayerSize()
+        cleanAllAnimationsFromPlayer()
+        CATransaction.flush()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        togglePlayerSize()
+        CATransaction.commit()
+    }
+
+    func removeAllAnimationsRecursively(from view: UIView) {
+        removeAllAnimationsRecursively(from: view.layer)
+        for subview in view.subviews {
+            removeAllAnimationsRecursively(from: subview)
+        }
+    }
+
+    func removeAllAnimationsRecursively(from layer: CALayer) {
+        layer.removeAllAnimations()
+        for sublayer in layer.sublayers ?? [] {
+            removeAllAnimationsRecursively(from: sublayer)
         }
     }
 
@@ -410,8 +510,8 @@ class SurfaceAnimationViewController: UIViewController {
         let size = CGSize(width: dimension, height: dimension)
         let center = center
         if let playerViewContainer {
+            playerViewContainer.bounds = .init(origin: .zero, size: size)
             playerViewContainer.center = center
-            playerViewContainer.bounds.size = size
             if self.useRoundCorners {
                 playerViewContainer.layer.cornerRadius = radius
             }
@@ -433,6 +533,7 @@ extension SurfaceAnimationViewController {
             createDurationMenu(),
             createDelayMenu(),
             createCurveMenu(),
+            createSpringMenu(),
             createRoundCornersMenu()
         ])
     }
@@ -442,7 +543,7 @@ extension SurfaceAnimationViewController {
             titlePrefix: "Duration",
             options: [
                 (0.0, "0.0s"),
-                (0.2, "0.2s"),
+                (0.3, "0.3s"),
                 (0.5, "0.5s"),
                 (1.0, "1.0s"),
                 (3.0, "3.0s")
@@ -459,7 +560,7 @@ extension SurfaceAnimationViewController {
             titlePrefix: "Delay",
             options: [
                 (0.0, "OFF"),
-                (1.0, "ON")
+                (Constants.animationDelay, "ON \(String(format: "%.1f", Constants.animationDelay))s")
             ],
             currentValue: delay,
             onSelect: { [weak self] newDelay in
@@ -480,6 +581,20 @@ extension SurfaceAnimationViewController {
             currentValue: curve,
             onSelect: { [weak self] newCurve in
                 self?.curve = newCurve
+            }
+        )
+    }
+
+    private func createSpringMenu() -> UIMenu {
+        UIMenu.createMenu(
+            titlePrefix: "Spring",
+            options: [
+                (true, "ON"),
+                (false, "OFF")
+            ],
+            currentValue: useSpring,
+            onSelect: { [weak self] newValue in
+                self?.useSpring = newValue
             }
         )
     }

@@ -72,6 +72,7 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
                 bottomShadow.isHidden = true
                 timelineView.isHidden = true
                 soundButton.isHidden = true
+                activityIndicator.isRunning = false
                 subtitlesView = nil
                 doubleTapSeek.isEnabled = false
                 return
@@ -95,6 +96,8 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
                     playPauseButton.isHidden = true
                 }
             }
+
+            activityIndicator.isRunning = mask.hasControl(.loading)
 
             let timelineWasHidden = timelineView.isHidden
             timelineView.isLiveAppearance = mask.hasControl(.live)
@@ -215,6 +218,8 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
     }
 
     // MARK: - Timeline
+
+    lazy var activityIndicator = ActivityIndicator(style: .standard, throttleStart: false)
 
     lazy var timelineView: TimelineView = {
         let view = TimelineView()
@@ -421,6 +426,7 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
         addSubview(soundButton)
         addSubview(playPauseButton)
         addSubview(timelineView)
+        addSubview(activityIndicator)
 
         buttonsContainer.addArrangedSubview(settingsButton)
         buttonsContainer.addArrangedSubview(pipButton)
@@ -442,6 +448,8 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
         super.layoutSubviews()
 
         playPauseButton.center = CGPoint(x: bounds.midX, y: bounds.midY)
+        activityIndicator.center = playPauseButton.center
+
         timelineView.frame = CGRect(x: 18, y: bounds.height - 36, width: bounds.width - 36, height: 28)
         topShadow.frame = CGRect(x: 0, y: 0, width: bounds.width, height: topShadow.bounds.height)
         bottomShadow.frame = CGRect(x: 0, y: bounds.height - bottomShadow.bounds.height, width: bounds.width, height: bottomShadow.bounds.height)

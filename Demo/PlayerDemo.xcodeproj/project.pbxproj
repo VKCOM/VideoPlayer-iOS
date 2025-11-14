@@ -59,6 +59,7 @@
 		EA480D6727B2CA4E00EDDD24 /* PlayerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA480D6627B2CA4E00EDDD24 /* PlayerViewProvider.swift */; };
 		EA480D6927B2D64E00EDDD24 /* PlayerTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA480D6827B2D64E00EDDD24 /* PlayerTransitionAnimator.swift */; };
 		EA68DCF02E7B0D8E00FDEE69 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = EA68DCEF2E7B0D8E00FDEE69 /* AppIcon.icon */; };
+		EAA14C3B2EC72DD800DF03A4 /* OVKitUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = EAA14C3A2EC72DD800DF03A4 /* OVKitUIComponents */; };
 		EAAFC53427BBEB6400033D8B /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFC53327BBEB6400033D8B /* NavigationController.swift */; };
 		EAD0550D28296648002EF645 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD0550C28296648002EF645 /* MenuCell.swift */; };
 		EAD0550F28296686002EF645 /* MenuPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD0550E28296686002EF645 /* MenuPresentationController.swift */; };
@@ -158,6 +159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAA14C3B2EC72DD800DF03A4 /* OVKitUIComponents in Frameworks */,
 				1306CD7FF4EB5A9F13229912 /* VKVideoPlayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,6 +457,7 @@
 			name = PlayerDemo;
 			packageProductDependencies = (
 				55904406B78EC8E5D1E3C4C6 /* VKVideoPlayer */,
+				EAA14C3A2EC72DD800DF03A4 /* OVKitUIComponents */,
 			);
 			productName = PlayerDemo;
 			productReference = D4CA47E52575A267009C5DB3 /* PlayerDemo.app */;
@@ -729,7 +732,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.52;
+				CURRENT_PROJECT_VERSION = 2.52.1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -738,7 +741,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.52;
+				MARKETING_VERSION = 2.52.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -757,7 +760,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.52;
+				CURRENT_PROJECT_VERSION = 2.52.1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -766,7 +769,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.52;
+				MARKETING_VERSION = 2.52.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -804,7 +807,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.52.0;
+				version = 2.52.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -814,6 +817,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66679F29752A9ABDADAEEFC3 /* XCRemoteSwiftPackageReference "VideoPlayer-iOS" */;
 			productName = VKVideoPlayer;
+		};
+		EAA14C3A2EC72DD800DF03A4 /* OVKitUIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66679F29752A9ABDADAEEFC3 /* XCRemoteSwiftPackageReference "VideoPlayer-iOS" */;
+			productName = OVKitUIComponents;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -48,12 +48,14 @@ class TabbarController: UITabBarController {
         #else
             let videoMotion: NavigationController? = nil
             let adsControls: NavigationController? = nil
+            let adsSupplementary: NavigationController? = nil
+            let fullscreenAds: NavigationController? = nil
         #endif
 
         let settings = NavigationController(rootViewController: SettingsViewController(rootView: SettingsView()))
         settings.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape"), selectedImage: nil)
 
-        viewControllers = [single, feed, transitions, multiplay, downloads, rotations, surfaceLayout, videoMotion, adsControls, settings].compactMap { $0 }
+        viewControllers = [single, feed, transitions, multiplay, downloads, rotations, surfaceLayout, videoMotion, adsControls, adsSupplementary, fullscreenAds, settings].compactMap { $0 }
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
