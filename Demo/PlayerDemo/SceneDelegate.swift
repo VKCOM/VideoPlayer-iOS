@@ -75,6 +75,8 @@ extension SceneDelegate: PlayerManagerDelegate {
     }
 
     func makeStatHandlers(for playerView: PlayerView) -> [any StatsHandler] {
+        var handlers = [StatsHandler]()
+
         // Если требуется отправка OneLog статистики, необходимо создать для нее хендлер.
         // guard let video = playerView.video, let handler = StatsHandlerOneLog.makeHandlerForVideo(video)
         // else {
@@ -84,11 +86,14 @@ extension SceneDelegate: PlayerManagerDelegate {
 
         if StatsManager.shared.debugMode {
             if let video = playerView.video, let h = OVTechStatsHandler.makeHandlerForVideo(video, configuration: OVTechStatsHandler.Configuration()) {
-                return [h]
+                handlers.append(h)
             }
         }
 
-        return []
+//        let consoleHandler = StatsHandlerConsole(consolePrefix: "[stats]")
+//        handlers.append(consoleHandler)
+
+        return handlers
     }
 
     func pipWindow(_ pip: PiPWindow, restoreUserInterfaceForPipMaximizeWithCompletionHandler completionHandler: @escaping (PlayerView?, Bool) -> Void) {

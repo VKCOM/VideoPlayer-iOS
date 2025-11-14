@@ -75,13 +75,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment._cmafAbrHarmonicCount = 12
         Environment.shared._fixURLParamsParser = true
         Environment.shared._fixPixelBufferCopy = true
-        Environment._surfaceView = true
+        Environment.shared._allowMultiplayChangeDuringPlayback = true
+        Environment._surfaceView = false
 
         if ProcessInfo.processInfo.environment["DEMO_DISABLE_ANIMATIONS"] == "1" {
             UIView.setAnimationsEnabled(false)
         }
         if ProcessInfo.processInfo.environment["DEMO_AUTO_SHOW_DIAGNOSTICS_VIEW"] == "1" {
             Environment.shared.autoShowDiagnosticsView = true
+        }
+
+        if let rawFormat = ProcessInfo.processInfo.environment["DEMO_INITIAL_VIDEO_FORMAT"],
+           let current = VideoFileFormat(rawValue: rawFormat) {
+            Environment.shared.disabledFormats = Set(VideoFileFormat.allCases.filter { $0 != current })
         }
 
         AppCoordinator.shared.readEnvironmentParams()
