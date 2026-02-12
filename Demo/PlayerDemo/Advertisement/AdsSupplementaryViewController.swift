@@ -3,12 +3,15 @@
 //
 
 import OVKit
+import OVKitUIComponents
 import UIKit
 
 final class AdsSupplementaryViewController: UIViewController {
     private var contentContainerView = UIView()
 
-    private var supplementaryView: SupplementaryAdControlsView?
+    #if !OLD_ADS_OFF
+    private var supplementaryView: OVKitUIComponents.SupplementaryAdControlsView?
+    #endif
 
     override func loadView() {
         super.loadView()
@@ -21,11 +24,11 @@ final class AdsSupplementaryViewController: UIViewController {
         contentContainerView.layer.masksToBounds = true
         contentContainerView.layoutMargins = .init(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
         view.addSubview(contentContainerView)
-
+        #if !OLD_ADS_OFF
         // Supplementary
-        supplementaryView = SupplementaryAdControlsView(
+        supplementaryView = OVKitUIComponents.SupplementaryAdControlsView(
             frame: .zero,
-            style: SupplementaryAdViewStyle(
+            style: OVKitUIComponents.SupplementaryAdViewStyle(
                 edgeInsets: .init(top: 12, left: 12, bottom: 12, right: 12),
                 buttonInsets: .init(top: 1, left: 0, bottom: 1, right: 0),
                 imageRadius: 14
@@ -41,11 +44,13 @@ final class AdsSupplementaryViewController: UIViewController {
             supplementaryView.layer.masksToBounds = true
             contentContainerView.addSubview(supplementaryView)
         }
+        #endif
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        #if !OLD_ADS_OFF
         if let supplementaryView {
             let constraints: [NSLayoutConstraint] = [
                 supplementaryView.centerYAnchor.constraint(equalTo: contentContainerView.centerYAnchor),
@@ -55,6 +60,7 @@ final class AdsSupplementaryViewController: UIViewController {
             ]
             contentContainerView.addConstraints(constraints)
         }
+        #endif
 
         view.backgroundColor = .systemBackground
     }

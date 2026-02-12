@@ -5,6 +5,7 @@
 import AVFoundation
 import CoreMedia.CMTime
 import OVKit
+import OVKitMyTargetPlugin
 import UIKit
 
 class TransitionsController: ViewController {
@@ -17,34 +18,60 @@ class TransitionsController: ViewController {
     }
 
     private lazy var firstPlayer: PlayerView = {
+        #if !OLD_ADS_OFF
         let player = PlayerView(
             frame: .zero,
             gravity: .fit,
             customControls: InplaceCustomControls(frame: .zero),
-            adsProvider: DefaultAdsProvider.autoplay()
+            adsProvider: OVKitMyTargetPlugin.DefaultAdsProvider.autoplay()
         )
+        #else
+        let player = PlayerView(
+            frame: .zero,
+            gravity: .fit,
+            controls: InplaceCustomControls(frame: .zero)
+        )
+        #endif
         player.delegate = self
+        player.accessibilityIdentifier = "video_player.video_container"
         return player
     }()
 
     private lazy var secondPlayer: PlayerView = {
+        #if !OLD_ADS_OFF
         let player = PlayerView(
             frame: .zero,
             gravity: .fill,
             customControls: FeedControlsView(frame: .zero),
-            adsProvider: DefaultAdsProvider.fullscreen()
+            adsProvider: OVKitMyTargetPlugin.DefaultAdsProvider.fullscreen()
         )
+        #else
+        let player = PlayerView(
+            frame: .zero,
+            gravity: .fill,
+            controls: FeedControlsView(frame: .zero)
+        )
+        #endif
         player.delegate = self
+        player.accessibilityIdentifier = "video_player.video_container"
         return player
     }()
 
     private lazy var customProviderPlayer: PlayerView = {
+        #if !OLD_ADS_OFF
         let player = PlayerView(
             frame: .zero,
             gravity: .fill,
             customControls: InplaceCustomControls(frame: .zero),
             adsProvider: CustomTimelineAdsProvider()
         )
+        #else
+        let player = PlayerView(
+            frame: .zero,
+            gravity: .fill,
+            controls: InplaceCustomControls(frame: .zero)
+        )
+        #endif
         player.delegate = self
         return player
     }()
@@ -55,6 +82,7 @@ class TransitionsController: ViewController {
         b.setImage(UIImage(systemName: "rectangle.2.swap"), for: .normal)
         b.addTarget(self, action: #selector(handleSwapButton(_:)), for: .touchUpInside)
         b.sizeToFit()
+        b.accessibilityIdentifier = "standard_button"
         return b
     }()
 
@@ -63,6 +91,7 @@ class TransitionsController: ViewController {
         b.setTitle("Custom", for: .normal)
         b.setImage(UIImage(systemName: "rectangle.2.swap"), for: .normal)
         b.addTarget(self, action: #selector(handleSwapButton(_:)), for: .touchUpInside)
+        b.accessibilityIdentifier = "custom_button"
         b.sizeToFit()
         return b
     }()
@@ -84,36 +113,28 @@ class TransitionsController: ViewController {
         view.addSubview(defaultButton)
         view.addSubview(customButton)
 
-        loadVideo()
+        let parser = URLParser()
+        parser.parseURL(AppCoordinator.shared.initialVideoURL ?? "")
+        let id = parser.vkVideoId ?? "-26006257_456245181"
+        loadVideo(Video(id: id))
     }
 
-    private func loadVideo() {
-        let uiItems = [firstPlayer, secondPlayer, defaultButton, secondPlayer]
-        for uiItem in uiItems {
-            uiItem.isHidden = true
+    private func loadVideo(_ video: Video) {
+        if !video.haveVideoFiles {
+            let uiItems = [firstPlayer, secondPlayer, defaultButton, customButton]
+            for uiItem in uiItems {
+                uiItem.isHidden = true
+            }
         }
 
-        startActivity()
-        ApiSession.shared?.fetch(videoIds: ["-26006257_456245181"]) { [weak self] videos, error in
-            DispatchQueue.main.async {
-                guard let self else {
-                    return
-                }
+        loadVideo(video, for: firstPlayer) { [weak self] success in
+            guard let self, success else {
+                return
+            }
 
-                self.stopActivity()
-                if let error {
-                    self.showError(error.localizedDescription)
-                    return
-                }
-                guard let video = videos?.first else {
-                    self.showError("Something went wrong")
-                    return
-                }
-
-                for uiItem in uiItems {
-                    uiItem.isHidden = false
-                }
-                self.firstPlayer.video = video
+            let uiItems = [self.firstPlayer, self.secondPlayer, self.defaultButton, self.customButton]
+            for uiItem in uiItems {
+                uiItem.isHidden = false
             }
         }
     }

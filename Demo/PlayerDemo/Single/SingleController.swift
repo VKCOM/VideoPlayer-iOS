@@ -5,17 +5,29 @@
 import AVFoundation
 import CoreMedia.CMTime
 import OVKit
+import OVKitMyTargetPlugin
 import UIKit
 
 class SingleController: ViewController {
     private lazy var playerView: PlayerView = {
         let controls = InplaceCustomControls(frame: .zero)
-        let player = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
-        player.delegate = self
-        player.soundOn = true
-        player.backgroundPlaybackPolicy = .continueAudioAndVideo
-        player.accessibilityIdentifier = "video_player.video_container"
-        return player
+        #if OLD_ADS_OFF
+        let playerView = PlayerView(frame: view.bounds, gravity: .fit, controls: controls)
+        #else
+        let playerView = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
+        #endif
+        playerView.interstitialProvider = Environment.shared._enableInterstitial ? MyTargetInterstitialProvider() : nil
+        playerView.delegate = self
+        playerView.soundOn = true
+        playerView.limitMaxQualityToSurfaceSize = (ProcessInfo.processInfo.environment["DEMO_LIMIT_QUALITY_TO_SURFACE"] as? NSString)?.boolValue ?? false
+        playerView.backgroundPlaybackPolicy = if (ProcessInfo.processInfo.environment["DEMO_DISABLE_BACKGROUND_PLAYBACK"] as? NSString)?.boolValue ?? false {
+            .pause
+        } else {
+            .continueAudioAndVideo
+        }
+        playerView.onlyAudioMode = (ProcessInfo.processInfo.environment["DEMO_ENABLE_ONLY_AUDIO_PLAYBACK"] as? NSString)?.boolValue ?? false
+        playerView.accessibilityIdentifier = "video_player.video_container"
+        return playerView
     }()
 
     deinit {

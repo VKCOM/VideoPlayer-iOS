@@ -50,6 +50,7 @@
 		D4D425292A9CFED2002A16E5 /* PiPCustomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D425282A9CFED2002A16E5 /* PiPCustomControls.swift */; };
 		D4E8A5A6294D1721002CAA3F /* MultiplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8A5A5294D1721002CAA3F /* MultiplayController.swift */; };
 		D4FC7349282BCCF40055623C /* Video+Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC7348282BCCF40055623C /* Video+Demo.swift */; };
+		DEF8F75D2ED0B79E00EBA51A /* VPMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF8F75C2ED0B79E00EBA51A /* VPMenuOption.swift */; };
 		EA04146B28881B1700A05BB0 /* PlayerViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04146A28881B1700A05BB0 /* PlayerViewContext.swift */; };
 		EA0F26BB28183F71004F126C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F26BA28183F71004F126C /* MenuController.swift */; };
 		EA1656B526BD6F1B007743EE /* FocusOfInterestTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1656B426BD6F1B007743EE /* FocusOfInterestTracker.swift */; };
@@ -132,6 +133,7 @@
 		D4D425282A9CFED2002A16E5 /* PiPCustomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiPCustomControls.swift; sourceTree = "<group>"; };
 		D4E8A5A5294D1721002CAA3F /* MultiplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayController.swift; sourceTree = "<group>"; };
 		D4FC7348282BCCF40055623C /* Video+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Video+Demo.swift"; sourceTree = "<group>"; };
+		DEF8F75C2ED0B79E00EBA51A /* VPMenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPMenuOption.swift; sourceTree = "<group>"; };
 		E805F55F25CABE2100D9F697 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		EA04146A28881B1700A05BB0 /* PlayerViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewContext.swift; sourceTree = "<group>"; };
 		EA0F26BA28183F71004F126C /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 		3D2D7CA72EA7C23200FFC9B3 /* SurfaceAnimation */ = {
 			isa = PBXGroup;
 			children = (
+				DEF8F75C2ED0B79E00EBA51A /* VPMenuOption.swift */,
 				3D2D7CA82EA7C24000FFC9B3 /* SurfaceAnimation.swift */,
 			);
 			path = SurfaceAnimation;
@@ -545,6 +548,7 @@
 				37D5D9E72E65A1BD00B4E928 /* URLParser.swift in Sources */,
 				B1BBFD402D4273410029400D /* AdsControlsViewController.swift in Sources */,
 				D48ADCB22A27489E0066AABF /* ImportFormatView.swift in Sources */,
+				DEF8F75D2ED0B79E00EBA51A /* VPMenuOption.swift in Sources */,
 				D421DB7A2A264DFF002C86E0 /* ImportSourceView.swift in Sources */,
 				D468AEEB2A2784DE00DE52D8 /* ImportTableController.swift in Sources */,
 				D4A11B2E2A9793EA00AF81F6 /* InplaceCustomControls.swift in Sources */,
@@ -732,7 +736,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.52.4;
+				CURRENT_PROJECT_VERSION = 2.53;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -741,10 +745,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.52.4;
+				MARKETING_VERSION = 2.53;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "OLD_ADS_OFF_ DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -760,7 +765,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.52.4;
+				CURRENT_PROJECT_VERSION = 2.53;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -769,7 +774,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.52.4;
+				MARKETING_VERSION = 2.53;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -807,7 +812,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.52.4;
+				version = 2.53.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

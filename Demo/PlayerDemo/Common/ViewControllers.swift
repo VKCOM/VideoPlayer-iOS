@@ -84,10 +84,11 @@ class ViewController: UIViewController {
         errorLabel = nil
     }
 
-    func loadVideo(_ video: Video, for playerView: PlayerView) {
+    func loadVideo(_ video: Video, for playerView: PlayerView, completion: ((Bool) -> Void)? = nil) {
         if video.haveVideoFiles {
             playerView.video = video
             stopActivity()
+            completion?(true)
             return
         }
 
@@ -96,21 +97,25 @@ class ViewController: UIViewController {
         ApiSession.shared?.fetch(videoIds: [video.videoId]) { [weak self] videos, error in
             DispatchQueue.main.async {
                 guard let self else {
+                    completion?(false)
                     return
                 }
 
                 self.stopActivity()
                 if let error {
                     self.showError(error.localizedDescription)
+                    completion?(false)
                     return
                 }
                 guard let video = videos?.first else {
                     self.showError("Something went wrong")
+                    completion?(false)
                     return
                 }
 
                 playerView.isHidden = false
                 playerView.video = video
+                completion?(true)
             }
         }
     }

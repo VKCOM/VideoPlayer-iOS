@@ -9,7 +9,11 @@ import UIKit
 class RotationsController: ViewController {
     private lazy var horizontalPlayerView: PlayerView = {
         let controls = InplaceCustomControls(frame: .zero)
+        #if OLD_ADS_OFF
+        let player = PlayerView(frame: view.bounds, gravity: .fit, controls: controls)
+        #else
         let player = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
+        #endif
         player.delegate = self
         player.soundOn = true
         player.backgroundPlaybackPolicy = .continueAudioAndVideo
@@ -17,8 +21,11 @@ class RotationsController: ViewController {
     }()
 
     private lazy var verticalPlayerView: PlayerView = {
-        let controls = InplaceCustomControls(frame: .zero)
-        let player = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
+        #if OLD_ADS_OFF
+        let player = PlayerView(frame: view.bounds, gravity: .fit, controls: InplaceCustomControls(frame: .zero))
+        #else
+        let player = PlayerView(frame: view.bounds, gravity: .fit, customControls: InplaceCustomControls(frame: .zero))
+        #endif
         player.delegate = self
         player.soundOn = true
         player.backgroundPlaybackPolicy = .continueAudioAndVideo

@@ -51,6 +51,11 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
 
     func showControls(animated: Bool) {
         updateControlsVisible(visible: true, animated: animated)
+
+        // UIDeferredMenuElement.uncached support
+        if #unavailable(iOS 15.0) {
+            moreButton.menu = createContextMenu()
+        }
     }
 
     // MARK: - PlayerControlsViewProtocol
@@ -72,6 +77,7 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
                 bottomShadow.isHidden = true
                 timelineView.isHidden = true
                 soundButton.isHidden = true
+                topRightButtons.isHidden = true
                 activityIndicator.isRunning = false
                 subtitlesView = nil
                 doubleTapSeek.isEnabled = false
@@ -82,6 +88,7 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
 
             doubleTapSeek.isEnabled = sparked && mask.fastScrubbingAvailable
 
+            topRightButtons.isHidden = !sparked
             buttonsContainer.isHidden = !sparked
             topShadow.isHidden = !sparked
             bottomShadow.isHidden = !sparked
@@ -194,7 +201,10 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
         guard let subtitlesView else {
             return
         }
-        guard let mask = controlMask, mask.hasControl(.sparked), !mask.hasControl(.gif), mask.screencastState == nil else {
+        guard let mask = controlMask,
+              mask.hasControl(.sparked),
+              !mask.hasControl(.gif),
+              mask.screencastState == nil else {
             subtitlesView.update(text: nil, fullText: nil)
             return
         }
@@ -314,6 +324,27 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
         }
     }
 
+    // MARK: - Header More Button
+
+    private lazy var moreButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(.ovk_moreHorizontal24, for: .normal)
+
+        if #available(iOS 26.0, *) {
+            button.configuration = .glass()
+        }
+        button.showsMenuAsPrimaryAction = true
+        button.menu = createContextMenu()
+        button.accessibilityIdentifier = "video_player.header.more_button"
+
+        NSLayoutConstraint.activate([
+            button.heightAnchor.constraint(equalToConstant: 32),
+            button.widthAnchor.constraint(equalToConstant: 32)
+        ])
+        return button
+    }()
+
     // MARK: - Sound button
 
     lazy var soundButton = SoundButton(target: self, action: #selector(Self.handleSoundButton))
@@ -323,6 +354,60 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
         if let sound = controlMask?.getControl(.sound) {
             controlsDelegate?.handleControl(sound)
         }
+    }
+
+    // MARK: - Context Menu
+
+    private func createContextMenu() -> UIMenu {
+        let menuTitle = "Ещё"
+        let children: [UIMenuElement]
+
+        if #available(iOS 15.0, *) {
+            children = [UIDeferredMenuElement.uncached { [weak self] completion in
+                guard let self else {
+                    completion([])
+                    return
+                }
+
+                completion([self.createLoopMenu()])
+            }]
+        } else {
+            children = [createLoopMenu()]
+        }
+
+        return UIMenu(title: menuTitle, children: children)
+    }
+
+    // MARK: - Loop Submenu
+
+    private func findPlayerView() -> PlayerView? {
+        var currentView: UIView? = self
+        while currentView != nil {
+            if let pv = currentView as? PlayerView {
+                return pv
+            }
+            currentView = currentView?.superview
+        }
+        return nil
+    }
+
+    private func createLoopMenu() -> UIMenu {
+        UIMenu.createMenu(
+            titlePrefix: "Повтор видео",
+            options: [
+                .init(value: true, title: "ВКЛ", accessibilityIdentifier: "video_loop_on"),
+                .init(value: false, title: "ВЫКЛ", accessibilityIdentifier: "video_loop_off")
+            ],
+            currentValue: findPlayerView()?.video?.repeated ?? false,
+            menuIdentifier: "video_loop_menu",
+            onSelect: { [weak self] newValue in
+                self?.setVideoRepeated(newValue)
+            }
+        )
+    }
+
+    private func setVideoRepeated(_ repeated: Bool) {
+        findPlayerView()?.video?.repeated = repeated
     }
 
     // MARK: - Subtitles
@@ -418,15 +503,33 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
         return view
     }()
 
+    private lazy var topRightButtons: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.alignment = .center
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.distribution = .equalSpacing
+        view.spacing = 8
+        view.semanticContentAttribute = .forceRightToLeft
+        return view
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         addSubview(topShadow)
         addSubview(bottomShadow)
-        addSubview(soundButton)
         addSubview(playPauseButton)
         addSubview(timelineView)
         addSubview(activityIndicator)
+
+        topRightButtons.addArrangedSubview(moreButton)
+        topRightButtons.addArrangedSubview(soundButton)
+        addSubview(topRightButtons)
+        NSLayoutConstraint.activate([
+            topRightButtons.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
+            topRightButtons.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+        ])
 
         buttonsContainer.addArrangedSubview(settingsButton)
         buttonsContainer.addArrangedSubview(pipButton)
@@ -453,7 +556,6 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
         timelineView.frame = CGRect(x: 18, y: bounds.height - 36, width: bounds.width - 36, height: 28)
         topShadow.frame = CGRect(x: 0, y: 0, width: bounds.width, height: topShadow.bounds.height)
         bottomShadow.frame = CGRect(x: 0, y: bounds.height - bottomShadow.bounds.height, width: bounds.width, height: bottomShadow.bounds.height)
-        soundButton.frame.origin = CGPoint(x: bounds.width - soundButton.bounds.width, y: 0)
         if let subtitlesView {
             subtitlesView.maxAvailableFrame = availableFrameForSubtitles()
         }
@@ -467,7 +569,7 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
             self.buttonsContainer.alpha = alpha
             self.topShadow.alpha = min(alpha, 0.48)
             self.bottomShadow.alpha = min(alpha, 0.48)
-            self.soundButton.alpha = alpha
+            self.topRightButtons.alpha = alpha
         }
         if animated {
             UIView.animate(withDuration: 0.24, delay: 0, options: .curveEaseInOut, animations: {

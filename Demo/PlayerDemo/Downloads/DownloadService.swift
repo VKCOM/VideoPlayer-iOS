@@ -50,8 +50,8 @@ class DownloadService {
         downloader.downloadVideo(video, inQuality: 1080, useHLS: useHLS, onlySound: false, userData: nil)
     }
 
-    func deleteVideo(_ video: VideoType) {
-        downloader.cancelOrDeleteVideo(video)
+    func delete(item: PersistentItem) {
+        downloader.cancelOrDeleteItem(item)
     }
 
     func getState(of item: PersistentItem) -> PersistentItemState {
@@ -92,5 +92,16 @@ class DownloadService {
 
     func resumeDownloads() {
         downloader.isManuallySuspended = false
+    }
+
+    func validateAll() {
+        downloader.validateAll()
+    }
+
+    var hasValidatingItems: Bool {
+        !downloader.getItemsWithStates {
+            $0.validationState == .processing
+        }
+        .isEmpty
     }
 }

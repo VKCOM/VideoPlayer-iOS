@@ -2,9 +2,12 @@
 //  Copyright © 2024 - present, VK. All rights reserved.
 //
 
-import OVKit
+#if !OLD_ADS_OFF
 
-final class CustomTimelineAdsProvider: NSObject, AdsProvider {
+import OVKit
+import OVKitUIComponents
+
+final class CustomTimelineAdsProvider: NSObject, OVKit.AdsProvider {
     func makeAdControls(for ads: any VideoAdsType, hasSupplementaryControls: Bool, interactiveAdsPlaying: Bool, inPiP: Bool) -> any PlayerControlsViewProtocol {
         let controls = CustomSupplementedAdControlsView(frame: .zero)
         controls.isInternalSupplementaryEnabled = true
@@ -16,9 +19,13 @@ final class CustomTimelineAdsProvider: NSObject, AdsProvider {
         controls.timelineView.frame = tFrame
         return controls
     }
+
+    func makeSupplementaryControls(for ads: (any OVKit.AdCallToAction)?) -> (any OVKit.PlayerControlsViewProtocol)? {
+        nil
+    }
 }
 
-class CustomSupplementedAdControlsView: SupplementedAdControlsView {
+class CustomSupplementedAdControlsView: OVKitUIComponents.SupplementedAdControlsView {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -29,3 +36,5 @@ class CustomSupplementedAdControlsView: SupplementedAdControlsView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+#endif

@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate: PlayerManagerDelegate {
-    func playerView(_ playerView: OVKit.PlayerView, presentMenu menu: OVKit.Menu) {
+    func playerView(_ playerView: OVKit.PlayerView?, presentMenu menu: OVKit.Menu) {
         guard let topController = Self.findTopViewController(base: window!.rootViewController) else {
             assertionFailure()
             return

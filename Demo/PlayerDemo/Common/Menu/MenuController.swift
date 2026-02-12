@@ -131,7 +131,7 @@ class MenuController: UIViewController {
         return max(headerInvisible ? 0.0 : 12.0, view.safeAreaInsets.top)
     }
 
-    private var actions: [MenuAction] = []
+    private var actions = [MenuAction]()
 
     private static func createVibrancyWrapper(for label: UILabel) -> UIVisualEffectView {
         let wrapper = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: Self.blurEffect))

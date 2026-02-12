@@ -92,7 +92,11 @@ class SurfaceAnimationViewController: UIViewController {
 
     func newPlayerView() -> OVKit.PlayerView {
         let controls = ControlsView()
+        #if OLD_ADS_OFF
+        let playerView = OVKit.PlayerView(frame: .init(x: 0, y: 0, width: dimension, height: dimension), gravity: .fit, controls: controls)
+        #else
         let playerView = OVKit.PlayerView(frame: .init(x: 0, y: 0, width: dimension, height: dimension), gravity: .fit, customControls: controls)
+        #endif
         playerView.soundOn = true
         playerView.backgroundPlaybackPolicy = .continueAudioAndVideo
         playerView.loopBehavior = .always
@@ -542,11 +546,11 @@ extension SurfaceAnimationViewController {
         UIMenu.createMenu(
             titlePrefix: "Duration",
             options: [
-                (0.0, "0.0s"),
-                (0.3, "0.3s"),
-                (0.5, "0.5s"),
-                (1.0, "1.0s"),
-                (3.0, "3.0s")
+                .init(0.0, "0.0s"),
+                .init(0.3, "0.3s"),
+                .init(0.5, "0.5s"),
+                .init(1.0, "1.0s"),
+                .init(3.0, "3.0s")
             ],
             currentValue: duration,
             onSelect: { [weak self] newDuration in
@@ -559,8 +563,8 @@ extension SurfaceAnimationViewController {
         UIMenu.createMenu(
             titlePrefix: "Delay",
             options: [
-                (0.0, "OFF"),
-                (Constants.animationDelay, "ON \(String(format: "%.1f", Constants.animationDelay))s")
+                .init(0.0, "OFF"),
+                .init(Constants.animationDelay, "ON \(String(format: "%.1f", Constants.animationDelay))s")
             ],
             currentValue: delay,
             onSelect: { [weak self] newDelay in
@@ -573,10 +577,10 @@ extension SurfaceAnimationViewController {
         UIMenu.createMenu(
             titlePrefix: "Curve",
             options: [
-                (.easeInOut, ".easeInOut"),
-                (.linear, ".linear"),
-                (.easeIn, ".easeIn"),
-                (.easeOut, ".easeOut")
+                .init(.easeInOut, ".easeInOut"),
+                .init(.linear, ".linear"),
+                .init(.easeIn, ".easeIn"),
+                .init(.easeOut, ".easeOut")
             ],
             currentValue: curve,
             onSelect: { [weak self] newCurve in
@@ -589,8 +593,8 @@ extension SurfaceAnimationViewController {
         UIMenu.createMenu(
             titlePrefix: "Spring",
             options: [
-                (true, "ON"),
-                (false, "OFF")
+                .init(true, "ON"),
+                .init(false, "OFF")
             ],
             currentValue: useSpring,
             onSelect: { [weak self] newValue in
@@ -603,8 +607,8 @@ extension SurfaceAnimationViewController {
         UIMenu.createMenu(
             titlePrefix: "Round Corners",
             options: [
-                (true, "ON"),
-                (false, "OFF")
+                .init(true, "ON"),
+                .init(false, "OFF")
             ],
             currentValue: useRoundCorners,
             onSelect: { [weak self] newValue in
@@ -617,8 +621,8 @@ extension SurfaceAnimationViewController {
         UIMenu.createMenu(
             titlePrefix: "Environment",
             options: [
-                (true, "ON"),
-                (false, "OFF")
+                .init(true, "ON"),
+                .init(false, "OFF"),
             ],
             currentValue: Environment._surfaceView,
             onSelect: { [weak self] _ in
@@ -631,18 +635,20 @@ extension SurfaceAnimationViewController {
 extension UIMenu {
 
     static func createActions<T: Equatable>(
-        from options: [(T, String)],
+        from options: [VPMenuOption<T>],
         currentValue: T,
         onSelect: @escaping (T) -> Void
     ) -> [UIAction] {
-        options.map { value, title in
-            UIAction(
-                title: title,
-                state: currentValue == value ? .on : .off,
+        options.map { option in
+            let action = UIAction(
+                title: option.title,
+                state: currentValue == option.value ? .on : .off,
                 handler: { _ in
-                    onSelect(value)
+                    onSelect(option.value)
                 }
             )
+            action.accessibilityIdentifier = option.accessibilityIdentifier
+            return action
         }
     }
 
@@ -663,19 +669,22 @@ extension UIMenu {
         }
     }
 
-    static func currentTitle<T: Equatable>(from options: [(T, String)], currentValue: T) -> String {
-        options.first { $0.0 == currentValue }?.1 ?? "unknown"
+    static func currentTitle<T: Equatable>(from options: [VPMenuOption<T>], currentValue: T) -> String {
+        options.first { $0.value == currentValue }?.title ?? "unknown"
     }
 
     static func createMenu<T: Equatable>(
         titlePrefix: String,
-        options: [(T, String)],
+        options: [VPMenuOption<T>],
         currentValue: T,
+        menuIdentifier: String? = nil,
         onSelect: @escaping (T) -> Void
     ) -> UIMenu {
         let actions = createActions(from: options, currentValue: currentValue, onSelect: onSelect)
         let currentTitle = "\(titlePrefix): \(currentTitle(from: options, currentValue: currentValue))"
-        return UIMenu(title: currentTitle, children: actions)
+        let menu = UIMenu(title: currentTitle, children: actions)
+        menu.accessibilityIdentifier = menuIdentifier
+        return menu
     }
 
     static func createMenu<T: Equatable>(
