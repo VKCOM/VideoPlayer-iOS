@@ -5,7 +5,9 @@
 import AVFoundation
 import CoreMedia.CMTime
 import OVKit
+#if canImport(OVKitMyTargetPlugin)
 import OVKitMyTargetPlugin
+#endif
 import UIKit
 
 class SingleController: ViewController {
@@ -16,7 +18,9 @@ class SingleController: ViewController {
         #else
         let playerView = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
         #endif
+        #if canImport(OVKitMyTargetPlugin)
         playerView.interstitialProvider = Environment.shared._enableInterstitial ? MyTargetInterstitialProvider() : nil
+        #endif
         playerView.delegate = self
         playerView.soundOn = true
         playerView.limitMaxQualityToSurfaceSize = (ProcessInfo.processInfo.environment["DEMO_LIMIT_QUALITY_TO_SURFACE"] as? NSString)?.boolValue ?? false

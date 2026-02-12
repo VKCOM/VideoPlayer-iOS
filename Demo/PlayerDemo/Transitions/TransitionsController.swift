@@ -5,7 +5,9 @@
 import AVFoundation
 import CoreMedia.CMTime
 import OVKit
+#if canImport(OVKitMyTargetPlugin)
 import OVKitMyTargetPlugin
+#endif
 import UIKit
 
 class TransitionsController: ViewController {
@@ -19,12 +21,21 @@ class TransitionsController: ViewController {
 
     private lazy var firstPlayer: PlayerView = {
         #if !OLD_ADS_OFF
+        #if canImport(OVKitMyTargetPlugin)
         let player = PlayerView(
             frame: .zero,
             gravity: .fit,
             customControls: InplaceCustomControls(frame: .zero),
             adsProvider: OVKitMyTargetPlugin.DefaultAdsProvider.autoplay()
         )
+        #else
+        let player = PlayerView(
+            frame: .zero,
+            gravity: .fit,
+            customControls: InplaceCustomControls(frame: .zero),
+            adsProvider: nil
+        )
+        #endif
         #else
         let player = PlayerView(
             frame: .zero,
@@ -39,12 +50,21 @@ class TransitionsController: ViewController {
 
     private lazy var secondPlayer: PlayerView = {
         #if !OLD_ADS_OFF
+        #if canImport(OVKitMyTargetPlugin)
         let player = PlayerView(
             frame: .zero,
             gravity: .fill,
             customControls: FeedControlsView(frame: .zero),
             adsProvider: OVKitMyTargetPlugin.DefaultAdsProvider.fullscreen()
         )
+        #else
+        let player = PlayerView(
+            frame: .zero,
+            gravity: .fill,
+            customControls: FeedControlsView(frame: .zero),
+            adsProvider: nil
+        )
+        #endif
         #else
         let player = PlayerView(
             frame: .zero,
