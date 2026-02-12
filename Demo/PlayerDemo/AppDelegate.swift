@@ -69,7 +69,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         #if !OLD_ADS_OFF
         Environment.shared._enableInterstitial = false
+        #if canImport(OVKitMyTargetPlugin)
         Environment.shared.defaultAdsProviderType = OVKitMyTargetPlugin.DefaultAdsProvider.self
+        #endif
         #endif
         Environment.shared.allowsExternalPlayback = true
         Environment.shared.allowsBackgroundPlayback = true

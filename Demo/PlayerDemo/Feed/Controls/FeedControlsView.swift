@@ -314,15 +314,7 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
     /// При запуске UI-тестов меняется состояние `isEnabled`, чтобы сохранить кнопку в accessibility tree.
     /// В остальных случаях меняется видимость кнопки (`isHidden`).
     private static func configurePiPInteractivity(for button: UIButton, isInteractive: Bool) {
-        #if DEBUG
-        if Environment.isUITests {
-            button.isEnabled = isInteractive
-        } else {
-            button.isHidden = !isInteractive
-        }
-        #else
         button.isHidden = !isInteractive
-        #endif
     }
 
     // - MARK: - External playback badge
