@@ -119,7 +119,11 @@ class MultiplayController: ViewController {
     }
 
     private func setupPlayer(video: VideoType, multi: Bool) {
+        #if OLD_ADS_OFF
+        let player = PlayerView(frame: .zero, gravity: .fill, controls: InplaceCustomControls(frame: .zero))
+        #else
         let player = PlayerView(frame: .zero, gravity: .fill, customControls: InplaceCustomControls(frame: .zero))
+        #endif
         player.delegate = self
         // view маленького размера, поэтому нет смысла загружать более высокое качество
         player.autoQualityRange = QualityRange(sameOrWorseThan: 360)
@@ -130,9 +134,11 @@ class MultiplayController: ViewController {
             player.tag = multiPlayers.count
             multiPlayers.append(player)
             player.allowsMultiplay = true
+            player.accessibilityIdentifier = "video_player.multiplay"
             player.isUserInteractionEnabled = false
         } else {
             regularPlayer = player
+            player.accessibilityIdentifier = "video_player.regular"
         }
         view.addSubview(player)
 

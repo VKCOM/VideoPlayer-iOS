@@ -13,7 +13,7 @@ extension Environment {
     static var demo_advCustomCreativeTypeKey: String { "\(String(describing: Environment.self)).\(#keyPath(Environment._advCustomCreativeType))" }
     static var demo_advDeviceIdKey: String { "\(String(describing: Environment.self)).\(#keyPath(Environment._advDeviceId))" }
     #if DEBUG
-        static var demo_focusDebug: String { "\(String(describing: Environment.self)).\(#keyPath(SettingsViewController.focusDebug))" }
+    static var demo_focusDebug: String { "\(String(describing: Environment.self)).\(#keyPath(SettingsViewController.focusDebug))" }
     #endif
 
     static var demo_hlsDownload: String { "\(String(describing: Environment.self)).\(#keyPath(SettingsViewController.useHLS))" }
@@ -41,9 +41,9 @@ extension Environment {
             _advDeviceId = advDeviceId
         }
         #if DEBUG
-            if UserDefaults.standard.object(forKey: Environment.demo_focusDebug) != nil {
-                SettingsViewController.focusDebug = UserDefaults.standard.bool(forKey: Environment.demo_focusDebug)
-            }
+        if UserDefaults.standard.object(forKey: Environment.demo_focusDebug) != nil {
+            SettingsViewController.focusDebug = UserDefaults.standard.bool(forKey: Environment.demo_focusDebug)
+        }
         #endif
         if UserDefaults.standard.object(forKey: Environment.demo_hlsDownload) != nil {
             SettingsViewController.useHLS = UserDefaults.standard.bool(forKey: Environment.demo_hlsDownload)

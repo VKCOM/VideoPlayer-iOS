@@ -15,17 +15,24 @@ class TabbarController: UITabBarController {
 
         tabBar.unselectedItemTintColor = UIColor(named: "tabbar_inactive")
 
+        let singleTabbarItem = UITabBarItem(title: "Single", image: UIImage(systemName: "rectangle"), selectedImage: nil)
+        singleTabbarItem.accessibilityIdentifier = "single_tab"
+
         let single = NavigationController(rootViewController: SingleController())
-        single.tabBarItem = UITabBarItem(title: "Single", image: UIImage(systemName: "rectangle"), selectedImage: nil)
+        single.tabBarItem = singleTabbarItem
+
+        let feedTabbarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "rectangle.split.1x2"), selectedImage: nil)
+        feedTabbarItem.accessibilityIdentifier = "feed_tab"
 
         let feed = NavigationController(rootViewController: FeedController())
-        feed.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "rectangle.split.1x2"), selectedImage: nil)
+        feed.tabBarItem = feedTabbarItem
 
         let multiplay = NavigationController(rootViewController: MultiplayController())
         multiplay.tabBarItem = UITabBarItem(title: "Multiplay", image: UIImage(systemName: "rectangle.split.3x3"), selectedImage: nil)
 
         let transitions = NavigationController(rootViewController: TransitionsController())
         transitions.tabBarItem = UITabBarItem(title: "Transitions", image: UIImage(systemName: "rectangle.2.swap"), selectedImage: nil)
+        transitions.tabBarItem.accessibilityIdentifier = "transitions_tab"
 
         let downloads = NavigationController(rootViewController: DownloadsController())
         downloads.tabBarItem = UITabBarItem(title: "Downloads", image: UIImage(systemName: "arrow.down.to.line"), selectedImage: nil)
@@ -37,19 +44,19 @@ class TabbarController: UITabBarController {
         surfaceLayout.tabBarItem = UITabBarItem(title: "Surface Layout", image: UIImage(systemName: "arrow.down.left.and.arrow.up.right.square"), selectedImage: nil)
 
         #if canImport(OVKitMyTargetPlugin)
-            let videoMotion = NavigationController(rootViewController: MyTargetVideoMotionLayoutDemoViewController())
-            videoMotion.tabBarItem = UITabBarItem(title: "Video Motion", image: UIImage(systemName: "play.tv"), selectedImage: nil)
-            let adsControls = NavigationController(rootViewController: AdsControlsViewController())
-            adsControls.tabBarItem = UITabBarItem(title: "Ads Controls", image: UIImage(systemName: "rectangle.and.hand.point.up.left.filled"), selectedImage: nil)
-            let adsSupplementary = NavigationController(rootViewController: AdsSupplementaryViewController())
-            adsSupplementary.tabBarItem = UITabBarItem(title: "Ads Supplementary", image: UIImage(systemName: "plus.app"), selectedImage: nil)
-            let fullscreenAds = FullscreenAdsControlsViewController()
-            fullscreenAds.tabBarItem = UITabBarItem(title: "Ads Fullscreen", image: UIImage(systemName: "arrow.up.left.and.arrow.down.right"), selectedImage: nil)
+        let videoMotion = NavigationController(rootViewController: MyTargetVideoMotionLayoutDemoViewController())
+        videoMotion.tabBarItem = UITabBarItem(title: "Video Motion", image: UIImage(systemName: "play.tv"), selectedImage: nil)
+        let adsControls = NavigationController(rootViewController: AdsControlsViewController())
+        adsControls.tabBarItem = UITabBarItem(title: "Ads Controls", image: UIImage(systemName: "rectangle.and.hand.point.up.left.filled"), selectedImage: nil)
+        let adsSupplementary = NavigationController(rootViewController: AdsSupplementaryViewController())
+        adsSupplementary.tabBarItem = UITabBarItem(title: "Ads Supplementary", image: UIImage(systemName: "plus.app"), selectedImage: nil)
+        let fullscreenAds = FullscreenAdsControlsViewController()
+        fullscreenAds.tabBarItem = UITabBarItem(title: "Ads Fullscreen", image: UIImage(systemName: "arrow.up.left.and.arrow.down.right"), selectedImage: nil)
         #else
-            let videoMotion: NavigationController? = nil
-            let adsControls: NavigationController? = nil
-            let adsSupplementary: NavigationController? = nil
-            let fullscreenAds: NavigationController? = nil
+        let videoMotion: NavigationController? = nil
+        let adsControls: NavigationController? = nil
+        let adsSupplementary: NavigationController? = nil
+        let fullscreenAds: NavigationController? = nil
         #endif
 
         let settings = NavigationController(rootViewController: SettingsViewController(rootView: SettingsView()))

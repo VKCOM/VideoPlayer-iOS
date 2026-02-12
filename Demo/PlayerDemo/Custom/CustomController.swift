@@ -9,7 +9,11 @@ import UIKit
 class CustomController: ViewController {
     private lazy var playerView: PlayerView = {
         let controls = InplaceCustomControls(frame: .zero)
+        #if OLD_ADS_OFF
+        let player = PlayerView(frame: view.bounds, gravity: .fit, controls: controls)
+        #else
         let player = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
+        #endif
         player.delegate = self
         player.soundOn = true
         player.backgroundPlaybackPolicy = .continueAudioAndVideo

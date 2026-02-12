@@ -11,7 +11,7 @@ import UIKit
 public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectatorsControls {
     // MARK: - Initialization
 
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
 
         let indicator = FeedIndicatorView(frame: .zero)
@@ -34,6 +34,7 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
         addSubview(topRightContainer)
         topRightContainer.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         topRightContainer.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        addSubview(pipButton)
     }
 
     @available(*, unavailable)
@@ -57,13 +58,16 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
                 externalPlaybackBadgeView = nil
                 subtitlesButton?.isHidden = true
                 subtitlesView = nil
+                togglePiPInteractivity(to: false)
                 return
             }
 
             isLiveAppearance = mask.hasControl(.live)
 
             let sparked = mask.hasControl(.sparked)
+
             let isScreencast = mask.screencastState != nil
+
             let isGIF = mask.hasControl(.gif)
 
             if !isGIF, let sound = mask.getControl(.sound), sparked, case let .sound(enabled, _) = sound, !isScreencast {
@@ -87,6 +91,10 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
                     subtitlesButton.isHidden = true
                 }
             }
+
+            let activePiP = sparked && !isScreencast
+            togglePiPInteractivity(to: activePiP)
+            pipButton.accessibilityIdentifier = activePiP ? "video_player.pip_button" : nil
             // создание / удаление view в зависимости выбраны ли субтитры
             if let info = mask.subtitlesInfo {
                 makeSubtitlesViewIfNeeded()
@@ -114,7 +122,10 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
         guard let subtitlesView else {
             return
         }
-        guard let mask = controlMask, mask.hasControl(.sparked), !mask.hasControl(.gif), mask.screencastState == nil else {
+        guard let mask = controlMask,
+              mask.hasControl(.sparked),
+              !mask.hasControl(.gif),
+              mask.screencastState == nil else {
             subtitlesView.update(text: nil, fullText: nil)
             return
         }
@@ -186,6 +197,7 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
             self.soundButton.alpha = alpha
             self.subtitlesButton?.alpha = alpha
             self.logoImageView?.alpha = alpha
+            self.pipButton.alpha = alpha
         }
         if animated {
             UIView.animate(
@@ -255,15 +267,62 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
         return button
     }()
 
-    override public func layoutSubviews() {
+    private lazy var pipButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+        button.accessibilityLabel = "video_player_pip_button_accessibility_label".ovk_localized()
+        button.accessibilityHint = "video_player_pip_button_accessibility_hint".ovk_localized()
+        button.setImage(.ovk_pipOutline24, for: .normal)
+        if #available(iOS 26.0, *) {
+            button.configuration = .prominentGlass()
+            button.tintColor = UIColor.black.withAlphaComponent(0.4)
+        }
+        button.addTarget(self, action: #selector(handlePiPButton), for: .touchUpInside)
+        Self.configurePiPInteractivity(for: button, isInteractive: false)
+        return button
+    }()
+
+    public override func layoutSubviews() {
         super.layoutSubviews()
 
         layoutExternalPlaybackBadge()
         layoutFeedIndicator()
+        layoutPipButton()
         if let subtitlesView {
             subtitlesView.fontSize = bounds.width <= 320 ? 13 : 15
             subtitlesView.maxAvailableFrame = availableFrameForSubtitles()
         }
+    }
+
+    private func layoutPipButton() {
+        var pipFrame = pipButton.frame
+
+        let indicatorInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 8.0, right: 0.0)
+        pipFrame.origin = CGPoint(
+            x: bounds.minX + indicatorInsets.left,
+            y: bounds.maxY - indicatorInsets.bottom - pipFrame.height
+        )
+
+        pipButton.frame = pipFrame
+    }
+
+    private func togglePiPInteractivity(to interactive: Bool) {
+        Self.configurePiPInteractivity(for: pipButton, isInteractive: interactive)
+    }
+
+    /// Настройка интерактивности кнопки PiP в зависимости от контекста выполнения.
+    ///
+    /// При запуске UI-тестов меняется состояние `isEnabled`, чтобы сохранить кнопку в accessibility tree.
+    /// В остальных случаях меняется видимость кнопки (`isHidden`).
+    private static func configurePiPInteractivity(for button: UIButton, isInteractive: Bool) {
+        #if DEBUG
+        if Environment.isUITests {
+            button.isEnabled = isInteractive
+        } else {
+            button.isHidden = !isInteractive
+        }
+        #else
+        button.isHidden = !isInteractive
+        #endif
     }
 
     // - MARK: - External playback badge
@@ -280,7 +339,7 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
     }
 
     private func updateExternalPlaybackBadge(mask: ControlMask) {
-        guard let screencastState = mask.screencastState, mask.hasControl(.sparked) else {
+        guard let deviceState = mask.screencastState, mask.hasControl(.sparked) else {
             externalPlaybackBadgeView = nil
             return
         }
@@ -290,8 +349,7 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
             badge.multiline = true
             externalPlaybackBadgeView = badge
         }
-
-        externalPlaybackBadgeView?.apply(screencastState)
+        externalPlaybackBadgeView?.apply(deviceState)
         layoutExternalPlaybackBadge()
     }
 
@@ -387,6 +445,13 @@ public class FeedControlsView: UIView, PlayerControlsViewProtocol, LiveSpectator
     private func handleSoundButton() {
         if let sound = controlMask?.getControl(.sound) {
             controlsDelegate?.handleControl(sound)
+        }
+    }
+
+    @objc
+    private func handlePiPButton() {
+        if controlMask?.hasControl(.pip) == true {
+            controlsDelegate?.handleControl(.pip)
         }
     }
 

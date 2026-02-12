@@ -31,16 +31,14 @@ class AppCoordinator {
     }
 }
 
-private enum AppTab: String {
+private enum AppTab: String, CaseIterable {
     case single
     case feed
+    case transitions
+    case multiplay
     case uiTest = "uitest"
 
     var tabIndex: Int? {
-        switch self {
-        case .single: return 0
-        case .feed: return 1
-        default: return nil
-        }
+        self == .uiTest ? nil : Self.allCases.firstIndex(of: self)
     }
 }

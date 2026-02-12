@@ -63,6 +63,7 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
         didSet {
             guard let mask = controlMask else {
                 playPauseButton.isHidden = true
+                gravityButton.isHidden = true
                 return
             }
 
@@ -75,6 +76,17 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
                 } else {
                     playPauseButton.isHidden = true
                 }
+            }
+
+            if let gravity = mask.getControl(.gravity),
+               case let .gravity(filled) = gravity,
+               controlsContainer?.surfaceSize != nil,
+               controlsContainer?.videoNaturalSize != nil {
+                gravityButton.appearance = filled ? .fit : .fill
+                gravityButton.accessibilityIdentifier = filled ? "video_player.gravity_fit_button" : "video_player.gravity_fill_button"
+                gravityButton.isHidden = false
+            } else {
+                gravityButton.isHidden = true
             }
         }
     }
@@ -104,12 +116,40 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
         }
     }
 
+    // MARK: - Gravity Button
+
+    lazy var gravityButton: GravityControlButton = {
+        let button = GravityControlButton(size: 32, target: self, action: #selector(handleGravityButton))
+        button.accessibilityIdentifier = "video_player.gravity_fill_button"
+        button.accessibilityLabel = "video_player_gravity_button_fill_accessibility_label".ovk_localized()
+        button.accessibilityHint = "video_player_gravity_button_fill_accessibility_hint".ovk_localized()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        button.isHidden = true
+        return button
+    }()
+
+    @objc
+    func handleGravityButton() {
+        guard let controlsDelegate,
+              let gravity = controlMask?.getControl(.gravity) else {
+            return
+        }
+
+        controlsDelegate.handleControl(gravity)
+    }
+
     // MARK: - View
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         addSubview(playPauseButton)
+        addSubview(gravityButton)
+
+        gravityButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -18).isActive = true
+        gravityButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -18).isActive = true
     }
 
     @available(*, unavailable)
@@ -127,6 +167,7 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
         let alpha: CGFloat = visible ? 1 : 0
         let update = {
             self.playPauseButton.alpha = alpha
+            self.gravityButton.alpha = alpha
         }
         if animated {
             UIView.animate(withDuration: 0.24, delay: 0, options: .curveEaseInOut, animations: {

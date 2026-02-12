@@ -20,6 +20,7 @@ extension ControlMask {
         let adInfoImage: UIImage? = UIImage.ovk_infoOutline16
         let shoppableAdsItems: [OVKit.ShoppableAdsItem]? = nil
         let videoMotionPlayer: MyTargetInstreamAdVideoMotionPlayer? = nil
+        #if !OLD_ADS_OFF
         let postViewData: CTAPostBannerData? = if needPostView {
             CTAPostBannerData(
                 text: "Узнайте подробнее на сайте http://vk.com/feed",
@@ -31,8 +32,12 @@ extension ControlMask {
         } else {
             nil
         }
+        #endif
         var mask = Set<ControlValue>()
+        #if !OLD_ADS_OFF
         mask.insert(.adSurface)
+        #endif
+        mask.insert(.interstitial)
         mask.insert(.sparked)
         mask.insert(.pause(paused: paused))
         mask.insert(.sound(enabled: soundOn, restricted: restricted))
@@ -43,6 +48,7 @@ extension ControlMask {
         if let duration {
             mask.insert(.duration(seconds: duration))
         }
+        #if !OLD_ADS_OFF
         if let cta {
             let data = CTAData(title: cta.text, text: cta.ctaText, icon: cta.icon, iconUrl: cta.iconUrlString, color: cta.ctaTextColor, backgroundColor: cta.ctaBackgroundColor, postBannerData: postViewData)
             mask.insert(.callToAction(data: data))
@@ -62,6 +68,7 @@ extension ControlMask {
                 assertionFailure("Video Motion player must be presented at this point!")
             }
         }
+        #endif
         return ControlMask(controls: mask)
     }
 }

@@ -9,14 +9,38 @@ class DownloadsController: CollectionController {
     private var itemModels = [DownloadItemModel]()
 
     init() {
-        let layout = UICollectionViewFlowLayout()
-        var height: CGFloat = 48
-        height += DownloadsCollectionCell.insets.top + DownloadsCollectionCell.insets.bottom
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width, height: height)
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        layout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.size.width, height: 36)
+        let layout = UICollectionViewCompositionalLayout.list(using: .init(appearance: .plain))
         super.init(collectionViewLayout: layout)
+
+        configureSwipeActions()
+    }
+
+    private func configureSwipeActions() {
+        guard collectionViewLayout is UICollectionViewCompositionalLayout else { return }
+
+        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        config.trailingSwipeActionsConfigurationProvider = { [weak self] indexPath in
+            guard let self = self else {
+                return nil
+            }
+
+            let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, completion in
+                guard let self = self else {
+                    completion(true)
+                    return
+                }
+
+                let model = self.itemModels[indexPath.item]
+                DownloadService.shared.delete(item: model.persistentItem)
+                completion(true)
+            }
+
+            deleteAction.image = UIImage(systemName: "trash.fill")
+            return UISwipeActionsConfiguration(actions: [deleteAction])
+        }
+
+        let newLayout = UICollectionViewCompositionalLayout.list(using: config)
+        collectionView.setCollectionViewLayout(newLayout, animated: false)
     }
 
     @available(*, unavailable)
@@ -31,7 +55,7 @@ class DownloadsController: CollectionController {
 
         navigationItem.title = "Downloads"
 
-        configurePauseButton(forPause: true)
+        configureButtons()
 
         collectionView.register(DownloadsCollectionCell.self, forCellWithReuseIdentifier: DownloadsCollectionCell.reuseId)
         collectionView.register(
@@ -61,7 +85,22 @@ class DownloadsController: CollectionController {
         DispatchQueue.global(qos: .userInitiated).async {
             let items: [DownloadItemModel] = DownloadService.shared.items.map { item in
                 let video = DownloadService.shared.getVideo(of: item, forLocalPlayback: true)
-                return DownloadItemModel(persistentItem: item, video: video)
+                let state = DownloadService.shared.getState(of: item)
+
+                let validationState: DownloadItemModel.ValidationState
+                switch state.downloadState {
+                case .finished:
+                    if let existingModelIndex = self.itemModels.firstIndex(where: { $0.persistentItem == item }),
+                       self.itemModels[existingModelIndex].validationState != .notChecked {
+                        validationState = self.itemModels[existingModelIndex].validationState
+                    } else {
+                        validationState = .notChecked
+                    }
+                default:
+                    validationState = .notChecked
+                }
+
+                return DownloadItemModel(persistentItem: item, video: video, validationState: validationState)
             }
 
             DispatchQueue.main.async {
@@ -80,26 +119,82 @@ class DownloadsController: CollectionController {
         }
     }
 
-    private func configurePauseButton(forPause: Bool) {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: forPause ? .pause : .play,
+    private func configureButtons() {
+        navigationItem.rightBarButtonItems = [
+            configureValidateButton(),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            configurePauseButton(),
+        ]
+    }
+
+    private func configureValidateButton() -> UIBarButtonItem {
+        guard isValidationInProgress else {
+            return UIBarButtonItem(
+                image: UIImage(systemName: "stethoscope", withConfiguration: UIImage.SymbolConfiguration(scale: .large)),
+                style: .plain,
+                target: self,
+                action: #selector(validateButtonAction)
+            )
+        }
+
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        let validationItem = UIBarButtonItem(customView: activityIndicator)
+        activityIndicator.startAnimating()
+        return validationItem
+    }
+
+    private func configurePauseButton() -> UIBarButtonItem {
+        UIBarButtonItem(
+            barButtonSystemItem: downloadsPaused ? .play : .pause,
             target: self,
             action: #selector(pauseButtonAction)
         )
     }
 
-    private var downloadsPaused = false
+    private var downloadsPaused = false {
+        didSet {
+            configureButtons()
+            if downloadsPaused {
+                DownloadService.shared.pauseDownloads()
+            } else {
+                DownloadService.shared.resumeDownloads()
+            }
+        }
+    }
+
     @objc
     private func pauseButtonAction() {
-        if downloadsPaused {
-            downloadsPaused = false
-            configurePauseButton(forPause: true)
-            DownloadService.shared.resumeDownloads()
-        } else {
-            downloadsPaused = true
-            configurePauseButton(forPause: false)
-            DownloadService.shared.pauseDownloads()
+        downloadsPaused.toggle()
+    }
+
+    @objc
+    private func validateButtonAction() {
+        guard hasItems else {
+            configureButtons()
+            return
         }
+
+        DownloadService.shared.validateAll()
+        isWaitingValidation = true
+    }
+
+    private var isWaitingValidation = false {
+        didSet {
+            configureButtons()
+        }
+    }
+}
+
+// MARK: - Data Source
+
+extension DownloadsController {
+
+    var hasItems: Bool {
+        !itemModels.isEmpty
+    }
+
+    var isValidationInProgress: Bool {
+        isWaitingValidation || DownloadService.shared.hasValidatingItems
     }
 }
 
@@ -116,9 +211,7 @@ extension DownloadsController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DownloadsCollectionCell.reuseId, for: indexPath) as! DownloadsCollectionCell
-
         cell.update(with: itemModels[indexPath.item])
-        cell.uiDelegate = self
         return cell
     }
 
@@ -151,15 +244,9 @@ extension DownloadsController {
 extension DownloadsController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = itemModels[indexPath.item]
-        PlayerView.showFullscreen(model.video, on: self, fromTime: nil)
-    }
-}
-
-// MARK: - DownloadsCollectionCellUIDelegate
-
-extension DownloadsController: DownloadsCollectionCellUIDelegate {
-    func cancelDownload(of model: DownloadItemModel) {
-        DownloadService.shared.deleteVideo(model.video)
+        PlayerView.showFullscreen(model.video, on: self, fromTime: nil, completion: { playerView in
+            playerView.delegate = self
+        })
     }
 }
 
@@ -167,7 +254,8 @@ extension DownloadsController: DownloadsCollectionCellUIDelegate {
 
 extension DownloadsController: PersistenceManagerListener {
     func persistenceManager(_ manager: PersistenceManager, didFailWithError error: Error) {
-        // Ignore
+        updateDataSource()
+        updateFooter()
     }
 
     func persistenceManager(_ manager: PersistenceManager, added item: PersistentItem) {
@@ -181,8 +269,62 @@ extension DownloadsController: PersistenceManagerListener {
     }
 
     func persistenceManager(_ manager: PersistenceManager, updatedStatusOf item: PersistentItem) {
+        updateValidationState(for: item, manager: manager)
         if manager.state(of: item).downloadState == .finished {
             updateFooter()
         }
     }
+
+    func persistenceManager(_ manager: PersistenceManager, didValidateItem item: PersistentItem, error: Error?) {
+        updateValidationState(for: item, validationResult: error == nil)
+        updateFooter()
+        isWaitingValidation = DownloadService.shared.hasValidatingItems
+    }
+}
+
+// MARK: - Validation in UI
+
+private extension DownloadsController {
+
+    func updateValidationState(for item: PersistentItem, validationResult: Bool) {
+        guard let index = itemModels.firstIndex(where: { $0.persistentItem == item }) else {
+            return
+        }
+
+        let validationState: DownloadItemModel.ValidationState = validationResult ? .valid : .invalid
+        let video = itemModels[index].video
+        itemModels[index] = DownloadItemModel(
+            persistentItem: item,
+            video: video,
+            validationState: validationState
+        )
+        let indexPath = IndexPath(item: index, section: 0)
+        self.collectionView.reloadItems(at: [indexPath])
+    }
+
+    func updateValidationState(for item: PersistentItem, manager: PersistenceManager) {
+        guard let index = itemModels.firstIndex(where: { $0.persistentItem == item }) else {
+            return
+        }
+
+        let state = manager.state(of: item)
+        let validationState = state.validationState
+        let video = itemModels[index].video
+        itemModels[index] = DownloadItemModel(
+            persistentItem: item,
+            video: video,
+            validationState: validationState == .processing ? .checking : .notChecked
+        )
+        let indexPath = IndexPath(item: index, section: 0)
+        self.collectionView.reloadItems(at: [indexPath])
+    }
+}
+
+extension DownloadsController: PlayerDelegate {
+
+    func player(_ playerView: OVKit.PlayerView, reloadVideoWithCompletionHandler completionHandler: @escaping ((any OVKit.VideoType)?) -> Void) {
+        playerView.video = playerView.video
+    }
+
+    func player(_ playerView: OVKit.PlayerView, unlockRestrictedVideo video: any OVKit.VideoType, withCompletionHandler completionHandler: @escaping ([Int]?, Date?, (any Error)?) -> Void) {}
 }

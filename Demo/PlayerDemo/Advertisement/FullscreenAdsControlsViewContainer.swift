@@ -5,7 +5,7 @@
 import OVKit
 import UIKit
 
-class FullscreenAdsControlsViewContainer: UIView, ControlsViewContainer {
+class FullscreenAdsControlsViewContainer: UIView, OVKit.ControlsViewContainer {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

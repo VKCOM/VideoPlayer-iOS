@@ -3,6 +3,7 @@
 //
 
 import OVKit
+import OVKitUIComponents
 import UIKit
 
 final class FullscreenAdsControlsViewController: UIViewController {
@@ -10,8 +11,9 @@ final class FullscreenAdsControlsViewController: UIViewController {
         .demoControlMask()
     }
 
-    private var controlsView: FullscreenSupplementedAdControlsView?
-
+    #if !OLD_ADS_OFF
+    private var controlsView: OVKitUIComponents.FullscreenSupplementedAdControlsView?
+    #endif
     private var container: FullscreenAdsControlsViewContainer?
 
     override func loadView() {
@@ -40,7 +42,8 @@ final class FullscreenAdsControlsViewController: UIViewController {
                 .init(item: container, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
             ])
 
-            controlsView = FullscreenSupplementedAdControlsView.createInstance(frame: container.bounds)
+            #if !OLD_ADS_OFF
+            controlsView = OVKitUIComponents.FullscreenSupplementedAdControlsView.createInstance(frame: container.bounds)
             if let controlsView {
                 controlsView.translatesAutoresizingMaskIntoConstraints = false
                 controlsView.controlsContainer = container
@@ -55,6 +58,7 @@ final class FullscreenAdsControlsViewController: UIViewController {
                     .init(item: controlsView, attribute: .bottom, relatedBy: .equal, toItem: container, attribute: .bottom, multiplier: 1, constant: 0),
                 ])
             }
+            #endif
         }
     }
 }
@@ -92,6 +96,7 @@ final class AdsControlsViewController: UIViewController {
             .zero
         }
 
+        #if !OLD_ADS_OFF
         let types: [UIView & PlayerControlsViewProtocol] = [
             SupplementedAdControlsView.createInstance(frame: controlsBounds),
             DiscoverSupplementedAdControlsView.createInstance(frame: controlsBounds),
@@ -108,6 +113,7 @@ final class AdsControlsViewController: UIViewController {
             }
             stackView.addArrangedSubview(view)
         }
+        #endif
     }
 
     override func viewWillLayoutSubviews() {

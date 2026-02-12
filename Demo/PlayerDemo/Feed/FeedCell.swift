@@ -27,11 +27,14 @@ class FeedCell: UITableViewCell, FocusOfInterestView {
     weak var uiDelegate: FeedCellUIDelegate?
 
     private(set) lazy var playerView: PlayerView = {
+        #if OLD_ADS_OFF
+        let player = PlayerView(frame: .zero, gravity: .fill, controls: FeedControlsView(frame: .zero))
+        #else
         let player = PlayerView(frame: .zero, gravity: .fill, customControls: FeedControlsView(frame: .zero))
+        #endif
         let context = DemoPlayerViewContext()
         context.openWithDetail = true
         player.context = context
-        player.isAccessibilityElement = true
         player.accessibilityIdentifier = "video_player.video_container"
         return player
     }()
@@ -106,17 +109,19 @@ class FeedCell: UITableViewCell, FocusOfInterestView {
 
     private func updateFocusedState() {
         #if DEBUG
-            if SettingsViewController.focusDebug {
-                contentView.layer.borderWidth = isFocusOfInterest ? 2.0 : 0.0
-                contentView.layer.borderColor = isFocusOfInterest ? UIColor.red.cgColor : UIColor.clear.cgColor
-            } else {
-                contentView.layer.borderWidth = 0.0
-            }
+        if SettingsViewController.focusDebug {
+            contentView.layer.borderWidth = isFocusOfInterest ? 2.0 : 0.0
+            contentView.layer.borderColor = isFocusOfInterest ? UIColor.red.cgColor : UIColor.clear.cgColor
+        } else {
+            contentView.layer.borderWidth = 0.0
+        }
         #endif
         if isFocusOfInterest, uiDelegate?.enableAutoplay == true {
+            accessibilityIdentifier = "FocusedFeedCell"
             playerView.play(userInitiated: false)
         } else if !isFocusOfInterest, !playerView.isPlayingOnExternalDevice {
             playerView.paused = true
+            accessibilityIdentifier = nil
         }
     }
 

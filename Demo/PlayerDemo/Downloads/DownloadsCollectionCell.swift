@@ -5,13 +5,18 @@
 import OVKit
 import UIKit
 
-protocol DownloadsCollectionCellUIDelegate: AnyObject {
-    func cancelDownload(of model: DownloadItemModel)
-}
-
 struct DownloadItemModel {
+
+    enum ValidationState {
+        case notChecked
+        case checking
+        case valid
+        case invalid
+    }
+
     let persistentItem: PersistentItem
     let video: Video
+    let validationState: ValidationState
 }
 
 class DownloadsCollectionCell: UICollectionViewCell {
@@ -19,8 +24,6 @@ class DownloadsCollectionCell: UICollectionViewCell {
     static let reuseId = String(describing: DownloadsCollectionCell.self)
 
     private(set) var model: DownloadItemModel?
-
-    weak var uiDelegate: DownloadsCollectionCellUIDelegate?
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
@@ -36,12 +39,10 @@ class DownloadsCollectionCell: UICollectionViewCell {
 
     private lazy var progressBar = UIProgressView(progressViewStyle: .bar)
 
-    private lazy var cancelButton: UIButton = {
-        let image = UIImage(systemName: "x.circle.fill")!
-        let btn = UIButton(frame: CGRect(origin: .zero, size: .init(width: 22, height: 22)))
-        btn.setImage(image, for: .normal)
-        btn.tintColor = .systemRed
-        return btn
+    lazy var validationIcon: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
 
     // MARK: - Initializers
@@ -51,10 +52,8 @@ class DownloadsCollectionCell: UICollectionViewCell {
 
         contentView.addSubview(titleLabel)
         contentView.addSubview(progressLabel)
-        contentView.addSubview(cancelButton)
         contentView.addSubview(progressBar)
-
-        cancelButton.addTarget(self, action: #selector(handleCancelButton), for: .touchUpInside)
+        contentView.addSubview(validationIcon)
     }
 
     @available(*, unavailable)
@@ -67,22 +66,28 @@ class DownloadsCollectionCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        cancelButton.center = CGPoint(
-            x: bounds.width - cancelButton.bounds.width / 2 - Self.insets.right,
-            y: bounds.height / 2
+        let iconSize: CGFloat = 20
+        let iconRightMargin: CGFloat = 8
+        validationIcon.frame = CGRect(
+            x: bounds.width - iconSize - iconRightMargin,
+            y: (bounds.height - iconSize) / 2,
+            width: iconSize,
+            height: iconSize
         )
+
+        let textRightMargin = validationIcon.frame.minX - iconRightMargin
 
         titleLabel.frame = CGRect(
             x: Self.insets.left,
             y: Self.insets.top,
-            width: cancelButton.frame.minX - Self.insets.right,
+            width: textRightMargin - Self.insets.left,
             height: bounds.height * 0.5
         )
 
         progressLabel.frame = CGRect(
             x: Self.insets.left,
             y: titleLabel.frame.maxY,
-            width: cancelButton.frame.minX - Self.insets.right,
+            width: textRightMargin - Self.insets.left,
             height: bounds.height - titleLabel.frame.maxY - Self.insets.bottom
         )
         progressBar.frame = CGRect(
@@ -102,6 +107,7 @@ class DownloadsCollectionCell: UICollectionViewCell {
         }
 
         titleLabel.text = model.video.title
+        updateValidationIcon(for: model.validationState)
 
         DownloadService.shared.addListener(self)
         updateItemState()
@@ -114,15 +120,6 @@ class DownloadsCollectionCell: UICollectionViewCell {
     }
 
     // MARK: - Private
-
-    @objc
-    private func handleCancelButton() {
-        guard let model else {
-            return
-        }
-
-        uiDelegate?.cancelDownload(of: model)
-    }
 
     @objc
     private func updateItemState() {
@@ -170,6 +167,28 @@ class DownloadsCollectionCell: UICollectionViewCell {
             }
         }
     }
+
+    // MARK: - Private Helper Methods
+
+    func updateValidationIcon(for state: DownloadItemModel.ValidationState) {
+        switch state {
+        case .notChecked:
+            validationIcon.image = nil
+            validationIcon.isHidden = true
+        case .checking:
+            validationIcon.image = UIImage(systemName: "arrow.2.circlepath.circle")
+            validationIcon.tintColor = .systemGray2
+            validationIcon.isHidden = false
+        case .valid:
+            validationIcon.image = UIImage(systemName: "checkmark.circle.fill")
+            validationIcon.tintColor = .systemGreen
+            validationIcon.isHidden = false
+        case .invalid:
+            validationIcon.image = UIImage(systemName: "xmark.circle.fill")
+            validationIcon.tintColor = .systemRed
+            validationIcon.isHidden = false
+        }
+    }
 }
 
 extension DownloadsCollectionCell: PersistenceManagerListener {
@@ -186,8 +205,22 @@ extension DownloadsCollectionCell: PersistenceManagerListener {
     }
 
     func persistenceManager(_ manager: PersistenceManager, updatedStatusOf item: PersistentItem) {
-        if item == model?.persistentItem {
-            updateItemState()
+        guard item == model?.persistentItem else {
+            return
         }
+
+        updateItemState()
+    }
+
+    func persistenceManager(_ manager: PersistenceManager, didValidateItem item: PersistentItem, error: Error?) {
+        guard item == model?.persistentItem else {
+            return
+        }
+
+        let validationState: DownloadItemModel.ValidationState = error == nil ? .valid : .invalid
+        guard let video = model?.video else { return }
+
+        model = DownloadItemModel(persistentItem: item, video: video, validationState: validationState)
+        updateValidationIcon(for: validationState)
     }
 }

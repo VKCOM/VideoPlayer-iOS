@@ -10,10 +10,10 @@ import OVPlayerKit
 import UIKit
 
 #if canImport(OVKitMyTargetPlugin)
-    import OVKitMyTargetPlugin
+import OVKitMyTargetPlugin
 #endif
 #if canImport(OVKitChromecastPlugin)
-    import OVKitChromecastPlugin
+import OVKitChromecastPlugin
 #endif
 
 let logger = Logger(subsystem: "", category: "")
@@ -67,6 +67,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // При необходимости можно очистить кэш
         OVPlayer.cache.purgeDisk()
 
+        #if !OLD_ADS_OFF
+        Environment.shared._enableInterstitial = false
+        Environment.shared.defaultAdsProviderType = OVKitMyTargetPlugin.DefaultAdsProvider.self
+        #endif
         Environment.shared.allowsExternalPlayback = true
         Environment.shared.allowsBackgroundPlayback = true
         Environment.shared.enableDiagnosticsView = true
@@ -77,6 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment.shared._fixPixelBufferCopy = true
         Environment.shared._allowMultiplayChangeDuringPlayback = true
         Environment._surfaceView = false
+        Environment.shared._useNewBroadcast = false
 
         if ProcessInfo.processInfo.environment["DEMO_DISABLE_ANIMATIONS"] == "1" {
             UIView.setAnimationsEnabled(false)
@@ -90,18 +95,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Environment.shared.disabledFormats = Set(VideoFileFormat.allCases.filter { $0 != current })
         }
 
+        if ProcessInfo.processInfo.environment["DEMO_START_WITH_LOWER_QUALITY"] == "1" {
+            Environment.shared.startWithLowerQuality = true
+        }
+
+        if let bufferSize = ProcessInfo.processInfo.environment["DEMO_MAX_BUFFER_SIZE"],
+           let bufferValue = TimeInterval(bufferSize) {
+            // понижаем зону стабильности: 10/20 -> 3/5
+            Environment.shared._videoBufferSettings = BufferSettings(
+                maxBufferSize: bufferValue,
+                minDurationForQualityIncrease: 3.0,
+                maxDurationForQualityDecrease: 5.0
+            )
+        }
+
         AppCoordinator.shared.readEnvironmentParams()
 
         #if canImport(OVKitMyTargetPlugin)
-            let disableAds = ProcessInfo.processInfo.environment["DEMO_DISABLE_ADS"] == "1"
-            Environment.shared.myTargetPlugin = disableAds ? nil : MyTargetPluginImpl()
-            Environment.shared._enableAnimatedControlsTranstions = true
+        let disableAds = ProcessInfo.processInfo.environment["DEMO_DISABLE_ADS"] == "1"
+        Environment.shared.myTargetPlugin = disableAds ? nil : MyTargetPluginImpl()
+        Environment.shared._enableAnimatedControlsTranstions = true
         #endif
 
         #if canImport(OVKitChromecastPlugin)
-            if let chromecastAppId = ProcessInfo.processInfo.environment["CHROMECAST_APP_ID"], !chromecastAppId.isEmpty {
+
+        if let chromecastAppId = ProcessInfo.processInfo.environment["CHROMECAST_APP_ID"], !chromecastAppId.isEmpty {
+            if Environment.shared._useNewBroadcast {
+                BroadcastManager.shared.configure(providers: [ChromecastBroadcastServiceProvider(deviceAppChromecastID: chromecastAppId, priority: 1)])
+            } else {
                 Environment.chromecastPlugin = ChromecastPluginImpl(deviceAppChromecastID: chromecastAppId)
             }
+        }
         #endif
 
         return true

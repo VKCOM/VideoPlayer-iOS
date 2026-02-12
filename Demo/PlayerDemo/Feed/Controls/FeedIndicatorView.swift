@@ -26,7 +26,7 @@ public class FeedIndicatorView: UIView {
 
     // MARK: - Initialization
 
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
 
         addSubview(textLabel)
@@ -53,7 +53,7 @@ public class FeedIndicatorView: UIView {
         }
     }
 
-    override public var isHidden: Bool {
+    public override var isHidden: Bool {
         didSet { updateState() }
     }
 
@@ -73,13 +73,13 @@ public class FeedIndicatorView: UIView {
 
     // MARK: - Layout
 
-    override public func didMoveToWindow() {
+    public override func didMoveToWindow() {
         super.didMoveToWindow()
 
         updateState()
     }
 
-    override public func sizeThatFits(_ size: CGSize) -> CGSize {
+    public override func sizeThatFits(_ size: CGSize) -> CGSize {
         var timeLabelSize = textLabel.sizeThatFits(size)
 
         timeLabelSize.height += 2 * 4.0
@@ -92,7 +92,7 @@ public class FeedIndicatorView: UIView {
         return timeLabelSize
     }
 
-    override public func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         var timeLabelX = 8.0
 

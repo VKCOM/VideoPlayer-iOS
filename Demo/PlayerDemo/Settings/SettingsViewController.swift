@@ -34,8 +34,8 @@ struct SettingsView: View {
     private var advExpId = ""
 
     #if DEBUG
-        @AppStorage(Environment.demo_focusDebug)
-        private var focusDebug = false
+    @AppStorage(Environment.demo_focusDebug)
+    private var focusDebug = false
     #endif
 
     @AppStorage(Environment.demo_hlsDownload)
@@ -78,14 +78,14 @@ struct SettingsView: View {
                 Text("VK API Credentials")
             }
             #if DEBUG
-                Section {
-                    Toggle(isOn: $focusDebug.animation()) {
-                        Text("Focus Preview")
-                    }
-                    .onChange(of: focusDebug, perform: updateFocusDebug)
-                } footer: {
-                    Text("Enable Focus Preview for autoplay feature.")
+            Section {
+                Toggle(isOn: $focusDebug.animation()) {
+                    Text("Focus Preview")
                 }
+                .onChange(of: focusDebug, perform: updateFocusDebug)
+            } footer: {
+                Text("Enable Focus Preview for autoplay feature.")
+            }
             #endif
 
             Section {
@@ -207,10 +207,10 @@ struct SettingsView: View {
 
     #if DEBUG
 
-        private func updateFocusDebug(value: Bool) {
-            focusDebug = value
-            SettingsViewController.focusDebug = focusDebug
-        }
+    private func updateFocusDebug(value: Bool) {
+        focusDebug = value
+        SettingsViewController.focusDebug = focusDebug
+    }
 
     #endif
 
