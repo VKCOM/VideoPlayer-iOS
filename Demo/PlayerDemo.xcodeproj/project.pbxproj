@@ -51,6 +51,7 @@
 		D4E8A5A6294D1721002CAA3F /* MultiplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8A5A5294D1721002CAA3F /* MultiplayController.swift */; };
 		D4FC7349282BCCF40055623C /* Video+Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC7348282BCCF40055623C /* Video+Demo.swift */; };
 		DEF8F75D2ED0B79E00EBA51A /* VPMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF8F75C2ED0B79E00EBA51A /* VPMenuOption.swift */; };
+		E89AD6B72CD2273E004BC860 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = E89AD6B62CD2273E004BC860 /* Shaders.metal */; };
 		EA04146B28881B1700A05BB0 /* PlayerViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04146A28881B1700A05BB0 /* PlayerViewContext.swift */; };
 		EA0F26BB28183F71004F126C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F26BA28183F71004F126C /* MenuController.swift */; };
 		EA1656B526BD6F1B007743EE /* FocusOfInterestTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1656B426BD6F1B007743EE /* FocusOfInterestTracker.swift */; };
@@ -60,7 +61,6 @@
 		EA480D6727B2CA4E00EDDD24 /* PlayerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA480D6627B2CA4E00EDDD24 /* PlayerViewProvider.swift */; };
 		EA480D6927B2D64E00EDDD24 /* PlayerTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA480D6827B2D64E00EDDD24 /* PlayerTransitionAnimator.swift */; };
 		EA68DCF02E7B0D8E00FDEE69 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = EA68DCEF2E7B0D8E00FDEE69 /* AppIcon.icon */; };
-		EAA14C3B2EC72DD800DF03A4 /* OVKitUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = EAA14C3A2EC72DD800DF03A4 /* OVKitUIComponents */; };
 		EAAFC53427BBEB6400033D8B /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFC53327BBEB6400033D8B /* NavigationController.swift */; };
 		EAD0550D28296648002EF645 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD0550C28296648002EF645 /* MenuCell.swift */; };
 		EAD0550F28296686002EF645 /* MenuPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD0550E28296686002EF645 /* MenuPresentationController.swift */; };
@@ -135,6 +135,7 @@
 		D4FC7348282BCCF40055623C /* Video+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Video+Demo.swift"; sourceTree = "<group>"; };
 		DEF8F75C2ED0B79E00EBA51A /* VPMenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPMenuOption.swift; sourceTree = "<group>"; };
 		E805F55F25CABE2100D9F697 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		E89AD6B62CD2273E004BC860 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = ../OVPlayerKit/OVPlayerKit/OVPlayerKit/Shaders.metal; sourceTree = SOURCE_ROOT; };
 		EA04146A28881B1700A05BB0 /* PlayerViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewContext.swift; sourceTree = "<group>"; };
 		EA0F26BA28183F71004F126C /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		EA1656B426BD6F1B007743EE /* FocusOfInterestTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOfInterestTracker.swift; sourceTree = "<group>"; };
@@ -161,7 +162,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAA14C3B2EC72DD800DF03A4 /* OVKitUIComponents in Frameworks */,
 				1306CD7FF4EB5A9F13229912 /* VKVideoPlayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,6 +323,7 @@
 				D4CA47E82575A267009C5DB3 /* AppDelegate.swift */,
 				3796ABE72E5367400031B627 /* AppCoordinator.swift */,
 				D4BD26C929D7201A005C52C6 /* SceneDelegate.swift */,
+				E89AD6B62CD2273E004BC860 /* Shaders.metal */,
 			);
 			path = PlayerDemo;
 			sourceTree = "<group>";
@@ -460,7 +461,6 @@
 			name = PlayerDemo;
 			packageProductDependencies = (
 				55904406B78EC8E5D1E3C4C6 /* VKVideoPlayer */,
-				EAA14C3A2EC72DD800DF03A4 /* OVKitUIComponents */,
 			);
 			productName = PlayerDemo;
 			productReference = D4CA47E52575A267009C5DB3 /* PlayerDemo.app */;
@@ -541,6 +541,7 @@
 				EAD174812AE7FC60008E34E7 /* FeedControlsView.swift in Sources */,
 				EAD174822AE7FC60008E34E7 /* FeedIndicatorView.swift in Sources */,
 				D4C551EB257687D6006E6419 /* FeedVideoModel.swift in Sources */,
+				E89AD6B72CD2273E004BC860 /* Shaders.metal in Sources */,
 				EA1656B526BD6F1B007743EE /* FocusOfInterestTracker.swift in Sources */,
 				D40B0A2A2AA5EB7A009EDEA8 /* FullscreenCustomControls.swift in Sources */,
 				3796ABE82E5367400031B627 /* AppCoordinator.swift in Sources */,
@@ -736,7 +737,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.53;
+				CURRENT_PROJECT_VERSION = 2.53.1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -745,7 +746,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.53;
+				MARKETING_VERSION = 2.53.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -765,7 +766,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.53;
+				CURRENT_PROJECT_VERSION = 2.53.1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -774,7 +775,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.53;
+				MARKETING_VERSION = 2.53.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -812,7 +813,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.53.0;
+				version = 2.53.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -822,11 +823,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66679F29752A9ABDADAEEFC3 /* XCRemoteSwiftPackageReference "VideoPlayer-iOS" */;
 			productName = VKVideoPlayer;
-		};
-		EAA14C3A2EC72DD800DF03A4 /* OVKitUIComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 66679F29752A9ABDADAEEFC3 /* XCRemoteSwiftPackageReference "VideoPlayer-iOS" */;
-			productName = OVKitUIComponents;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
