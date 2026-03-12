@@ -64,6 +64,7 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
             guard let mask = controlMask else {
                 playPauseButton.isHidden = true
                 gravityButton.isHidden = true
+                pipButton.isHidden = true
                 return
             }
 
@@ -88,6 +89,8 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
             } else {
                 gravityButton.isHidden = true
             }
+
+            pipButton.isHidden = !mask.hasControl(.pip)
         }
     }
 
@@ -140,6 +143,28 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
         controlsDelegate.handleControl(gravity)
     }
 
+    // MARK: - PiP button
+
+    lazy var pipButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+        button.accessibilityIdentifier = "video_player.pip_button"
+        button.accessibilityLabel = "video_player_pip_button_accessibility_label".ovk_localized()
+        button.accessibilityHint = "video_player_pip_button_accessibility_hint".ovk_localized()
+        button.setImage(.ovk_pipOutline24, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        button.addTarget(self, action: #selector(Self.handlePiPButton), for: .touchUpInside)
+        return button
+    }()
+
+    @objc
+    func handlePiPButton() {
+        if controlMask?.hasControl(.pip) == true {
+            controlsDelegate?.handleControl(.pip)
+        }
+    }
+
     // MARK: - View
 
     override init(frame: CGRect) {
@@ -147,9 +172,13 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
 
         addSubview(playPauseButton)
         addSubview(gravityButton)
+        addSubview(pipButton)
 
         gravityButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -18).isActive = true
         gravityButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -18).isActive = true
+
+        pipButton.rightAnchor.constraint(equalTo: gravityButton.leftAnchor, constant: -18).isActive = true
+        pipButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -18).isActive = true
     }
 
     @available(*, unavailable)
@@ -168,6 +197,7 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
         let update = {
             self.playPauseButton.alpha = alpha
             self.gravityButton.alpha = alpha
+            self.pipButton.alpha = alpha
         }
         if animated {
             UIView.animate(withDuration: 0.24, delay: 0, options: .curveEaseInOut, animations: {
