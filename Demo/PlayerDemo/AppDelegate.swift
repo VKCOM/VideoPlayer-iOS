@@ -83,6 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Environment.shared._fixPixelBufferCopy = true
         Environment.shared._allowMultiplayChangeDuringPlayback = true
         Environment._surfaceView = false
+        Environment.shared._prepareSBDL = false
         Environment.shared._useNewBroadcast = false
 
         if ProcessInfo.processInfo.environment["DEMO_DISABLE_ANIMATIONS"] == "1" {
