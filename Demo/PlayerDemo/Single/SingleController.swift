@@ -11,12 +11,21 @@ import OVKitMyTargetPlugin
 import UIKit
 
 class SingleController: ViewController {
+    private lazy var controls = InplaceCustomControls(frame: .zero)
+
+    // MARK: - Prefetch Properties
+
+    private let prefetchResourceLoader = DemoResourceLoader()
+    private var prefetchTask: URLSessionDownloadTask?
+    private var prefetchProgressObservation: NSKeyValueObservation?
+
+    // MARK: - Player View
+
     private lazy var playerView: PlayerView = {
-        let controls = InplaceCustomControls(frame: .zero)
         #if OLD_ADS_OFF
-        let playerView = PlayerView(frame: view.bounds, gravity: .fit, controls: controls)
+        let playerView = PlayerView(frame: view.bounds, gravity: .fill, controls: controls)
         #else
-        let playerView = PlayerView(frame: view.bounds, gravity: .fit, customControls: controls)
+        let playerView = PlayerView(frame: view.bounds, gravity: .fill, customControls: controls)
         #endif
         #if canImport(OVKitMyTargetPlugin)
         playerView.interstitialProvider = Environment.shared._enableInterstitial ? MyTargetInterstitialProvider() : nil
@@ -35,6 +44,7 @@ class SingleController: ViewController {
     }()
 
     deinit {
+        prefetchTask?.cancel()
         if isViewLoaded {
             playerView.stop()
         }
@@ -44,12 +54,18 @@ class SingleController: ViewController {
         super.viewDidLoad()
 
         navigationItem.title = "Single video"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Import", style: .plain, target: self, action: #selector(Self.openImport))
-        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "single_controller.import_button"
+        let importButton = UIBarButtonItem(image: .add, style: .plain, target: self, action: #selector(Self.openImport))
+        let screencastButton = UIBarButtonItem(image: .ovk_screencastOutline24, style: .plain, target: self, action: #selector(Self.openScreencastMenu))
+        importButton.accessibilityIdentifier = "single_controller.import_button"
+        screencastButton.accessibilityIdentifier = "single_controller.broadcast_button"
+
+        navigationItem.leftBarButtonItems = [importButton, screencastButton]
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Stop", style: .plain, target: self, action: #selector(Self.stopPlayer))
 
         navigationItem.rightBarButtonItem?.accessibilityIdentifier = "single_controller.stop_button"
         view.addSubview(playerView)
+
+        setupPrefetchControls()
 
         guard let video = Video.loadFromUserDefaults() else {
             print("No saved video in UserDefaults")
@@ -105,5 +121,75 @@ class SingleController: ViewController {
             loadVideo(video, for: playerView)
         }
         present(vc, animated: true, completion: nil)
+    }
+
+    @objc
+    private func openScreencastMenu() {
+        controls.handleScreencastButton()
+    }
+}
+
+// MARK: - Prefetch Cache Playback
+
+extension SingleController {
+    private func setupPrefetchControls() {
+        controls.onPrefetchRequested = { [weak self] video, format in
+            self?.startPrefetch(for: video, format: format)
+        }
+    }
+
+    private func startPrefetch(for videoType: VideoType, format: VideoFileFormat) {
+        guard let video = videoType as? Video,
+              let remoteURL = video.videoURL(format),
+              let ovkdemoURL = remoteURL.withDemoResourceLoaderScheme
+        else { return }
+
+        controls.showPrefetchProgress(0)
+
+        let task = URLSession.shared.downloadTask(with: remoteURL) { [weak self] tempURL, _, error in
+            guard let self else { return }
+
+            prefetchProgressObservation = nil
+
+            guard error == nil, let tempURL else {
+                DispatchQueue.main.async { self.controls.hidePrefetchProgress(cached: false) }
+                return
+            }
+
+            let destURL = cachedFileURL(for: video)
+            try? FileManager.default.removeItem(at: destURL)
+            try? FileManager.default.moveItem(at: tempURL, to: destURL)
+
+            DispatchQueue.main.async {
+                self.prefetchResourceLoader.localFileURL = destURL
+                video.files = [format: ovkdemoURL]
+                self.controls.hidePrefetchProgress(cached: true)
+                self.playerView.video = nil
+                self.playerView.video = video
+            }
+        }
+
+        prefetchProgressObservation = task.progress.observe(\.fractionCompleted) { [weak self] progress, _ in
+            DispatchQueue.main.async {
+                self?.controls.showPrefetchProgress(Float(progress.fractionCompleted))
+            }
+        }
+
+        prefetchTask?.cancel()
+        prefetchTask = task
+        task.resume()
+    }
+
+    private func cachedFileURL(for video: Video) -> URL {
+        let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+        return cacheDir.appendingPathComponent("prefetch_\(video.videoId).mp4")
+    }
+
+    func playerResourceLoaderDelegate(for playerView: PlayerView) -> (any AVAssetResourceLoaderDelegate)? {
+        prefetchResourceLoader.localFileURL != nil ? prefetchResourceLoader : nil
+    }
+
+    func playerResourceLoaderQueue(for playerView: PlayerView) -> DispatchQueue? {
+        DispatchQueue(label: "com.ovplayerkit.resource-loader-delegate")
     }
 }

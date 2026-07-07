@@ -219,7 +219,7 @@ class DetailController: ViewController {
         }
     }
 
-    lazy var dismissGestureRecognizer: UIPanGestureRecognizer? = {
+    lazy var swipeGestureRecognizer: UIPanGestureRecognizer? = {
         let g = UIPanGestureRecognizer()
         view.addGestureRecognizer(g)
         return g

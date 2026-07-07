@@ -6,8 +6,8 @@ import OVKit
 import UIKit
 
 class NavigationController: UINavigationController, PlayerViewProvider, FullscreenSupplementaryController {
-    var dismissGestureRecognizer: UIPanGestureRecognizer? {
-        supplementary?.dismissGestureRecognizer
+    var swipeGestureRecognizer: UIPanGestureRecognizer? {
+        supplementary?.swipeGestureRecognizer
     }
 
     var supplementaryType: OVKit.SupplementaryControllerType {

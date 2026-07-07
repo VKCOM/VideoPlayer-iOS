@@ -40,7 +40,7 @@ class TabbarController: UITabBarController {
         let rotations = RotationsNavController(rootViewController: RotationsController())
         rotations.tabBarItem = UITabBarItem(title: "Rotations", image: UIImage(systemName: "rotate.left"), selectedImage: nil)
 
-        let surfaceLayout = NavigationController(rootViewController: SurfaceAnimationViewController())
+        let surfaceLayout = NavigationController(rootViewController: SurfacePlayground())
         surfaceLayout.tabBarItem = UITabBarItem(title: "Surface Layout", image: UIImage(systemName: "arrow.down.left.and.arrow.up.right.square"), selectedImage: nil)
 
         #if canImport(OVKitMyTargetPlugin)

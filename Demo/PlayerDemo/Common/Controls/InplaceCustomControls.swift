@@ -369,13 +369,22 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
                     return
                 }
 
-                completion([self.createLoopMenu()])
+                completion(self.createContextMenuChildren())
             }]
         } else {
-            children = [createLoopMenu()]
+            children = createContextMenuChildren()
         }
 
         return UIMenu(title: menuTitle, children: children)
+    }
+
+    private func createContextMenuChildren() -> [UIMenuElement] {
+        var children: [UIMenuElement] = [createLoopMenu()]
+        if let currentVideo = findPlayerView()?.video {
+            children.append(contentsOf: createDownloadOptions(for: currentVideo))
+            children.append(contentsOf: createPrefetchMenu(for: currentVideo))
+        }
+        return children
     }
 
     // MARK: - Loop Submenu
@@ -404,6 +413,100 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
                 self?.setVideoRepeated(newValue)
             }
         )
+    }
+
+    // MARK: - Download Options
+
+    private func createDownloadOptions(for video: VideoType) -> [UIMenuElement] {
+        var actions: [UIMenuElement] = []
+
+        let hlsFormats: [VideoFileFormat] = [.hlsFMP4, .hls, .hlsOndemand]
+        if hlsFormats.contains(where: { video.videoURL($0) != nil }) {
+            VideoFileFormat.allCases
+                .compactMap { format -> Int? in
+                    guard format.rawValue.hasPrefix("mp4_"),
+                          let suffix = format.rawValue.split(separator: "_").last else { return nil }
+
+                    return Int(suffix)
+                }
+                .sorted(by: >)
+                .forEach { quality in
+                    let action = UIAction(
+                        title: "HLS \(qualityDescription(for: quality))",
+                        image: UIImage(systemName: "antenna.radiowaves.left.and.right")
+                    ) { _ in
+                        DownloadService.shared.downloadVideo(video, quality: quality, useHLS: true, onlySound: false)
+                    }
+                    actions.append(action)
+                }
+        }
+
+        actions.append(UIAction(
+            title: "Только аудио",
+            image: UIImage(systemName: "music.note")
+        ) { _ in
+            DownloadService.shared.downloadVideo(video, useHLS: false, onlySound: true)
+        })
+
+        return [
+            UIMenu(
+                title: "Загрузка видео",
+                image: UIImage(systemName: "arrow.down.to.line"),
+                children: actions
+            )
+        ]
+    }
+
+    // MARK: - Prefetch Menu
+
+    private static let mp4Formats: [VideoFileFormat] = [.mp4_720, .mp4_480, .mp4_360, .mp4_240]
+
+    private func createPrefetchMenu(for video: VideoType) -> [UIMenuElement] {
+        var actions: [UIMenuElement] = []
+
+        for format in Self.mp4Formats where video.videoURL(format) != nil {
+            if let quality = Self.extractQuality(from: format) {
+                actions.append(UIAction(
+                    title: "MP4 \(qualityDescription(for: quality))",
+                    image: UIImage(systemName: "film")
+                ) { [weak self] _ in
+                    self?.onPrefetchRequested?(video, format)
+                })
+            }
+        }
+
+        return [
+            UIMenu(
+                title: "Префетч",
+                image: UIImage(systemName: "arrow.down.circle"),
+                children: actions
+            )
+        ]
+    }
+
+    private static func extractQuality(from format: VideoFileFormat) -> Int? {
+        guard format.rawValue.hasPrefix("mp4_"),
+              let suffix = format.rawValue.split(separator: "_").last else {
+            return nil
+        }
+
+        return Int(suffix)
+    }
+
+    // MARK: - Prefetch
+
+    /// Fired when the user taps a prefetch option. The receiver is responsible for
+    /// downloading the media, driving progress updates, and reloading the player.
+    var onPrefetchRequested: ((VideoType, VideoFileFormat) -> Void)?
+
+    // MARK: - Prefetch Progress
+
+    private func qualityDescription(for quality: Int) -> String {
+        switch quality {
+        case 2160: return "4K"
+        case 1440: return "2K"
+        default: return "\(quality)p"
+        }
     }
 
     private func setVideoRepeated(_ repeated: Bool) {
@@ -459,10 +562,45 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
     }()
 
     @objc
-    private func handleScreencastButton() {
+    func handleScreencastButton() {
         controlsDelegate?.presentScreencastMenu(onShowRoutePicker: { [weak self] in
             self?.screencastButton.showRoutePicker()
         })
+    }
+
+    // MARK: - Prefetch Progress
+
+    private lazy var prefetchProgressLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .white
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.65)
+        label.font = .monospacedDigitSystemFont(ofSize: 12, weight: .medium)
+        label.layer.cornerRadius = 8
+        label.layer.masksToBounds = true
+        label.isHidden = true
+        return label
+    }()
+
+    func showPrefetchProgress(_ progress: Float) {
+        prefetchProgressLabel.isHidden = false
+        let pct = Int(progress * 100)
+        prefetchProgressLabel.text = "Префетчинг: \(pct)%"
+        prefetchProgressLabel.sizeToFit()
+        setNeedsLayout()
+    }
+
+    func hidePrefetchProgress(cached: Bool) {
+        if cached {
+            prefetchProgressLabel.text = "✓ Проигрывание из кэша"
+            prefetchProgressLabel.sizeToFit()
+            setNeedsLayout()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                self?.prefetchProgressLabel.isHidden = true
+            }
+        } else {
+            prefetchProgressLabel.isHidden = true
+        }
     }
 
     // MARK: - Behaviors
@@ -539,7 +677,11 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
         buttonsContainer.rightAnchor.constraint(equalTo: rightAnchor, constant: -18).isActive = true
         buttonsContainer.bottomAnchor.constraint(equalTo: timelineView.topAnchor).isActive = true
 
+        addSubview(prefetchProgressLabel)
+
         addBehavior(doubleTapSeek)
+
+        DownloadService.shared.addListener(self)
     }
 
     @available(*, unavailable)
@@ -556,6 +698,14 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
         timelineView.frame = CGRect(x: 18, y: bounds.height - 36, width: bounds.width - 36, height: 28)
         topShadow.frame = CGRect(x: 0, y: 0, width: bounds.width, height: topShadow.bounds.height)
         bottomShadow.frame = CGRect(x: 0, y: bounds.height - bottomShadow.bounds.height, width: bounds.width, height: bottomShadow.bounds.height)
+
+        let labelSize = prefetchProgressLabel.sizeThatFits(CGSize(width: bounds.width - 32, height: 28))
+        prefetchProgressLabel.frame = CGRect(
+            x: (bounds.width - labelSize.width) / 2,
+            y: timelineView.frame.minY - labelSize.height - 8,
+            width: labelSize.width,
+            height: max(labelSize.height, 24)
+        )
         if let subtitlesView {
             subtitlesView.maxAvailableFrame = availableFrameForSubtitles()
         }
@@ -583,4 +733,31 @@ class InplaceCustomControls: UIView, PlayerControlsViewProtocol {
             controlsDelegate?.visibilityDidChangeTo(visible: visible)
         }
     }
+}
+
+// MARK: - PersistenceManagerListener
+
+extension InplaceCustomControls: PersistenceManagerListener {
+    func persistenceManager(_ manager: PersistenceManager, added item: PersistentItem) {}
+
+    func persistenceManager(_ manager: PersistenceManager, removed item: PersistentItem) {
+        guard !item.onlySound,
+              let video = findPlayerView()?.video,
+              item.identifier == video.videoId else { return }
+
+        DownloadService.shared.clearLocalURLs(for: video)
+    }
+
+    func persistenceManager(_ manager: PersistenceManager, updatedStatusOf item: PersistentItem) {
+        guard manager.state(of: item).downloadState == .finished,
+              !item.onlySound,
+              let video = findPlayerView()?.video,
+              item.identifier == video.videoId else { return }
+
+        DownloadService.shared.fillLocalURLs(for: video)
+    }
+
+    func persistenceManager(_ manager: PersistenceManager, didFailWithError error: Error) {}
+
+    func persistenceManager(_ manager: PersistenceManager, didValidateItem item: PersistentItem, error: Error?) {}
 }

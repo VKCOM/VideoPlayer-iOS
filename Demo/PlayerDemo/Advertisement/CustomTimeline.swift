@@ -8,7 +8,22 @@ import OVKit
 import OVKitUIComponents
 
 final class CustomTimelineAdsProvider: NSObject, OVKit.AdsProvider {
+
+    var isPostViewEnabled = true
+
     func makeAdControls(for ads: any VideoAdsType, hasSupplementaryControls: Bool, interactiveAdsPlaying: Bool, inPiP: Bool) -> any PlayerControlsViewProtocol {
+        let controls = CustomSupplementedAdControlsView(frame: .zero)
+        controls.isInternalSupplementaryEnabled = true
+        controls.timelineView.progressColor = .red
+        controls.timelineView.rounded = false
+        controls.timelineView.roundedProgress = false
+        var tFrame = controls.timelineView.frame
+        tFrame.size.height = 10
+        controls.timelineView.frame = tFrame
+        return controls
+    }
+
+    func makeAdControls(hasSupplementaryControls: Bool, interactiveAdsPlaying: Bool, inPiP: Bool) -> any PlayerControlsViewProtocol {
         let controls = CustomSupplementedAdControlsView(frame: .zero)
         controls.isInternalSupplementaryEnabled = true
         controls.timelineView.progressColor = .red

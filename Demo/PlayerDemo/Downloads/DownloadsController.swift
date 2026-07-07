@@ -246,6 +246,7 @@ extension DownloadsController {
         let model = itemModels[indexPath.item]
         PlayerView.showFullscreen(model.video, on: self, fromTime: nil, completion: { playerView in
             playerView.delegate = self
+            playerView.onlyAudioMode = model.persistentItem.onlySound
         })
     }
 }

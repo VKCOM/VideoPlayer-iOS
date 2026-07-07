@@ -113,6 +113,7 @@ class ViewController: UIViewController {
                     return
                 }
 
+                DownloadService.shared.fillLocalURLs(for: video)
                 playerView.isHidden = false
                 playerView.video = video
                 completion?(true)

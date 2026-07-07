@@ -65,8 +65,9 @@ class FeedController: TableController, PlayerViewProvider {
         ApiSession.shared?.fetch(
             ownerVideos: ownerId,
             count: UInt(feedVideosCount)
-        ) { [weak self] items, _ in
+        ) { [weak self] items, error in
             guard let self, let items else {
+                print("Received 0 items. Error: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
 

@@ -45,9 +45,8 @@ class DownloadService {
         }
     }
 
-    func downloadVideo(_ video: VideoType) {
-        let useHLS = SettingsViewController.useHLS
-        downloader.downloadVideo(video, inQuality: 1080, useHLS: useHLS, onlySound: false, userData: nil)
+    func downloadVideo(_ video: VideoType, quality: Int = 1080, useHLS: Bool = false, onlySound: Bool = false) {
+        downloader.downloadVideo(video, inQuality: quality, useHLS: useHLS, onlySound: onlySound, userData: nil)
     }
 
     func delete(item: PersistentItem) {
@@ -103,5 +102,33 @@ class DownloadService {
             $0.validationState == .processing
         }
         .isEmpty
+    }
+
+    func clearLocalURLs(for video: VideoType) {
+        for format in VideoFileFormat.allCases where video.videoURL(format)?.isFileURL == true {
+            video.setVideoURL(nil, for: format)
+        }
+    }
+
+    func fillLocalURLs(for video: VideoType) {
+        guard let item = items.first(where: {
+            $0.identifier == video.videoId
+                && getState(of: $0).downloadState == .finished
+                && !$0.onlySound
+        }) else {
+            return
+        }
+
+        let localVideo = getVideo(of: item, forLocalPlayback: true)
+
+        guard let sourceURL = localVideo.videoURL(.source) else {
+            return
+        }
+
+        video.setVideoURL(sourceURL, for: .source)
+
+        if let format = VideoFileFormat(rawValue: "mp4_\(item.quality)") {
+            video.setVideoURL(sourceURL, for: format)
+        }
     }
 }
