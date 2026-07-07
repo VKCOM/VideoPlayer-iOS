@@ -15,6 +15,12 @@ import OVKitMyTargetPlugin
 #if canImport(OVKitChromecastPlugin)
 import OVKitChromecastPlugin
 #endif
+#if canImport(OVKitOpusPlugin)
+import OVKitOpusPlugin
+#endif
+#if canImport(OVKitVPXPlugin)
+import OVKitVPXPlugin
+#endif
 
 let logger = Logger(subsystem: "", category: "")
 
@@ -59,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // OKApiSession.setup(appKey: <#T##String#>, userId: <#T##String?#>, tokenProvider: <#T##any StatsTokenProvider#>)
 
         StatsManager.shared.debugMode = true
-        Environment.shared._oneLogV2 = true
+        Environment.shared._enableThinStats = true
 
         Environment.shared.userId = "2"
         Environment.shared.demo_bootstrapFromSettingsPersistence()
@@ -74,15 +80,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
         #endif
         Environment.shared.allowsExternalPlayback = true
+        Environment.shared._ovStatisticsCustomCollectors = true
         Environment.shared.allowsBackgroundPlayback = true
         Environment.shared.enableDiagnosticsView = true
         Environment.shared.autoShowDiagnosticsView = false
         Environment.shared._audioRouteChangeStrategy = NSNumber(value: 1)
         Environment._cmafAbrHarmonicCount = 12
         Environment.shared._fixURLParamsParser = true
-        Environment.shared._fixPixelBufferCopy = true
+        Environment.shared._audioCBRSupport = true
         Environment.shared._allowMultiplayChangeDuringPlayback = true
-        Environment._surfaceView = false
+        Environment._surfaceView = true
         Environment.shared._prepareSBDL = false
         Environment.shared._useNewBroadcast = false
 
@@ -129,6 +136,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Environment.chromecastPlugin = ChromecastPluginImpl(deviceAppChromecastID: chromecastAppId)
             }
         }
+        #endif
+
+        #if canImport(OVKitOpusPlugin)
+        OpusPlugin.setup()
+        #endif
+        #if canImport(OVKitVPXPlugin)
+        VPXPlugin.setup()
         #endif
 
         return true

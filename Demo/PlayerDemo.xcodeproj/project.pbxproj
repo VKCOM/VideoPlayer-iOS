@@ -12,8 +12,11 @@
 		3796ABE82E5367400031B627 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3796ABE72E5367400031B627 /* AppCoordinator.swift */; };
 		37A3A1862E5C5A40008008D7 /* CustomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1842E5C5A40008008D7 /* CustomController.swift */; };
 		37D5D9E72E65A1BD00B4E928 /* URLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5D9E62E65A1BD00B4E928 /* URLParser.swift */; };
+		3C5565222FC5991C00926BA4 /* DemoResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5565202FC5991C00926BA4 /* DemoResourceLoader.swift */; };
 		3D0819042E4126F80016CEDC /* CustomTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0819032E4126F30016CEDC /* CustomTimeline.swift */; };
 		3D2D7CA92EA7C24400FFC9B3 /* SurfaceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2D7CA82EA7C24000FFC9B3 /* SurfaceAnimation.swift */; };
+		3D8669C12F6D55A3002F47B3 /* SurfacePlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8669C02F6D559A002F47B3 /* SurfacePlayground.swift */; };
+		3D8669C32F6D5619002F47B3 /* SurfaceAnimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8669C22F6D5614002F47B3 /* SurfaceAnimate.swift */; };
 		40A9BA762E1FAC3100BC5384 /* Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 40A9BA752E1FAC3100BC5384 /* Configuration.xcconfig */; };
 		40E3AADB2E1FAA5300EF2F75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E3AAD52E1FAA5300EF2F75 /* Assets.xcassets */; };
 		40E3AADD2E1FAA5300EF2F75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40E3AAD92E1FAA5300EF2F75 /* LaunchScreen.storyboard */; };
@@ -91,8 +94,11 @@
 		3796ABE72E5367400031B627 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		37A3A1842E5C5A40008008D7 /* CustomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomController.swift; sourceTree = "<group>"; };
 		37D5D9E62E65A1BD00B4E928 /* URLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParser.swift; sourceTree = "<group>"; };
+		3C5565202FC5991C00926BA4 /* DemoResourceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoResourceLoader.swift; sourceTree = "<group>"; };
 		3D0819032E4126F30016CEDC /* CustomTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTimeline.swift; sourceTree = "<group>"; };
 		3D2D7CA82EA7C24000FFC9B3 /* SurfaceAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfaceAnimation.swift; sourceTree = "<group>"; };
+		3D8669C02F6D559A002F47B3 /* SurfacePlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfacePlayground.swift; sourceTree = "<group>"; };
+		3D8669C22F6D5614002F47B3 /* SurfaceAnimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfaceAnimate.swift; sourceTree = "<group>"; };
 		40A9BA752E1FAC3100BC5384 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Configuration.xcconfig; sourceTree = "<group>"; };
 		40E3AAD52E1FAA5300EF2F75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40E3AAD62E1FAA5300EF2F75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -185,9 +191,19 @@
 			path = Custom;
 			sourceTree = "<group>";
 		};
+		3C5565212FC5991C00926BA4 /* DemoResourceLoader */ = {
+			isa = PBXGroup;
+			children = (
+				3C5565202FC5991C00926BA4 /* DemoResourceLoader.swift */,
+			);
+			path = DemoResourceLoader;
+			sourceTree = "<group>";
+		};
 		3D2D7CA72EA7C23200FFC9B3 /* SurfaceAnimation */ = {
 			isa = PBXGroup;
 			children = (
+				3D8669C22F6D5614002F47B3 /* SurfaceAnimate.swift */,
+				3D8669C02F6D559A002F47B3 /* SurfacePlayground.swift */,
 				DEF8F75C2ED0B79E00EBA51A /* VPMenuOption.swift */,
 				3D2D7CA82EA7C24000FFC9B3 /* SurfaceAnimation.swift */,
 			);
@@ -310,6 +326,7 @@
 				D4B535142B712DA5005AB39D /* Api */,
 				EA2865692949ECAD0006EFE8 /* Transitions */,
 				EA3E58B4291D4CCA00605471 /* Multiplay */,
+				3C5565212FC5991C00926BA4 /* DemoResourceLoader */,
 				EADF720B274D108000FAD363 /* Downloads */,
 				D4D7522226E657B10046E7A7 /* Common */,
 				37A3A1852E5C5A40008008D7 /* Custom */,
@@ -478,7 +495,7 @@
 				TargetAttributes = {
 					D4CA47E42575A267009C5DB3 = {
 						CreatedOnToolsVersion = 12.2;
-						LastSwiftMigration = 1220;
+						LastSwiftMigration = 2630;
 					};
 				};
 			};
@@ -523,6 +540,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D8669C12F6D55A3002F47B3 /* SurfacePlayground.swift in Sources */,
 				3D2D7CA92EA7C24400FFC9B3 /* SurfaceAnimation.swift in Sources */,
 				D4B5352E2B712F22005AB39D /* ApiProvider.swift in Sources */,
 				B1B093ED2D956E660079B2CB /* FullscreenAdsControlsViewContainer.swift in Sources */,
@@ -545,6 +563,7 @@
 				D40B0A2A2AA5EB7A009EDEA8 /* FullscreenCustomControls.swift in Sources */,
 				3796ABE82E5367400031B627 /* AppCoordinator.swift in Sources */,
 				D43BD367257E244B007952B6 /* ImportController.swift in Sources */,
+				3C5565222FC5991C00926BA4 /* DemoResourceLoader.swift in Sources */,
 				37D5D9E72E65A1BD00B4E928 /* URLParser.swift in Sources */,
 				B1BBFD402D4273410029400D /* AdsControlsViewController.swift in Sources */,
 				D48ADCB22A27489E0066AABF /* ImportFormatView.swift in Sources */,
@@ -561,6 +580,7 @@
 				3D0819042E4126F80016CEDC /* CustomTimeline.swift in Sources */,
 				B1C532FA2B7A41B6006D89B9 /* MyTargetVideoMotionLayoutDemoViewController.swift in Sources */,
 				EAAFC53427BBEB6400033D8B /* NavigationController.swift in Sources */,
+				3D8669C32F6D5619002F47B3 /* SurfaceAnimate.swift in Sources */,
 				EADB39DF27E35F5B0056D9E0 /* OVKStartButtonBehavior+Defaults.swift in Sources */,
 				D4B5352C2B712F22005AB39D /* OauthApi.swift in Sources */,
 				D4B5352D2B712F22005AB39D /* OauthApiSchema.swift in Sources */,
@@ -736,7 +756,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.53.7;
+				CURRENT_PROJECT_VERSION = 2.54;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -745,7 +765,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.53.7;
+				MARKETING_VERSION = 2.54;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -765,7 +785,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.53.7;
+				CURRENT_PROJECT_VERSION = 2.54;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -774,7 +794,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.53.7;
+				MARKETING_VERSION = 2.54;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -812,7 +832,7 @@
 			repositoryURL = "https://github.com/VKCOM/VideoPlayer-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.53.7;
+				version = 2.54.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

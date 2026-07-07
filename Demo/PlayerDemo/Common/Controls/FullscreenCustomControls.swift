@@ -140,7 +140,9 @@ class FullscreenCustomControls: UIView, PlayerFullscreenControlsViewProtocol {
             return
         }
 
-        controlsDelegate.handleControl(gravity)
+        UIView.animate(withDuration: UIView.inheritedAnimationDuration > 0 ? UIView.inheritedAnimationDuration : 0.25) {
+            controlsDelegate.handleControl(gravity)
+        }
     }
 
     // MARK: - PiP button

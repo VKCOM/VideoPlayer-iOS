@@ -257,7 +257,7 @@ class SurfaceAnimationViewController: UIViewController {
     // MARK: State
 
     /// ID of square clip or video to simulate video message
-    private let videoId = "1265333_456247154"
+    private let videoId = "1265333_456247407"
 
     private var duration: TimeInterval = Constants.initialAnimationDuration {
         didSet {
